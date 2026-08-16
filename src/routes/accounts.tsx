@@ -31,7 +31,7 @@ export const Route = createFileRoute("/accounts")({
       },
     ],
   }),
-  component: AccountsPage;
+  component: AccountsPage,
 });
 
 const empty: Account = {
