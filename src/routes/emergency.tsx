@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Phone } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
+import { MicButton } from "@/components/MicButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -174,14 +175,20 @@ function Field({
       <Label htmlFor={id} className="text-base">
         {label}
       </Label>
-      <Input
-        id={id}
-        type={type}
-        maxLength={120}
-        className="h-14 text-base"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      />
+      <div className="flex items-center gap-2">
+        <Input
+          id={id}
+          type={type}
+          maxLength={120}
+          className="h-14 flex-1 text-base"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+        />
+        <MicButton
+          label={label}
+          onText={(text) => onChange((value ? `${value} ${text}` : text).slice(0, 120))}
+        />
+      </div>
     </div>
   );
 }
@@ -202,13 +209,19 @@ function Area({
       <Label htmlFor={id} className="text-base">
         {label}
       </Label>
-      <Textarea
-        id={id}
-        className="min-h-24 text-base"
-        maxLength={600}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      />
+      <div className="flex items-start gap-2">
+        <Textarea
+          id={id}
+          className="min-h-24 flex-1 text-base"
+          maxLength={600}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+        />
+        <MicButton
+          label={label}
+          onText={(text) => onChange((value ? `${value} ${text}` : text).slice(0, 600))}
+        />
+      </div>
     </div>
   );
 }
