@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { Home, Wallet, User, HeartPulse, Settings } from "lucide-react";
+import { ReadAloudButton } from "@/components/ReadAloudButton";
 
 const navItems = [
   { to: "/", label: "Home", icon: Home },
