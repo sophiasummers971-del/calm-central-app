@@ -1,24 +1,127 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Wallet, User, HeartPulse, Phone, ChevronRight } from "lucide-react";
+import { PageShell } from "@/components/PageShell";
+import { useAccounts, useHealthInfo, useMyDetails, usePeople } from "@/lib/local-store";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "My Life Folder — one clear place for your accounts" },
+      {
+        name: "description",
+        content:
+          "A calm, easy dashboard to keep your accounts, home address, phone contacts and emergency details in one clear view.",
+      },
+      { property: "og:title", content: "My Life Folder — one clear place for your accounts" },
+      {
+        property: "og:description",
+        content: "Keep your accounts, contacts and emergency details in one easy view.",
+      },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
+  const { value: accounts, ready } = useAccounts();
+  const { value: details } = useMyDetails();
+  const { value: health } = useHealthInfo();
+  const { value: people } = usePeople();
+
+  const tiles = [
+    {
+      to: "/accounts" as const,
+      label: "My accounts",
+      icon: Wallet,
+      tile: "bg-tile-accounts",
+      line: ready ? `${accounts.length} saved` : "Loading…",
+      help: "Bank, phone, electricity and more.",
+    },
+    {
+      to: "/my-details" as const,
+      label: "My details",
+      icon: User,
+      tile: "bg-tile-details",
+      line: details.fullName ? details.fullName : "Not filled in yet",
+      help: "Your name, home address and phone.",
+    },
+    {
+      to: "/emergency" as const,
+      label: "Emergency",
+      icon: HeartPulse,
+      tile: "bg-tile-emergency",
+      line: health.gpName ? `Doctor: ${health.gpName}` : "Not filled in yet",
+      help: "Doctor, allergies, medicine, helpers.",
+    },
+  ];
+
+  const firstHelper = people[0];
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
+    <PageShell
+      title="My Life Folder"
+      intro="Everything about you, in one calm place. Tap a big button below."
     >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+      <ul className="space-y-4">
+        {tiles.map(({ to, label, icon: Icon, tile, line, help }) => (
+          <li key={to}>
+            <Link
+              to={to}
+              className={`flex items-center gap-4 rounded-2xl border p-5 ${tile} transition-transform hover:scale-[1.01]`}
+            >
+              <span className="flex size-14 shrink-0 items-center justify-center rounded-xl bg-card">
+                <Icon className="size-7" aria-hidden="true" />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-2xl font-bold">{label}</span>
+                <span className="block text-base text-muted-foreground">{help}</span>
+                <span className="mt-1 block truncate text-base font-semibold">{line}</span>
+              </span>
+              <ChevronRight className="size-7 shrink-0" aria-hidden="true" />
+            </Link>
+          </li>
+        ))}
+      </ul>
+
+      <section className="mt-8 rounded-2xl border bg-card p-5" aria-labelledby="help-now">
+        <h2 id="help-now" className="text-2xl font-bold">
+          Need help now?
+        </h2>
+        <p className="mt-1 text-base text-muted-foreground">
+          These are your quick phone numbers.
+        </p>
+        <div className="mt-4 space-y-3">
+          {firstHelper?.phone ? (
+            <CallButton name={firstHelper.name} phone={firstHelper.phone} />
+          ) : null}
+          {health.gpPhone ? (
+            <CallButton name={health.gpName || "My doctor"} phone={health.gpPhone} />
+          ) : null}
+          {!firstHelper?.phone && !health.gpPhone ? (
+            <p className="text-base">
+              No numbers yet. Add them on the{" "}
+              <Link to="/emergency" className="font-bold underline">
+                Emergency page
+              </Link>
+              .
+            </p>
+          ) : null}
+        </div>
+      </section>
+    </PageShell>
+  );
+}
+
+function CallButton({ name, phone }: { name: string; phone: string }) {
+  return (
+    <a
+      href={`tel:${phone.replace(/[^+\d]/g, "")}`}
+      className="flex items-center gap-3 rounded-xl bg-primary px-5 py-4 text-lg font-bold text-primary-foreground"
+    >
+      <Phone className="size-6" aria-hidden="true" />
+      <span className="min-w-0 flex-1 truncate">
+        Call {name} — {phone}
+      </span>
+    </a>
   );
 }
