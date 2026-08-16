@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Phone } from "lucide-react";
+import { Phone, ExternalLink } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { MicButton } from "@/components/MicButton";
 import { Button } from "@/components/ui/button";
@@ -80,6 +80,39 @@ function EmergencyPage() {
             ) : null,
           )}
         </div>
+      </section>
+
+      <section className="mt-6 rounded-2xl border bg-card p-5" aria-labelledby="nhs">
+        <h2 id="nhs" className="text-2xl font-bold">
+          NHS help
+        </h2>
+        <p className="mt-1 text-base text-muted-foreground">
+          These buttons open the NHS websites in a new tab.
+        </p>
+        <ul className="mt-4 space-y-3">
+          {[
+            { href: "tel:111", label: "Call NHS 111 — help when it is not 999", external: false },
+            { href: "https://www.nhs.uk/nhs-app/", label: "NHS App — records and prescriptions", external: true },
+            { href: "https://111.nhs.uk/", label: "NHS 111 online", external: true },
+            { href: "https://www.nhs.uk/service-search/find-a-gp", label: "Find my GP surgery", external: true },
+            { href: "https://www.nhs.uk/service-search/pharmacy/find-a-pharmacy", label: "Find a pharmacy", external: true },
+          ].map((link) => (
+            <li key={link.href}>
+              <a
+                href={link.href}
+                {...(link.external ? { target: "_blank", rel: "noreferrer" } : {})}
+                className="flex items-center gap-3 rounded-xl bg-secondary px-5 py-4 text-lg font-bold text-secondary-foreground"
+              >
+                {link.external ? (
+                  <ExternalLink className="size-6" aria-hidden="true" />
+                ) : (
+                  <Phone className="size-6" aria-hidden="true" />
+                )}
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <form
