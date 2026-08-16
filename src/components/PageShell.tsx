@@ -27,10 +27,15 @@ export function PageShell({
         <div className="mx-auto max-w-3xl px-4 py-5">
           <h1 className="text-3xl font-bold">{title}</h1>
           {intro ? <p className="mt-2 text-lg text-muted-foreground">{intro}</p> : null}
+          <div className="mt-4">
+            <ReadAloudButton targetId="page-content" />
+          </div>
         </div>
       </header>
 
-      <main className="mx-auto max-w-3xl px-4 py-6">{children}</main>
+      <main id="page-content" className="mx-auto max-w-3xl px-4 py-6">
+        {children}
+      </main>
 
       <nav
         aria-label="Main pages"
