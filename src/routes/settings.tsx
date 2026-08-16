@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { Download, Upload, Trash2 } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
+import { BigTextButton } from "@/components/BigTextButton";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
@@ -139,6 +140,16 @@ function SettingsPage() {
             </li>
           ))}
         </ul>
+      </section>
+
+      <section className="mt-6 space-y-3 rounded-2xl border bg-card p-5" aria-labelledby="reading">
+        <h2 id="reading" className="text-2xl font-bold">
+          Easier reading
+        </h2>
+        <p className="text-base text-muted-foreground">
+          Turn on bigger text with stronger colours. It stays on until you turn it off.
+        </p>
+        <BigTextButton className="h-16 w-full text-lg" />
       </section>
 
       <section className="mt-6 space-y-3 rounded-2xl border bg-card p-5" aria-labelledby="backup">
