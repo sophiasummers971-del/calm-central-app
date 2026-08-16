@@ -1,13 +1,15 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { Home, Wallet, User, HeartPulse } from "lucide-react";
+import { Home, Wallet, User, HeartPulse, Settings } from "lucide-react";
 
 const navItems = [
   { to: "/", label: "Home", icon: Home },
-  { to: "/accounts", label: "My accounts", icon: Wallet },
-  { to: "/my-details", label: "My details", icon: User },
+  { to: "/accounts", label: "Accounts", icon: Wallet },
+  { to: "/my-details", label: "Details", icon: User },
   { to: "/emergency", label: "Emergency", icon: HeartPulse },
+  { to: "/settings", label: "Settings", icon: Settings },
 ] as const;
+
 
 export function PageShell({
   title,

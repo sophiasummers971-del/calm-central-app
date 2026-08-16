@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AccountsRouteImport } from './routes/accounts'
 import { Route as EmergencyRouteImport } from './routes/emergency'
 import { Route as MyDetailsRouteImport } from './routes/my-details'
+import { Route as SettingsRouteImport } from './routes/settings'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +35,25 @@ const MyDetailsRoute = MyDetailsRouteImport.update({
   path: '/my-details',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/accounts': typeof AccountsRoute
   '/emergency': typeof EmergencyRoute
   '/my-details': typeof MyDetailsRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/accounts': typeof AccountsRoute
   '/emergency': typeof EmergencyRoute
   '/my-details': typeof MyDetailsRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,15 @@ export interface FileRoutesById {
   '/accounts': typeof AccountsRoute
   '/emergency': typeof EmergencyRoute
   '/my-details': typeof MyDetailsRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/accounts' | '/emergency' | '/my-details'
+  fullPaths: '/' | '/accounts' | '/emergency' | '/my-details' | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/accounts' | '/emergency' | '/my-details'
-  id: '__root__' | '/' | '/accounts' | '/emergency' | '/my-details'
+  to: '/' | '/accounts' | '/emergency' | '/my-details' | '/settings'
+  id:
+    '__root__' | '/' | '/accounts' | '/emergency' | '/my-details' | '/settings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +77,7 @@ export interface RootRouteChildren {
   AccountsRoute: typeof AccountsRoute
   EmergencyRoute: typeof EmergencyRoute
   MyDetailsRoute: typeof MyDetailsRoute
+  SettingsRoute: typeof SettingsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +110,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MyDetailsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +125,7 @@ const rootRouteChildren: RootRouteChildren = {
   AccountsRoute: AccountsRoute,
   EmergencyRoute: EmergencyRoute,
   MyDetailsRoute: MyDetailsRoute,
+  SettingsRoute: SettingsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
