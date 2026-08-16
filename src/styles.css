@@ -151,3 +151,18 @@
     color: var(--color-foreground);
   }
 }
+
+@layer base {
+  html {
+    font-size: 18px;
+  }
+
+  h1 {
+    letter-spacing: -0.01em;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+}
