@@ -65,13 +65,21 @@ function MyDetailsPage() {
           <Label htmlFor="address" className="text-base">
             My home address
           </Label>
-          <Textarea
-            id="address"
-            className="min-h-28 text-base"
-            maxLength={300}
-            value={form.address}
-            onChange={(e) => set("address", e.target.value)}
-          />
+          <div className="flex items-start gap-2">
+            <Textarea
+              id="address"
+              className="min-h-28 flex-1 text-base"
+              maxLength={300}
+              value={form.address}
+              onChange={(e) => set("address", e.target.value)}
+            />
+            <MicButton
+              label="my home address"
+              onText={(text) =>
+                set("address", (form.address ? `${form.address} ${text}` : text).slice(0, 300))
+              }
+            />
+          </div>
         </div>
         <Field
           id="phone"
