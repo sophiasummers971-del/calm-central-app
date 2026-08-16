@@ -35,14 +35,14 @@ export function PageShell({
         aria-label="Main pages"
         className="fixed inset-x-0 bottom-0 border-t bg-card"
       >
-        <ul className="mx-auto grid max-w-3xl grid-cols-4">
+        <ul className="mx-auto grid max-w-3xl grid-cols-5">
           {navItems.map(({ to, label, icon: Icon }) => (
             <li key={to}>
               <Link
                 to={to}
                 activeOptions={{ exact: to === "/" }}
                 activeProps={{ className: "bg-secondary text-secondary-foreground" }}
-                className="flex flex-col items-center gap-1 px-1 py-3 text-center text-sm font-semibold text-muted-foreground"
+                className="flex flex-col items-center gap-1 px-1 py-3 text-center text-xs font-semibold text-muted-foreground"
               >
                 <Icon className="size-6" aria-hidden="true" />
                 {label}
