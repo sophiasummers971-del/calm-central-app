@@ -1,8 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { Home, Wallet, User, HeartPulse, Settings } from "lucide-react";
+import { Home, Wallet, User, HeartPulse, Settings, LogIn, CircleUser } from "lucide-react";
 import { ReadAloudButton } from "@/components/ReadAloudButton";
 import { BigTextButton } from "@/components/BigTextButton";
+import { useSessionUser } from "@/lib/auth";
 
 const navItems = [
   { to: "/", label: "Home", icon: Home },
@@ -22,11 +23,31 @@ export function PageShell({
   intro?: string;
   children: ReactNode;
 }) {
+  const { user, ready } = useSessionUser();
+
   return (
     <div className="min-h-screen bg-background pb-28">
       <header className="border-b bg-card">
         <div className="mx-auto max-w-3xl px-4 py-5">
-          <h1 className="text-3xl font-bold">{title}</h1>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h1 className="text-3xl font-bold">{title}</h1>
+            <Link
+              to="/auth"
+              className="inline-flex items-center gap-2 rounded-xl border px-4 py-3 text-base font-semibold"
+            >
+              {ready && user ? (
+                <>
+                  <CircleUser className="size-6" aria-hidden="true" />
+                  My account
+                </>
+              ) : (
+                <>
+                  <LogIn className="size-6" aria-hidden="true" />
+                  Sign in
+                </>
+              )}
+            </Link>
+          </div>
           {intro ? <p className="mt-2 text-lg text-muted-foreground">{intro}</p> : null}
           <div className="mt-4 flex flex-wrap gap-3">
             <ReadAloudButton targetId="page-content" />
