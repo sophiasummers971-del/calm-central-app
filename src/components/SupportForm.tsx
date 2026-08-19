@@ -132,7 +132,10 @@ export function SupportForm() {
             placeholder="For example: my information disappeared"
             className="h-14 text-lg"
           />
-          <MicButton onResult={(text) => setTopic((prev) => (prev ? `${prev} ${text}` : text))} />
+          <MicButton
+            label="what it is about"
+            onText={(text) => setTopic((prev) => (prev ? `${prev} ${text}` : text))}
+          />
         </div>
       </div>
 
@@ -150,7 +153,10 @@ export function SupportForm() {
             placeholder="What were you doing, and what went wrong?"
             className="text-lg"
           />
-          <MicButton onResult={(text) => setMessage((prev) => (prev ? `${prev} ${text}` : text))} />
+          <MicButton
+            label="what happened"
+            onText={(text) => setMessage((prev) => (prev ? `${prev} ${text}` : text))}
+          />
         </div>
       </div>
 
