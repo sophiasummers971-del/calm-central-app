@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AccountsRouteImport } from './routes/accounts'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as EmergencyRouteImport } from './routes/emergency'
+import { Route as FaqRouteImport } from './routes/faq'
 import { Route as MyDetailsRouteImport } from './routes/my-details'
 import { Route as SettingsRouteImport } from './routes/settings'
 
@@ -36,6 +37,11 @@ const EmergencyRoute = EmergencyRouteImport.update({
   path: '/emergency',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MyDetailsRoute = MyDetailsRouteImport.update({
   id: '/my-details',
   path: '/my-details',
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/accounts': typeof AccountsRoute
   '/auth': typeof AuthRoute
   '/emergency': typeof EmergencyRoute
+  '/faq': typeof FaqRoute
   '/my-details': typeof MyDetailsRoute
   '/settings': typeof SettingsRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/accounts': typeof AccountsRoute
   '/auth': typeof AuthRoute
   '/emergency': typeof EmergencyRoute
+  '/faq': typeof FaqRoute
   '/my-details': typeof MyDetailsRoute
   '/settings': typeof SettingsRoute
 }
@@ -69,21 +77,36 @@ export interface FileRoutesById {
   '/accounts': typeof AccountsRoute
   '/auth': typeof AuthRoute
   '/emergency': typeof EmergencyRoute
+  '/faq': typeof FaqRoute
   '/my-details': typeof MyDetailsRoute
   '/settings': typeof SettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/accounts' | '/auth' | '/emergency' | '/my-details' | '/settings'
+    | '/'
+    | '/accounts'
+    | '/auth'
+    | '/emergency'
+    | '/faq'
+    | '/my-details'
+    | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/accounts' | '/auth' | '/emergency' | '/my-details' | '/settings'
+  to:
+    | '/'
+    | '/accounts'
+    | '/auth'
+    | '/emergency'
+    | '/faq'
+    | '/my-details'
+    | '/settings'
   id:
     | '__root__'
     | '/'
     | '/accounts'
     | '/auth'
     | '/emergency'
+    | '/faq'
     | '/my-details'
     | '/settings'
   fileRoutesById: FileRoutesById
@@ -93,6 +116,7 @@ export interface RootRouteChildren {
   AccountsRoute: typeof AccountsRoute
   AuthRoute: typeof AuthRoute
   EmergencyRoute: typeof EmergencyRoute
+  FaqRoute: typeof FaqRoute
   MyDetailsRoute: typeof MyDetailsRoute
   SettingsRoute: typeof SettingsRoute
 }
@@ -127,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EmergencyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/my-details': {
       id: '/my-details'
       path: '/my-details'
@@ -149,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   AccountsRoute: AccountsRoute,
   AuthRoute: AuthRoute,
   EmergencyRoute: EmergencyRoute,
+  FaqRoute: FaqRoute,
   MyDetailsRoute: MyDetailsRoute,
   SettingsRoute: SettingsRoute,
 }
