@@ -1,6 +1,15 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { Home, Wallet, User, HeartPulse, Settings, LogIn, CircleUser } from "lucide-react";
+import {
+  Home,
+  Wallet,
+  User,
+  HeartPulse,
+  Settings,
+  LogIn,
+  CircleUser,
+  HelpCircle,
+} from "lucide-react";
 import { ReadAloudButton } from "@/components/ReadAloudButton";
 import { BigTextButton } from "@/components/BigTextButton";
 import { useSessionUser } from "@/lib/auth";
