@@ -1,0 +1,1 @@
+DELETE FROM public.support_requests WHERE email = 'tester@example.com' AND topic = 'Test topic';

@@ -20,6 +20,7 @@ const navItems = [
   { to: "/my-details", label: "Details", icon: User },
   { to: "/emergency", label: "Emergency", icon: HeartPulse },
   { to: "/settings", label: "Settings", icon: Settings },
+  { to: "/faq", label: "Help", icon: HelpCircle },
 ] as const;
 
 
@@ -73,7 +74,7 @@ export function PageShell({
         aria-label="Main pages"
         className="fixed inset-x-0 bottom-0 border-t bg-card"
       >
-        <ul className="mx-auto grid max-w-3xl grid-cols-5">
+        <ul className="mx-auto grid max-w-3xl grid-cols-6">
           {navItems.map(({ to, label, icon: Icon }) => (
             <li key={to}>
               <Link
