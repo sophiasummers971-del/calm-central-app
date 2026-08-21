@@ -1,6 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
+export type SupportStatus = "open" | "in_progress" | "resolved";
+
 export type SupportRequestRow = {
   id: string;
   email: string;
@@ -9,6 +11,9 @@ export type SupportRequestRow = {
   screenshot_path: string | null;
   created_at: string;
   screenshot_url: string | null;
+  status: SupportStatus;
+  resolver_notes: string | null;
+  resolved_at: string | null;
 };
 
 export const getIsAdmin = createServerFn({ method: "GET" })
@@ -29,7 +34,9 @@ export const listSupportRequests = createServerFn({ method: "GET" })
   .handler(async ({ context }): Promise<SupportRequestRow[]> => {
     const { data, error } = await context.supabase
       .from("support_requests")
-      .select("id, email, topic, message, screenshot_path, created_at")
+      .select(
+        "id, email, topic, message, screenshot_path, created_at, status, resolver_notes, resolved_at",
+      )
       .order("created_at", { ascending: false })
       .limit(500);
     if (error) throw error;
@@ -53,4 +60,35 @@ export const listSupportRequests = createServerFn({ method: "GET" })
       ...r,
       screenshot_url: r.screenshot_path ? (urls.get(r.screenshot_path) ?? null) : null,
     }));
+  });
+
+export const updateSupportRequest = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: {
+    id: string;
+    status: SupportStatus;
+    resolverNotes: string;
+  }) => {
+    if (!input?.id) throw new Error("Missing id");
+    if (!["open", "in_progress", "resolved"].includes(input.status)) {
+      throw new Error("Invalid status");
+    }
+    return {
+      id: input.id,
+      status: input.status,
+      resolverNotes: (input.resolverNotes ?? "").slice(0, 4000),
+    };
+  })
+  .handler(async ({ data, context }) => {
+    const { error } = await context.supabase
+      .from("support_requests")
+      .update({
+        status: data.status,
+        resolver_notes: data.resolverNotes.trim() === "" ? null : data.resolverNotes,
+        resolved_at: data.status === "resolved" ? new Date().toISOString() : null,
+        updated_by: context.userId,
+      })
+      .eq("id", data.id);
+    if (error) throw error;
+    return { ok: true };
   });
