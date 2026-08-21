@@ -221,6 +221,25 @@ function AdminPage() {
             <div className="flex flex-wrap gap-3">
               {(
                 [
+                  { key: "all", label: "All statuses" },
+                  ...STATUS_OPTIONS,
+                ] as { key: SupportStatus | "all"; label: string }[]
+              ).map((opt) => (
+                <Button
+                  key={opt.key}
+                  type="button"
+                  variant={statusFilter === opt.key ? "default" : "outline"}
+                  className="h-12 text-base"
+                  onClick={() => setStatusFilter(opt.key)}
+                >
+                  {opt.label}
+                </Button>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              {(
+                [
                   { key: "all", label: "All time" },
                   { key: "7", label: "Last 7 days" },
                   { key: "30", label: "Last 30 days" },
