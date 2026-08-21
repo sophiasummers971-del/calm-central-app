@@ -149,6 +149,7 @@ function AdminPage() {
   const [search, setSearch] = useState("");
   const [withScreenshot, setWithScreenshot] = useState(false);
   const [time, setTime] = useState<TimeFilter>("all");
+  const [statusFilter, setStatusFilter] = useState<SupportStatus | "all">("all");
 
   const rows = useMemo(() => {
     const all = requestsQuery.data ?? [];
@@ -158,6 +159,7 @@ function AdminPage() {
 
     return all.filter((r) => {
       if (withScreenshot && !r.screenshot_path) return false;
+      if (statusFilter !== "all" && r.status !== statusFilter) return false;
       if (cutoff && new Date(r.created_at).getTime() < cutoff) return false;
       if (!q) return true;
       return (
@@ -165,7 +167,7 @@ function AdminPage() {
         (r.topic ?? "").toLowerCase().includes(q)
       );
     });
-  }, [requestsQuery.data, search, withScreenshot, time]);
+  }, [requestsQuery.data, search, withScreenshot, time, statusFilter]);
 
   return (
     <PageShell
