@@ -321,6 +321,11 @@ function AdminPage() {
                         />
                       </a>
                     ) : null}
+                    <StatusCard
+                      key={`${r.id}-${r.status}`}
+                      row={r}
+                      onSaved={() => void requestsQuery.refetch()}
+                    />
                   </li>
                 ))}
               </ul>
