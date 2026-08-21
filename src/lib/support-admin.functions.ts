@@ -34,7 +34,9 @@ export const listSupportRequests = createServerFn({ method: "GET" })
   .handler(async ({ context }): Promise<SupportRequestRow[]> => {
     const { data, error } = await context.supabase
       .from("support_requests")
-      .select("id, email, topic, message, screenshot_path, created_at")
+      .select(
+        "id, email, topic, message, screenshot_path, created_at, status, resolver_notes, resolved_at",
+      )
       .order("created_at", { ascending: false })
       .limit(500);
     if (error) throw error;
