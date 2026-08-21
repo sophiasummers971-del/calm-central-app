@@ -7,8 +7,101 @@ import { PageShell } from "@/components/PageShell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { useSessionUser } from "@/lib/auth";
-import { getIsAdmin, listSupportRequests } from "@/lib/support-admin.functions";
+import {
+  getIsAdmin,
+  listSupportRequests,
+  updateSupportRequest,
+  type SupportRequestRow,
+  type SupportStatus,
+} from "@/lib/support-admin.functions";
+
+const STATUS_OPTIONS: { key: SupportStatus; label: string }[] = [
+  { key: "open", label: "Open" },
+  { key: "in_progress", label: "In progress" },
+  { key: "resolved", label: "Resolved" },
+];
+
+function StatusCard({
+  row,
+  onSaved,
+}: {
+  row: SupportRequestRow;
+  onSaved: () => void;
+}) {
+  const saveFn = useServerFn(updateSupportRequest);
+  const [status, setStatus] = useState<SupportStatus>(row.status);
+  const [notes, setNotes] = useState(row.resolver_notes ?? "");
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [failed, setFailed] = useState(false);
+
+  const save = async (nextStatus: SupportStatus) => {
+    setSaving(true);
+    setSaved(false);
+    setFailed(false);
+    try {
+      await saveFn({ data: { id: row.id, status: nextStatus, resolverNotes: notes } });
+      setSaved(true);
+      onSaved();
+    } catch {
+      setFailed(true);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div className="mt-5 rounded-xl border bg-background p-4">
+      <p className="text-lg font-semibold">Where is this up to?</p>
+      <div className="mt-2 flex flex-wrap gap-3">
+        {STATUS_OPTIONS.map((opt) => (
+          <Button
+            key={opt.key}
+            type="button"
+            variant={status === opt.key ? "default" : "outline"}
+            className="h-12 text-base"
+            disabled={saving}
+            onClick={() => {
+              setStatus(opt.key);
+              void save(opt.key);
+            }}
+          >
+            {opt.label}
+          </Button>
+        ))}
+      </div>
+
+      <Label htmlFor={`notes-${row.id}`} className="mt-4 block text-lg font-semibold">
+        Notes from the person helping
+      </Label>
+      <Textarea
+        id={`notes-${row.id}`}
+        value={notes}
+        onChange={(e) => setNotes(e.target.value)}
+        rows={3}
+        placeholder="What you did, or what needs doing next."
+        className="mt-2 text-lg"
+      />
+
+      <div className="mt-3 flex flex-wrap items-center gap-3">
+        <Button
+          type="button"
+          className="h-12 text-base"
+          disabled={saving}
+          onClick={() => void save(status)}
+        >
+          {saving ? "Saving…" : "Save notes"}
+        </Button>
+        {saved ? <span className="text-base text-muted-foreground">Saved.</span> : null}
+        {failed ? (
+          <span className="text-base text-destructive">Sorry, that did not save.</span>
+        ) : null}
+      </div>
+    </div>
+  );
+}
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
