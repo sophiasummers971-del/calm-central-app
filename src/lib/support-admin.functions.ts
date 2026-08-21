@@ -1,6 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
+export type SupportStatus = "open" | "in_progress" | "resolved";
+
 export type SupportRequestRow = {
   id: string;
   email: string;
@@ -9,6 +11,9 @@ export type SupportRequestRow = {
   screenshot_path: string | null;
   created_at: string;
   screenshot_url: string | null;
+  status: SupportStatus;
+  resolver_notes: string | null;
+  resolved_at: string | null;
 };
 
 export const getIsAdmin = createServerFn({ method: "GET" })
