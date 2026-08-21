@@ -299,6 +299,12 @@ function AdminPage() {
                       </span>
                     </div>
                     <p className="mt-1 text-base font-semibold">{r.email}</p>
+                    <p className="mt-2 inline-block rounded-full border px-3 py-1 text-base font-semibold">
+                      {STATUS_OPTIONS.find((s) => s.key === r.status)?.label ?? "Open"}
+                      {r.status === "resolved" && r.resolved_at
+                        ? ` — ${new Date(r.resolved_at).toLocaleDateString()}`
+                        : ""}
+                    </p>
                     <p className="mt-3 whitespace-pre-wrap text-lg">{r.message}</p>
                     {r.screenshot_url ? (
                       <a
