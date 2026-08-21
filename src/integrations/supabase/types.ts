@@ -20,8 +20,12 @@ export type Database = {
           email: string
           id: string
           message: string
+          resolved_at: string | null
+          resolver_notes: string | null
           screenshot_path: string | null
+          status: Database["public"]["Enums"]["support_status"]
           topic: string | null
+          updated_by: string | null
           user_id: string | null
         }
         Insert: {
@@ -29,8 +33,12 @@ export type Database = {
           email: string
           id?: string
           message: string
+          resolved_at?: string | null
+          resolver_notes?: string | null
           screenshot_path?: string | null
+          status?: Database["public"]["Enums"]["support_status"]
           topic?: string | null
+          updated_by?: string | null
           user_id?: string | null
         }
         Update: {
@@ -38,8 +46,12 @@ export type Database = {
           email?: string
           id?: string
           message?: string
+          resolved_at?: string | null
+          resolver_notes?: string | null
           screenshot_path?: string | null
+          status?: Database["public"]["Enums"]["support_status"]
           topic?: string | null
+          updated_by?: string | null
           user_id?: string | null
         }
         Relationships: []
@@ -80,6 +92,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      support_status: "open" | "in_progress" | "resolved"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -208,6 +221,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      support_status: ["open", "in_progress", "resolved"],
     },
   },
 } as const
