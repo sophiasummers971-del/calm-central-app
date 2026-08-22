@@ -83,8 +83,8 @@ function Index() {
         ))}
       </ul>
 
-      <section className="mt-8 rounded-2xl border bg-card p-5" aria-labelledby="help-now">
-        <h2 id="help-now" className="text-2xl font-bold">
+      <section className="mt-8 rounded-2xl border border-border/60 surface p-5" aria-labelledby="help-now">
+        <h2 id="help-now" className="font-display text-2xl font-bold tracking-wide">
           Need help now?
         </h2>
         <p className="mt-1 text-base text-muted-foreground">
