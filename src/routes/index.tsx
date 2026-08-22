@@ -67,13 +67,13 @@ function Index() {
           <li key={to}>
             <Link
               to={to}
-              className={`flex items-center gap-4 rounded-2xl border p-5 ${tile} transition-transform hover:scale-[1.01]`}
+              className={`flex items-center gap-4 rounded-2xl border border-border/60 p-5 ${tile} shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-0.5 hover:glow-edge`}
             >
-              <span className="flex size-14 shrink-0 items-center justify-center rounded-xl bg-card">
+              <span className="flex size-14 shrink-0 items-center justify-center rounded-xl bg-card/80 ring-1 ring-border/60">
                 <Icon className="size-7" aria-hidden="true" />
               </span>
               <span className="min-w-0 flex-1">
-                <span className="block text-2xl font-bold">{label}</span>
+                <span className="block font-display text-2xl font-bold tracking-wide">{label}</span>
                 <span className="block text-base text-muted-foreground">{help}</span>
                 <span className="mt-1 block truncate text-base font-semibold">{line}</span>
               </span>
