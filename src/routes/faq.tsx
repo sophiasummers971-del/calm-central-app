@@ -251,7 +251,7 @@ function FaqPage() {
       title="Help and questions"
       intro="Search for your problem, follow the steps, or send us a message."
     >
-      <section className="rounded-2xl border-border/60 surface p-5" aria-labelledby="search-help">
+      <section className="rounded-2xl border border-border/60 surface p-5" aria-labelledby="search-help">
         <h2 id="search-help" className="text-2xl font-bold">
           Search for help
         </h2>
@@ -294,7 +294,7 @@ function FaqPage() {
       </section>
 
       {nothingFound ? (
-        <section className="mt-6 rounded-2xl border-border/60 surface p-5">
+        <section className="mt-6 rounded-2xl border border-border/60 surface p-5">
           <h2 className="text-2xl font-bold">Nothing matched “{search}”</h2>
           <p className="mt-1 text-base">
             Try a simpler word, or scroll down and send us a message — we will answer by email.
@@ -306,7 +306,7 @@ function FaqPage() {
       ) : null}
 
       {shownProblems.length > 0 ? (
-        <section className="mt-6 rounded-2xl border-border/60 surface p-5" aria-labelledby="problems">
+        <section className="mt-6 rounded-2xl border border-border/60 surface p-5" aria-labelledby="problems">
           <h2 id="problems" className="text-2xl font-bold">
             Common problems
           </h2>
@@ -345,7 +345,7 @@ function FaqPage() {
               <article
                 key={item.id}
                 id={`fix-${item.id}`}
-                className="scroll-mt-24 rounded-2xl border-border/60 surface p-5"
+                className="scroll-mt-24 rounded-2xl border border-border/60 surface p-5"
               >
                 <h3 className="text-xl font-bold">{item.q}</h3>
                 <ol className="mt-3 list-decimal space-y-2 pl-6 text-base leading-relaxed">
@@ -369,7 +369,7 @@ function FaqPage() {
       ) : null}
 
       {shownPages.length > 0 ? (
-        <section className="mt-6 rounded-2xl border-border/60 surface p-5" aria-labelledby="pages">
+        <section className="mt-6 rounded-2xl border border-border/60 surface p-5" aria-labelledby="pages">
           <h2 id="pages" className="text-2xl font-bold">
             How every page works
           </h2>
@@ -386,7 +386,7 @@ function FaqPage() {
         </section>
       ) : null}
 
-      <section className="mt-6 rounded-2xl border-border/60 surface p-5" aria-labelledby="screen">
+      <section className="mt-6 rounded-2xl border border-border/60 surface p-5" aria-labelledby="screen">
         <h2 id="screen" className="text-2xl font-bold">
           Screen colours
         </h2>
@@ -396,7 +396,7 @@ function FaqPage() {
         <ThemeButtons className="mt-4" />
       </section>
 
-      <section className="mt-6 rounded-2xl border-border/60 surface p-5" aria-labelledby="contact">
+      <section className="mt-6 rounded-2xl border border-border/60 surface p-5" aria-labelledby="contact">
         <h2 id="contact" className="text-2xl font-bold">
           Still stuck? Send us a message
         </h2>
@@ -407,7 +407,7 @@ function FaqPage() {
         <SupportForm />
       </section>
 
-      <section className="mt-6 rounded-2xl border bg-tile-emergency p-5" aria-labelledby="urgent">
+      <section className="mt-6 rounded-2xl border border-border/60 bg-tile-emergency glow-edge p-5" aria-labelledby="urgent">
         <h2 id="urgent" className="text-2xl font-bold">
           If you need help now
         </h2>

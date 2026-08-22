@@ -48,7 +48,7 @@ function EmergencyPage() {
       title="Emergency"
       intro="Important health information. Show this page to a doctor or helper."
     >
-      <section className="rounded-2xl border bg-tile-emergency p-5" aria-labelledby="quick">
+      <section className="rounded-2xl border border-border/60 bg-tile-emergency glow-edge p-5" aria-labelledby="quick">
         <h2 id="quick" className="text-2xl font-bold">
           Quick calls
         </h2>
@@ -73,7 +73,7 @@ function EmergencyPage() {
               <a
                 key={person.id}
                 href={`tel:${person.phone.replace(/[^+\d]/g, "")}`}
-                className="flex items-center gap-3 rounded-xl bg-card px-5 py-4 text-lg font-bold"
+                className="flex items-center gap-3 rounded-xl border border-border/60 bg-secondary/70 px-5 py-4 text-lg font-bold"
               >
                 <Phone className="size-6" aria-hidden="true" /> Call {person.name} ({person.relation})
               </a>
@@ -82,7 +82,7 @@ function EmergencyPage() {
         </div>
       </section>
 
-      <section className="mt-6 rounded-2xl border-border/60 surface p-5" aria-labelledby="nhs">
+      <section className="mt-6 rounded-2xl border border-border/60 surface p-5" aria-labelledby="nhs">
         <h2 id="nhs" className="text-2xl font-bold">
           NHS help
         </h2>
@@ -116,7 +116,7 @@ function EmergencyPage() {
       </section>
 
       <form
-        className="mt-6 space-y-4 rounded-2xl border-border/60 surface p-5"
+        className="mt-6 space-y-4 rounded-2xl border border-border/60 surface p-5"
         onSubmit={(event) => {
           event.preventDefault();
           save(form);

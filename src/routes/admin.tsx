@@ -177,7 +177,7 @@ function AdminPage() {
       {!ready ? (
         <p className="text-lg">Checking your account…</p>
       ) : !user ? (
-        <div className="rounded-2xl border-border/60 surface p-6">
+        <div className="rounded-2xl border border-border/60 surface p-6">
           <p className="text-lg">You need to sign in to see this page.</p>
           <Link
             to="/auth"
@@ -189,7 +189,7 @@ function AdminPage() {
       ) : adminQuery.isPending ? (
         <p className="text-lg">Checking your access…</p>
       ) : !isAdmin ? (
-        <div className="rounded-2xl border-border/60 surface p-6">
+        <div className="rounded-2xl border border-border/60 surface p-6">
           <p className="text-lg font-semibold">This page is for support staff only.</p>
           <p className="mt-2 text-base text-muted-foreground">
             Your account does not have admin access. If you think this is wrong, ask for the
@@ -198,7 +198,7 @@ function AdminPage() {
         </div>
       ) : (
         <div className="space-y-6">
-          <div className="rounded-2xl border-border/60 surface p-5 space-y-4">
+          <div className="rounded-2xl border border-border/60 surface p-5 space-y-4">
             <div>
               <Label htmlFor="admin-search" className="text-lg font-semibold">
                 Search by email or subject
@@ -291,7 +291,7 @@ function AdminPage() {
               </p>
               <ul className="space-y-4">
                 {rows.map((r) => (
-                  <li key={r.id} className="rounded-2xl border-border/60 surface p-5">
+                  <li key={r.id} className="rounded-2xl border border-border/60 surface p-5">
                     <div className="flex flex-wrap items-baseline justify-between gap-2">
                       <h2 className="text-xl font-bold">{r.topic || "No subject"}</h2>
                       <span className="text-base text-muted-foreground">
