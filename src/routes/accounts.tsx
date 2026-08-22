@@ -250,7 +250,7 @@ function FieldInput({
 
 function Row({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl bg-muted p-4">
+    <div className="rounded-xl border border-border/50 bg-secondary/60 p-4">
       <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">{label}</p>
       <p className="mt-1 break-words text-lg">{value || "—"}</p>
     </div>
