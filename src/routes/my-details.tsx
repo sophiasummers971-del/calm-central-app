@@ -46,7 +46,7 @@ function MyDetailsPage() {
   return (
     <PageShell title="My details" intro="Who you are and where you live.">
       <form
-        className="space-y-4 rounded-2xl border-border/60 surface p-5"
+        className="space-y-4 rounded-2xl border border-border/60 surface p-5"
         onSubmit={(event) => {
           event.preventDefault();
           save(form);
@@ -115,7 +115,7 @@ function MyDetailsPage() {
 
         <ul className="mt-4 space-y-3">
           {people.map((person) => (
-            <li key={person.id} className="flex items-center gap-3 rounded-2xl border-border/60 surface p-4">
+            <li key={person.id} className="flex items-center gap-3 rounded-2xl border border-border/60 surface p-4">
               <a
                 href={`tel:${person.phone.replace(/[^+\d]/g, "")}`}
                 className="flex min-w-0 flex-1 items-center gap-3"
@@ -141,7 +141,7 @@ function MyDetailsPage() {
         </ul>
 
         <form
-          className="mt-4 space-y-4 rounded-2xl border-border/60 surface p-5"
+          className="mt-4 space-y-4 rounded-2xl border border-border/60 surface p-5"
           onSubmit={(event) => {
             event.preventDefault();
             const data = new FormData(event.currentTarget);

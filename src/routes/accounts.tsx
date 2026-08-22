@@ -84,7 +84,7 @@ function AccountsPage() {
               <button
                 type="button"
                 onClick={() => setViewing(account)}
-                className="flex w-full items-center gap-4 rounded-2xl border-border/60 surface p-4 text-left"
+                className="flex w-full items-center gap-4 rounded-2xl border border-border/60 surface p-4 text-left"
               >
                 <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-tile-accounts">
                   <Wallet className="size-6" aria-hidden="true" />
@@ -250,7 +250,7 @@ function FieldInput({
 
 function Row({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl bg-muted p-4">
+    <div className="rounded-xl border border-border/50 bg-secondary/60 p-4">
       <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">{label}</p>
       <p className="mt-1 break-words text-lg">{value || "—"}</p>
     </div>
