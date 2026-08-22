@@ -63,6 +63,7 @@ export function PageShell({
             <ReadAloudButton targetId="page-content" />
             <BigTextButton />
           </div>
+          <div className="gold-rule mt-4 h-px w-full" aria-hidden="true" />
         </div>
       </header>
 
@@ -72,7 +73,7 @@ export function PageShell({
 
       <nav
         aria-label="Main pages"
-        className="fixed inset-x-0 bottom-0 border-t bg-card"
+        className="fixed inset-x-0 bottom-0 z-20 border-t border-border/60 surface"
       >
         <ul className="mx-auto grid max-w-3xl grid-cols-6">
           {navItems.map(({ to, label, icon: Icon }) => (
