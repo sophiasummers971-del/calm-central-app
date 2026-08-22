@@ -125,7 +125,7 @@ function SettingsPage() {
 
   return (
     <PageShell title="Settings" intro="See what is saved, keep a copy safe, or start again.">
-      <section className="rounded-2xl border bg-card p-5" aria-labelledby="stored">
+      <section className="rounded-2xl border-border/60 surface p-5" aria-labelledby="stored">
         <h2 id="stored" className="text-2xl font-bold">
           What is saved here
         </h2>
@@ -142,7 +142,7 @@ function SettingsPage() {
         </ul>
       </section>
 
-      <section className="mt-6 space-y-3 rounded-2xl border bg-card p-5" aria-labelledby="reading">
+      <section className="mt-6 space-y-3 rounded-2xl border-border/60 surface p-5" aria-labelledby="reading">
         <h2 id="reading" className="text-2xl font-bold">
           Easier reading
         </h2>
@@ -152,7 +152,7 @@ function SettingsPage() {
         <BigTextButton className="h-16 w-full text-lg" />
       </section>
 
-      <section className="mt-6 space-y-3 rounded-2xl border bg-card p-5" aria-labelledby="backup">
+      <section className="mt-6 space-y-3 rounded-2xl border-border/60 surface p-5" aria-labelledby="backup">
         <h2 id="backup" className="text-2xl font-bold">
           Back up my information
         </h2>

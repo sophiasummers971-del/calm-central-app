@@ -82,7 +82,7 @@ function EmergencyPage() {
         </div>
       </section>
 
-      <section className="mt-6 rounded-2xl border bg-card p-5" aria-labelledby="nhs">
+      <section className="mt-6 rounded-2xl border-border/60 surface p-5" aria-labelledby="nhs">
         <h2 id="nhs" className="text-2xl font-bold">
           NHS help
         </h2>
@@ -116,7 +116,7 @@ function EmergencyPage() {
       </section>
 
       <form
-        className="mt-6 space-y-4 rounded-2xl border bg-card p-5"
+        className="mt-6 space-y-4 rounded-2xl border-border/60 surface p-5"
         onSubmit={(event) => {
           event.preventDefault();
           save(form);

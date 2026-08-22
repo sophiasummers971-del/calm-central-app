@@ -84,7 +84,7 @@ function AccountsPage() {
               <button
                 type="button"
                 onClick={() => setViewing(account)}
-                className="flex w-full items-center gap-4 rounded-2xl border bg-card p-4 text-left"
+                className="flex w-full items-center gap-4 rounded-2xl border-border/60 surface p-4 text-left"
               >
                 <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-tile-accounts">
                   <Wallet className="size-6" aria-hidden="true" />
