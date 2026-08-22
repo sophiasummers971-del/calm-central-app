@@ -36,14 +36,14 @@ export function PageShell({
   const { user, ready } = useSessionUser();
 
   return (
-    <div className="min-h-screen bg-background pb-28">
-      <header className="border-b bg-card">
+    <div className="min-h-screen pb-28">
+      <header className="sticky top-0 z-20 border-b border-border/60 surface">
         <div className="mx-auto max-w-3xl px-4 py-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <h1 className="text-3xl font-bold">{title}</h1>
+            <h1 className="font-display text-3xl font-bold tracking-wide">{title}</h1>
             <Link
               to="/auth"
-              className="inline-flex items-center gap-2 rounded-xl border px-4 py-3 text-base font-semibold"
+              className="inline-flex items-center gap-2 rounded-xl border border-border/70 bg-card/60 px-4 py-3 text-base font-semibold transition-colors hover:bg-secondary"
             >
               {ready && user ? (
                 <>
