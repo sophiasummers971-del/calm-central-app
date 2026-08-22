@@ -83,7 +83,7 @@ function AuthPage() {
       intro="Sign in with your email address. Then your folder is yours on any device."
     >
       {ready && user ? (
-        <section className="rounded-2xl border bg-card p-5">
+        <section className="rounded-2xl border-border/60 surface p-5">
           <h2 className="text-2xl font-bold">You are signed in</h2>
           <p className="mt-2 break-words text-lg">{user.email}</p>
           <Button variant="secondary" className="mt-4 h-16 w-full text-lg" onClick={signOut}>
@@ -91,7 +91,7 @@ function AuthPage() {
           </Button>
         </section>
       ) : (
-        <section className="space-y-4 rounded-2xl border bg-card p-5">
+        <section className="space-y-4 rounded-2xl border-border/60 surface p-5">
           <div className="space-y-2">
             <Label htmlFor="email" className="text-lg">
               Your email address
