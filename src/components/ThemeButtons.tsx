@@ -12,7 +12,7 @@ export function ThemeButtons({ className = "" }: { className?: string }) {
   const { choice, setTheme, ready } = useTheme();
 
   return (
-    <div className={`grid grid-cols-3 gap-3 ${className}`} role="group" aria-label="Screen colours">
+    <div className={`grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-3 ${className}`} role="group" aria-label="Screen colours">
       {options.map(({ value, label, help, icon: Icon }) => {
         const active = ready && choice === value;
         return (

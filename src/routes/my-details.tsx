@@ -46,7 +46,7 @@ function MyDetailsPage() {
   return (
     <PageShell title="My details" intro="Who you are and where you live.">
       <form
-        className="space-y-4 rounded-2xl border border-border/60 surface p-5"
+        className="space-y-4 rounded-2xl border border-border/60 surface p-4 sm:p-5"
         onSubmit={(event) => {
           event.preventDefault();
           save(form);
@@ -65,7 +65,7 @@ function MyDetailsPage() {
           <Label htmlFor="address" className="text-base">
             My home address
           </Label>
-          <div className="flex items-start gap-2">
+          <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start">
             <Textarea
               id="address"
               className="min-h-28 flex-1 text-base"
@@ -115,10 +115,10 @@ function MyDetailsPage() {
 
         <ul className="mt-4 space-y-3">
           {people.map((person) => (
-            <li key={person.id} className="flex items-center gap-3 rounded-2xl border border-border/60 surface p-4">
+            <li key={person.id} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-2xl border border-border/60 surface p-4">
               <a
                 href={`tel:${person.phone.replace(/[^+\d]/g, "")}`}
-                className="flex min-w-0 flex-1 items-center gap-3"
+                className="flex min-w-0 items-center gap-3"
               >
                 <Phone className="size-6 shrink-0" aria-hidden="true" />
                 <span className="min-w-0">
@@ -131,6 +131,7 @@ function MyDetailsPage() {
               <Button
                 variant="ghost"
                 size="icon"
+                className="min-h-11 min-w-11 shrink-0"
                 aria-label={`Delete ${person.name}`}
                 onClick={() => savePeople(people.filter((p) => p.id !== person.id))}
               >
@@ -141,7 +142,7 @@ function MyDetailsPage() {
         </ul>
 
         <form
-          className="mt-4 space-y-4 rounded-2xl border border-border/60 surface p-5"
+          className="mt-4 space-y-4 rounded-2xl border border-border/60 surface p-4 sm:p-5"
           onSubmit={(event) => {
             event.preventDefault();
             const data = new FormData(event.currentTarget);
@@ -211,7 +212,7 @@ function Field({
       <Label htmlFor={id} className="text-base">
         {label}
       </Label>
-      <div className="flex items-center gap-2">
+      <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
         <Input
           id={id}
           type={type}

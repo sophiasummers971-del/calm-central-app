@@ -48,21 +48,21 @@ function EmergencyPage() {
       title="Emergency"
       intro="Important health information. Show this page to a doctor or helper."
     >
-      <section className="rounded-2xl border border-border/60 bg-tile-emergency glow-edge p-5" aria-labelledby="quick">
+      <section className="rounded-2xl border border-border/60 bg-tile-emergency glow-edge p-4 sm:p-5" aria-labelledby="quick">
         <h2 id="quick" className="text-2xl font-bold">
           Quick calls
         </h2>
         <div className="mt-4 space-y-3">
           <a
             href="tel:999"
-            className="flex items-center gap-3 rounded-xl bg-destructive px-5 py-4 text-lg font-bold text-destructive-foreground"
+            className="flex min-h-14 items-center gap-3 rounded-xl bg-destructive px-4 py-3 text-base font-bold text-destructive-foreground sm:px-5 sm:py-4 sm:text-lg"
           >
             <Phone className="size-6" aria-hidden="true" /> Call 999 — ambulance
           </a>
           {form.gpPhone ? (
             <a
               href={`tel:${form.gpPhone.replace(/[^+\d]/g, "")}`}
-              className="flex items-center gap-3 rounded-xl bg-primary px-5 py-4 text-lg font-bold text-primary-foreground"
+              className="flex min-h-14 items-center gap-3 rounded-xl bg-primary px-4 py-3 text-base font-bold text-primary-foreground sm:px-5 sm:py-4 sm:text-lg"
             >
               <Phone className="size-6" aria-hidden="true" /> Call my doctor —{" "}
               {form.gpPhone}
@@ -73,7 +73,7 @@ function EmergencyPage() {
               <a
                 key={person.id}
                 href={`tel:${person.phone.replace(/[^+\d]/g, "")}`}
-                className="flex items-center gap-3 rounded-xl border border-border/60 bg-secondary/70 px-5 py-4 text-lg font-bold"
+                className="flex min-h-14 items-center gap-3 rounded-xl border border-border/60 bg-secondary/70 px-4 py-3 text-base font-bold sm:px-5 sm:py-4 sm:text-lg"
               >
                 <Phone className="size-6" aria-hidden="true" /> Call {person.name} ({person.relation})
               </a>
@@ -82,7 +82,7 @@ function EmergencyPage() {
         </div>
       </section>
 
-      <section className="mt-6 rounded-2xl border border-border/60 surface p-5" aria-labelledby="nhs">
+      <section className="mt-6 rounded-2xl border border-border/60 surface p-4 sm:p-5" aria-labelledby="nhs">
         <h2 id="nhs" className="text-2xl font-bold">
           NHS help
         </h2>
@@ -101,7 +101,7 @@ function EmergencyPage() {
               <a
                 href={link.href}
                 {...(link.external ? { target: "_blank", rel: "noreferrer" } : {})}
-                className="flex items-center gap-3 rounded-xl bg-secondary px-5 py-4 text-lg font-bold text-secondary-foreground"
+                className="flex min-h-14 items-center gap-3 rounded-xl bg-secondary px-4 py-3 text-base font-bold text-secondary-foreground sm:px-5 sm:py-4 sm:text-lg"
               >
                 {link.external ? (
                   <ExternalLink className="size-6" aria-hidden="true" />
@@ -116,7 +116,7 @@ function EmergencyPage() {
       </section>
 
       <form
-        className="mt-6 space-y-4 rounded-2xl border border-border/60 surface p-5"
+        className="mt-6 space-y-4 rounded-2xl border border-border/60 surface p-4 sm:p-5"
         onSubmit={(event) => {
           event.preventDefault();
           save(form);
@@ -208,7 +208,7 @@ function Field({
       <Label htmlFor={id} className="text-base">
         {label}
       </Label>
-      <div className="flex items-center gap-2">
+      <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
         <Input
           id={id}
           type={type}
@@ -242,7 +242,7 @@ function Area({
       <Label htmlFor={id} className="text-base">
         {label}
       </Label>
-      <div className="flex items-start gap-2">
+      <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start">
         <Textarea
           id={id}
           className="min-h-24 flex-1 text-base"
