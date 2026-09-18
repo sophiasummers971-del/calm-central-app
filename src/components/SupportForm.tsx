@@ -123,7 +123,7 @@ export function SupportForm() {
         <Label htmlFor="support-topic" className="text-lg font-semibold">
           What is it about? (optional)
         </Label>
-        <div className="mt-2 flex items-center gap-2">
+        <div className="mt-2 grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
           <Input
             id="support-topic"
             maxLength={120}
@@ -143,7 +143,7 @@ export function SupportForm() {
         <Label htmlFor="support-message" className="text-lg font-semibold">
           Tell us what happened
         </Label>
-        <div className="mt-2 flex items-start gap-2">
+        <div className="mt-2 grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start">
           <Textarea
             id="support-message"
             rows={5}

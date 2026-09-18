@@ -53,15 +53,15 @@ function StatusCard({
   };
 
   return (
-    <div className="mt-5 rounded-xl border bg-background p-4">
+    <div className="mt-5 rounded-xl border bg-background p-3 sm:p-4">
       <p className="text-lg font-semibold">Where is this up to?</p>
-      <div className="mt-2 flex flex-wrap gap-3">
+       <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-3">
         {STATUS_OPTIONS.map((opt) => (
           <Button
             key={opt.key}
             type="button"
             variant={status === opt.key ? "default" : "outline"}
-            className="h-12 text-base"
+            className="h-12 w-full text-base"
             disabled={saving}
             onClick={() => {
               setStatus(opt.key);
@@ -198,7 +198,7 @@ function AdminPage() {
         </div>
       ) : (
         <div className="space-y-6">
-          <div className="rounded-2xl border border-border/60 surface p-5 space-y-4">
+          <div className="space-y-4 rounded-2xl border border-border/60 surface p-4 sm:p-5">
             <div>
               <Label htmlFor="admin-search" className="text-lg font-semibold">
                 Search by email or subject
@@ -218,7 +218,7 @@ function AdminPage() {
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-3">
               {(
                 [
                   { key: "all", label: "All statuses" },
@@ -229,7 +229,7 @@ function AdminPage() {
                   key={opt.key}
                   type="button"
                   variant={statusFilter === opt.key ? "default" : "outline"}
-                  className="h-12 text-base"
+                   className="h-12 min-w-0 px-2 text-sm sm:px-4 sm:text-base"
                   onClick={() => setStatusFilter(opt.key)}
                 >
                   {opt.label}
@@ -237,7 +237,7 @@ function AdminPage() {
               ))}
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-3">
               {(
                 [
                   { key: "all", label: "All time" },
@@ -249,7 +249,7 @@ function AdminPage() {
                   key={opt.key}
                   type="button"
                   variant={time === opt.key ? "default" : "outline"}
-                  className="h-12 text-base"
+                   className="h-12 min-w-0 px-2 text-sm sm:px-4 sm:text-base"
                   onClick={() => setTime(opt.key)}
                 >
                   {opt.label}
@@ -258,7 +258,7 @@ function AdminPage() {
               <Button
                 type="button"
                 variant={withScreenshot ? "default" : "outline"}
-                className="h-12 text-base"
+                 className="h-12 min-w-0 px-2 text-sm sm:px-4 sm:text-base"
                 onClick={() => setWithScreenshot((v) => !v)}
               >
                 <ImageIcon className="mr-2 size-5" aria-hidden="true" />
@@ -267,7 +267,7 @@ function AdminPage() {
               <Button
                 type="button"
                 variant="outline"
-                className="h-12 text-base"
+                 className="h-12 min-w-0 px-2 text-sm sm:px-4 sm:text-base"
                 onClick={() => requestsQuery.refetch()}
               >
                 <RefreshCw className="mr-2 size-5" aria-hidden="true" />
@@ -291,8 +291,8 @@ function AdminPage() {
               </p>
               <ul className="space-y-4">
                 {rows.map((r) => (
-                  <li key={r.id} className="rounded-2xl border border-border/60 surface p-5">
-                    <div className="flex flex-wrap items-baseline justify-between gap-2">
+                  <li key={r.id} className="rounded-2xl border border-border/60 surface p-4 sm:p-5">
+                    <div className="grid gap-1 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-baseline sm:gap-2">
                       <h2 className="text-xl font-bold">{r.topic || "No subject"}</h2>
                       <span className="text-base text-muted-foreground">
                         {new Date(r.created_at).toLocaleString()}
@@ -316,7 +316,7 @@ function AdminPage() {
                         <img
                           src={r.screenshot_url}
                           alt={`Screenshot sent with the message about ${r.topic || "a problem"}`}
-                          className="max-h-64 rounded-xl border"
+                          className="max-h-64 max-w-full rounded-xl border object-contain"
                           loading="lazy"
                         />
                       </a>
