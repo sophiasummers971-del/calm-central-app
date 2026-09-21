@@ -1,6 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Phone, ExternalLink } from "lucide-react";
+import { Phone, ExternalLink, Sparkles } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { MicButton } from "@/components/MicButton";
 import { Button } from "@/components/ui/button";
@@ -80,6 +80,21 @@ function EmergencyPage() {
             ) : null,
           )}
         </div>
+      </section>
+
+      <section className="mt-6 rounded-2xl border border-border/60 surface p-4 sm:p-5" aria-labelledby="appt">
+        <h2 id="appt" className="text-2xl font-bold">
+          Getting ready for the doctor
+        </h2>
+        <p className="mt-1 text-base text-muted-foreground">
+          Say how you feel and we will make a clear list you can show your doctor.
+        </p>
+        <Link
+          to="/appointment"
+          className="mt-4 flex min-h-14 items-center gap-3 rounded-xl bg-primary px-4 py-3 text-base font-bold text-primary-foreground sm:px-5 sm:py-4 sm:text-lg"
+        >
+          <Sparkles className="size-6" aria-hidden="true" /> Make my appointment notes
+        </Link>
       </section>
 
       <section className="mt-6 rounded-2xl border border-border/60 surface p-4 sm:p-5" aria-labelledby="nhs">
