@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AccountsRouteImport } from './routes/accounts'
 import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AppointmentRouteImport } from './routes/appointment'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as EmergencyRouteImport } from './routes/emergency'
 import { Route as FaqRouteImport } from './routes/faq'
@@ -31,6 +32,11 @@ const AccountsRoute = AccountsRouteImport.update({
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppointmentRoute = AppointmentRouteImport.update({
+  id: '/appointment',
+  path: '/appointment',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -63,6 +69,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/accounts': typeof AccountsRoute
   '/admin': typeof AdminRoute
+  '/appointment': typeof AppointmentRoute
   '/auth': typeof AuthRoute
   '/emergency': typeof EmergencyRoute
   '/faq': typeof FaqRoute
@@ -73,6 +80,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/accounts': typeof AccountsRoute
   '/admin': typeof AdminRoute
+  '/appointment': typeof AppointmentRoute
   '/auth': typeof AuthRoute
   '/emergency': typeof EmergencyRoute
   '/faq': typeof FaqRoute
@@ -84,6 +92,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/accounts': typeof AccountsRoute
   '/admin': typeof AdminRoute
+  '/appointment': typeof AppointmentRoute
   '/auth': typeof AuthRoute
   '/emergency': typeof EmergencyRoute
   '/faq': typeof FaqRoute
@@ -96,6 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/accounts'
     | '/admin'
+    | '/appointment'
     | '/auth'
     | '/emergency'
     | '/faq'
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/accounts'
     | '/admin'
+    | '/appointment'
     | '/auth'
     | '/emergency'
     | '/faq'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '/'
     | '/accounts'
     | '/admin'
+    | '/appointment'
     | '/auth'
     | '/emergency'
     | '/faq'
@@ -127,6 +139,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccountsRoute: typeof AccountsRoute
   AdminRoute: typeof AdminRoute
+  AppointmentRoute: typeof AppointmentRoute
   AuthRoute: typeof AuthRoute
   EmergencyRoute: typeof EmergencyRoute
   FaqRoute: typeof FaqRoute
@@ -155,6 +168,13 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/appointment': {
+      id: '/appointment'
+      path: '/appointment'
+      fullPath: '/appointment'
+      preLoaderRoute: typeof AppointmentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -199,6 +219,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccountsRoute: AccountsRoute,
   AdminRoute: AdminRoute,
+  AppointmentRoute: AppointmentRoute,
   AuthRoute: AuthRoute,
   EmergencyRoute: EmergencyRoute,
   FaqRoute: FaqRoute,
