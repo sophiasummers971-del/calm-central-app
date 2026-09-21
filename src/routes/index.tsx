@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Wallet, User, HeartPulse, Phone, ChevronRight } from "lucide-react";
+import { Wallet, User, HeartPulse, Phone, ChevronRight, Sparkles } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { useAccounts, useHealthInfo, useMyDetails, usePeople } from "@/lib/local-store";
 
@@ -52,6 +52,14 @@ function Index() {
       tile: "bg-tile-emergency",
       line: health.gpName ? `Doctor: ${health.gpName}` : "Not filled in yet",
       help: "Doctor, allergies, medicine, helpers.",
+    },
+    {
+      to: "/appointment" as const,
+      label: "Appointment notes",
+      icon: Sparkles,
+      tile: "bg-tile-details",
+      line: "Say how you feel",
+      help: "Turn your words into a clear list for the doctor.",
     },
   ];
 
