@@ -1,5 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Wallet, User, HeartPulse, Phone, ChevronRight, Sparkles } from "lucide-react";
+import {
+  Wallet,
+  User,
+  HeartPulse,
+  Phone,
+  ChevronRight,
+  Sparkles,
+  Map as MapIcon,
+} from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { useAccounts, useHealthInfo, useMyDetails, usePeople } from "@/lib/local-store";
 
@@ -116,6 +124,13 @@ function Index() {
           ) : null}
         </div>
       </section>
+
+      <Link
+        to="/sitemap"
+        className="mt-6 flex min-h-14 items-center justify-center gap-3 rounded-xl border border-border/60 bg-secondary px-4 py-3 text-base font-bold text-secondary-foreground sm:text-lg"
+      >
+        <MapIcon className="size-6" aria-hidden="true" /> Map of all pages
+      </Link>
     </PageShell>
   );
 }
