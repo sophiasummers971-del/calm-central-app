@@ -18,6 +18,7 @@ import { Route as EmergencyRouteImport } from './routes/emergency'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as MyDetailsRouteImport } from './routes/my-details'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as SitemapRouteImport } from './routes/sitemap'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -64,6 +65,11 @@ const SettingsRoute = SettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SitemapRoute = SitemapRouteImport.update({
+  id: '/sitemap',
+  path: '/sitemap',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -75,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/my-details': typeof MyDetailsRoute
   '/settings': typeof SettingsRoute
+  '/sitemap': typeof SitemapRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -86,6 +93,7 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/my-details': typeof MyDetailsRoute
   '/settings': typeof SettingsRoute
+  '/sitemap': typeof SitemapRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -98,6 +106,7 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/my-details': typeof MyDetailsRoute
   '/settings': typeof SettingsRoute
+  '/sitemap': typeof SitemapRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -111,6 +120,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/my-details'
     | '/settings'
+    | '/sitemap'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -122,6 +132,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/my-details'
     | '/settings'
+    | '/sitemap'
   id:
     | '__root__'
     | '/'
@@ -133,6 +144,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/my-details'
     | '/settings'
+    | '/sitemap'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -145,6 +157,7 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   MyDetailsRoute: typeof MyDetailsRoute
   SettingsRoute: typeof SettingsRoute
+  SitemapRoute: typeof SitemapRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -212,6 +225,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sitemap': {
+      id: '/sitemap'
+      path: '/sitemap'
+      fullPath: '/sitemap'
+      preLoaderRoute: typeof SitemapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -225,6 +245,7 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   MyDetailsRoute: MyDetailsRoute,
   SettingsRoute: SettingsRoute,
+  SitemapRoute: SitemapRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
