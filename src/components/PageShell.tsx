@@ -39,8 +39,8 @@ export function PageShell({
     <div className="min-h-dvh pb-24 sm:pb-28">
       <header className="sticky top-0 z-20 border-b border-border/60 surface">
         <div className="mx-auto max-w-3xl px-3 py-4 sm:px-5 sm:py-5">
-          <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
-            <h1 className="min-w-0 font-display text-2xl font-bold sm:text-3xl">{title}</h1>
+          <div className="grid grid-cols-1 items-center gap-3 min-[380px]:grid-cols-[minmax(0,1fr)_auto]">
+            <h1 className="min-w-0 break-words font-display text-2xl font-bold sm:text-3xl">{title}</h1>
             <Link
               to="/auth"
               className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-xl border border-border/70 bg-card/60 px-3 py-2 text-sm font-semibold transition-colors hover:bg-secondary sm:px-4 sm:py-3 sm:text-base"
@@ -85,7 +85,7 @@ export function PageShell({
                 className="flex min-h-16 min-w-0 flex-col items-center justify-center gap-1 rounded-md px-0.5 py-2 text-center text-[0.65rem] font-semibold leading-tight text-muted-foreground sm:min-h-18 sm:px-2 sm:py-3 sm:text-xs"
               >
                 <Icon className="size-5 shrink-0 sm:size-6" aria-hidden="true" />
-                <span className="max-w-full">{label}</span>
+                <span className="max-w-full break-all">{label}</span>
               </Link>
             </li>
           ))}

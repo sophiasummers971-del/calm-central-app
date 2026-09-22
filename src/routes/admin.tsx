@@ -61,7 +61,7 @@ function StatusCard({
             key={opt.key}
             type="button"
             variant={status === opt.key ? "default" : "outline"}
-            className="h-12 w-full text-base"
+            className="min-h-12 h-auto w-full py-2 text-base"
             disabled={saving}
             onClick={() => {
               setStatus(opt.key);
@@ -229,7 +229,7 @@ function AdminPage() {
                   key={opt.key}
                   type="button"
                   variant={statusFilter === opt.key ? "default" : "outline"}
-                   className="h-12 min-w-0 px-2 text-sm sm:px-4 sm:text-base"
+                   className="min-h-12 h-auto min-w-0 whitespace-normal px-2 py-2 text-sm sm:px-4 sm:text-base"
                   onClick={() => setStatusFilter(opt.key)}
                 >
                   {opt.label}
@@ -249,7 +249,7 @@ function AdminPage() {
                   key={opt.key}
                   type="button"
                   variant={time === opt.key ? "default" : "outline"}
-                   className="h-12 min-w-0 px-2 text-sm sm:px-4 sm:text-base"
+                   className="min-h-12 h-auto min-w-0 whitespace-normal px-2 py-2 text-sm sm:px-4 sm:text-base"
                   onClick={() => setTime(opt.key)}
                 >
                   {opt.label}
@@ -258,7 +258,7 @@ function AdminPage() {
               <Button
                 type="button"
                 variant={withScreenshot ? "default" : "outline"}
-                 className="h-12 min-w-0 px-2 text-sm sm:px-4 sm:text-base"
+                  className="min-h-12 h-auto min-w-0 whitespace-normal px-2 py-2 text-sm sm:px-4 sm:text-base"
                 onClick={() => setWithScreenshot((v) => !v)}
               >
                 <ImageIcon className="mr-2 size-5" aria-hidden="true" />
@@ -267,7 +267,7 @@ function AdminPage() {
               <Button
                 type="button"
                 variant="outline"
-                 className="h-12 min-w-0 px-2 text-sm sm:px-4 sm:text-base"
+                  className="min-h-12 h-auto min-w-0 whitespace-normal px-2 py-2 text-sm sm:px-4 sm:text-base"
                 onClick={() => requestsQuery.refetch()}
               >
                 <RefreshCw className="mr-2 size-5" aria-hidden="true" />

@@ -23,6 +23,8 @@ export const Route = createFileRoute("/emergency")({
         property: "og:description",
         content: "Doctor, allergies, medicine and helpers, ready to show in an emergency.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: EmergencyPage,
