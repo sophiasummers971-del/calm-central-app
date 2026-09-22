@@ -42,6 +42,8 @@ export const Route = createFileRoute("/settings")({
         property: "og:description",
         content: "See what is saved, make a backup, or delete everything on this device.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: SettingsPage,
@@ -134,7 +136,7 @@ function SettingsPage() {
         </p>
         <ul className="mt-4 space-y-3">
           {rows.map((row) => (
-            <li key={row.label} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border border-border/50 bg-secondary/60 p-4">
+            <li key={row.label} className="grid grid-cols-1 gap-1 rounded-xl border border-border/50 bg-secondary/60 p-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:gap-3">
               <span className="text-base">{row.label}</span>
               <span className="text-lg font-bold">{row.value}</span>
             </li>

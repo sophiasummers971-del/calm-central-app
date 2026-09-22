@@ -130,7 +130,7 @@
   --muted-foreground: oklch(0.78 0.03 75);
   --accent: oklch(0.62 0.13 25);
   --accent-foreground: oklch(0.96 0.02 85);
-  --destructive: oklch(0.62 0.19 25);
+  --destructive: oklch(0.44 0.16 25);
   --destructive-foreground: oklch(0.97 0.02 85);
   --border: oklch(0.42 0.04 55 / 70%);
   --input: oklch(0.45 0.045 55 / 80%);
@@ -225,6 +225,10 @@ html.big-text.dark,
   html.big-text * {
     line-height: 1.55;
     letter-spacing: 0.01em;
+  }
+
+  html.big-text body {
+    overflow-wrap: anywhere;
   }
 
   :focus-visible {

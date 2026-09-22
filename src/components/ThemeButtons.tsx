@@ -26,7 +26,7 @@ export function ThemeButtons({ className = "" }: { className?: string }) {
           >
             <Icon className="size-6" aria-hidden="true" />
             <span className="font-bold">{label}</span>
-            <span className="text-xs font-normal opacity-80">{help}</span>
+            <span className="text-xs font-normal">{help}</span>
           </Button>
         );
       })}
