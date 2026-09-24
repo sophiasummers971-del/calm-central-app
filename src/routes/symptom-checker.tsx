@@ -39,7 +39,7 @@ function SymptomChecker() {
   const [result, setResult] = useState<Result | null>(null);
 
   const answer = (yes: boolean) => {
-    if (yes) return setResult(steps[i].yes);
+    if (yes) return setResult(steps[i]!.yes);
     if (i + 1 < steps.length) setI(i + 1);
     else setResult("home");
   };
@@ -66,7 +66,7 @@ function SymptomChecker() {
       ) : (
         <section className="rounded-2xl border border-border/60 surface p-5">
           <p className="text-base text-muted-foreground">Question {i + 1} of {steps.length}</p>
-          <h2 className="mt-2 text-2xl font-bold">{steps[i].q}</h2>
+          <h2 className="mt-2 text-2xl font-bold">{steps[i]!.q}</h2>
           <div className="mt-5 grid grid-cols-2 gap-3">
             <Button className="h-16 text-xl" onClick={() => answer(true)}>Yes</Button>
             <Button variant="secondary" className="h-16 text-xl" onClick={() => answer(false)}>No</Button>
