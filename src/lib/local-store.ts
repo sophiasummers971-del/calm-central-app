@@ -106,10 +106,26 @@ function useStored<T>(key: string, fallback: T) {
   return { value, save, ready };
 }
 
+export type SavedConcern = {
+  id: string;
+  createdAt: string;
+  original: string;
+  summary: {
+    mainProblem: string;
+    howLong: string;
+    symptoms: string[];
+    thingsThatHelpOrMakeItWorse: string[];
+    medicinesMentioned: string[];
+    questionsForTheDoctor: string[];
+    urgentWarning: string | null;
+  };
+};
+
 export const useAccounts = () => useStored<Account[]>(KEYS.accounts, []);
 export const usePeople = () => useStored<Person[]>(KEYS.people, []);
 export const useMyDetails = () => useStored<MyDetails>(KEYS.details, emptyDetails);
 export const useHealthInfo = () => useStored<HealthInfo>(KEYS.health, emptyHealth);
+export const useConcerns = () => useStored<SavedConcern[]>("mycare.concerns", []);
 
 export const newId = () =>
   typeof crypto !== "undefined" && "randomUUID" in crypto

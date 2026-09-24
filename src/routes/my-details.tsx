@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Plus, Trash2, Phone } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { newId, usePeople, useMyDetails, type MyDetails } from "@/lib/local-store";
+import { newId, usePeople, useMyDetails, useConcerns, type MyDetails } from "@/lib/local-store";
 
 export const Route = createFileRoute("/my-details")({
   head: () => ({
@@ -190,7 +190,91 @@ function MyDetailsPage() {
           </Button>
         </form>
       </section>
+
+      <SavedConcerns />
     </PageShell>
+  );
+}
+
+function SavedConcerns() {
+  const { value: concerns, save } = useConcerns();
+  return (
+    <section
+      aria-labelledby="concerns-title"
+      className="space-y-4 rounded-2xl border border-border/60 surface p-4 sm:p-5"
+    >
+      <h2 id="concerns-title" className="font-display text-2xl font-bold">
+        My health notes
+      </h2>
+      {concerns.length === 0 ? (
+        <p className="text-base">
+          No notes yet.{" "}
+          <Link to="/appointment" className="font-bold underline">
+            Make an appointment note
+          </Link>
+        </p>
+      ) : (
+        <>
+          <ul className="space-y-3">
+            {concerns.map((c) => (
+              <li key={c.id} className="rounded-xl border border-border/50 bg-secondary/60 p-4">
+                <details>
+                  <summary className="cursor-pointer text-lg font-bold">
+                    {c.summary.mainProblem}
+                    <span className="block text-base font-normal">
+                      {new Date(c.createdAt).toLocaleDateString("en-GB", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </span>
+                  </summary>
+                  <div className="mt-3 space-y-2 text-base">
+                    {c.summary.urgentWarning ? (
+                      <p className="font-bold text-destructive">{c.summary.urgentWarning}</p>
+                    ) : null}
+                    <p><strong>How long:</strong> {c.summary.howLong}</p>
+                    <NoteList title="What I feel" items={c.summary.symptoms} />
+                    <NoteList title="Helps or makes it worse" items={c.summary.thingsThatHelpOrMakeItWorse} />
+                    <NoteList title="Medicines" items={c.summary.medicinesMentioned} />
+                    <NoteList title="Questions for the doctor" items={c.summary.questionsForTheDoctor} />
+                    <p><strong>My own words:</strong> {c.original}</p>
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      className="h-12 w-full text-base"
+                      onClick={() => {
+                        if (window.confirm("Delete this note?"))
+                          save(concerns.filter((x) => x.id !== c.id));
+                      }}
+                    >
+                      <Trash2 className="size-5" aria-hidden="true" /> Delete this note
+                    </Button>
+                  </div>
+                </details>
+              </li>
+            ))}
+          </ul>
+          <Link to="/appointment" className="inline-block text-lg font-bold underline">
+            Add a new note
+          </Link>
+        </>
+      )}
+    </section>
+  );
+}
+
+function NoteList({ title, items }: { title: string; items: string[] }) {
+  if (!items?.length) return null;
+  return (
+    <div>
+      <strong>{title}:</strong>
+      <ul className="list-disc pl-5">
+        {items.map((i) => (
+          <li key={i}>{i}</li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
