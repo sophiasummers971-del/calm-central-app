@@ -9,6 +9,9 @@ import {
   Sparkles,
   LogIn,
   Map,
+  Lightbulb,
+  Leaf,
+  Stethoscope,
   ChevronRight,
 } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
@@ -60,6 +63,9 @@ const pages = [
     icon: Sparkles,
     help: "Say how you feel and get a clear list for the doctor.",
   },
+  { to: "/health-tips" as const, label: "Health tips", icon: Lightbulb, help: "Small, easy steps for water, food, sleep and medicine." },
+  { to: "/wellness-guides" as const, label: "Wellness guides", icon: Leaf, help: "Calm step-by-step guides for breathing, stress and sleep." },
+  { to: "/symptom-checker" as const, label: "Symptom checker", icon: Stethoscope, help: "Yes or no questions to help you choose who to call." },
   {
     to: "/settings" as const,
     label: "Settings",
