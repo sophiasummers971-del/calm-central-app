@@ -5,3 +5,4 @@
 - [x] Verify the five pages across themes and responsive viewports.
 - [x] Add an appointment notes page that turns free text into a clear doctor summary (AI).
 - [x] Add a sitemap page listing every page with a short explanation.
+- [x] Add health tips, wellness guides and symptom checker pages, linked from the page map.
