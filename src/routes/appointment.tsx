@@ -1,7 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { Loader2, Sparkles, AlertTriangle, Copy } from "lucide-react";
+import { Loader2, Sparkles, AlertTriangle, Copy, Save } from "lucide-react";
+import { newId, useConcerns } from "@/lib/local-store";
 import { PageShell } from "@/components/PageShell";
 import { MicButton } from "@/components/MicButton";
 import { Button } from "@/components/ui/button";
@@ -37,6 +38,8 @@ function AppointmentPage() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [savedId, setSavedId] = useState<string | null>(null);
+  const { value: concerns, save: saveConcerns } = useConcerns();
 
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -45,6 +48,7 @@ function AppointmentPage() {
     setError(null);
     setSummary(null);
     setCopied(false);
+    setSavedId(null);
     try {
       const result = await run({ data: { concern: text.trim() } });
       setSummary(result);
@@ -158,6 +162,30 @@ function AppointmentPage() {
               Copied. You can paste it anywhere.
             </p>
           ) : null}
+
+          {savedId ? (
+            <div role="status" className="rounded-xl border border-primary/60 bg-secondary/60 p-4 text-center">
+              <p className="text-lg font-semibold text-primary">Saved in My details.</p>
+              <Link to="/my-details" className="mt-1 inline-block text-lg font-bold underline">
+                Open My details
+              </Link>
+            </div>
+          ) : (
+            <Button
+              type="button"
+              className="h-14 w-full text-base"
+              onClick={() => {
+                const id = newId();
+                saveConcerns([
+                  { id, createdAt: new Date().toISOString(), original: text.trim(), summary },
+                  ...concerns,
+                ]);
+                setSavedId(id);
+              }}
+            >
+              <Save className="size-5" aria-hidden="true" /> Save in My details
+            </Button>
+          )}
 
           <p className="text-base text-muted-foreground">
             This is only a tidy-up of your own words. It is not medical advice.
