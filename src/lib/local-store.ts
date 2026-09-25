@@ -127,6 +127,19 @@ export const useMyDetails = () => useStored<MyDetails>(KEYS.details, emptyDetail
 export const useHealthInfo = () => useStored<HealthInfo>(KEYS.health, emptyHealth);
 export const useConcerns = () => useStored<SavedConcern[]>("mycare.concerns", []);
 
+export type HealthGoal = {
+  id: string;
+  label: string;
+  target: number;
+  unit: string;
+  // progress per day, keyed by YYYY-MM-DD
+  progress: Record<string, number>;
+};
+
+export const useGoals = () => useStored<HealthGoal[]>("mycare.goals", []);
+
+export const todayKey = () => new Date().toISOString().slice(0, 10);
+
 export const newId = () =>
   typeof crypto !== "undefined" && "randomUUID" in crypto
     ? crypto.randomUUID()
