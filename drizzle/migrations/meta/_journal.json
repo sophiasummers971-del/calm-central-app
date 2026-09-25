@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1790343000925,
+      "tag": "0000_scope_support_screenshot_uploads",
+      "breakpoints": true
+    }
+  ]
+}
