@@ -7,3 +7,4 @@
 - [x] Add a sitemap page listing every page with a short explanation.
 - [x] Add health tips, wellness guides and symptom checker pages, linked from the page map.
 - [ ] Support messages page: send message with screenshot, show user's messages in My details
+- [ ] Walk health note flow end to end: write, save, verify timeline date order in My details
