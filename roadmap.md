@@ -6,3 +6,4 @@
 - [x] Add an appointment notes page that turns free text into a clear doctor summary (AI).
 - [x] Add a sitemap page listing every page with a short explanation.
 - [x] Add health tips, wellness guides and symptom checker pages, linked from the page map.
+- [ ] Support messages page: send message with screenshot, show user's messages in My details
