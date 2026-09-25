@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Plus, Trash2, Phone } from "lucide-react";
+import { Plus, Trash2, Phone, Mail } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { MicButton } from "@/components/MicButton";
 import { Button } from "@/components/ui/button";
@@ -192,7 +192,93 @@ function MyDetailsPage() {
       </section>
 
       <SavedConcerns />
+      <EmailExport />
     </PageShell>
+  );
+}
+
+function buildEmailBody(details: MyDetails, concerns: ReturnType<typeof useConcerns>["value"]) {
+  const lines: string[] = [
+    "My health notes",
+    "",
+    `Name: ${details.fullName || "-"}`,
+    `Date of birth: ${details.dateOfBirth || "-"}`,
+    `Phone: ${details.phone || "-"}`,
+    `Email: ${details.email || "-"}`,
+    `Address: ${details.address || "-"}`,
+    "",
+    "My health history (newest first):",
+    "",
+  ];
+  const sorted = [...concerns].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  for (const c of sorted) {
+    const date = new Date(c.createdAt).toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+    lines.push(`--- ${date} ---`);
+    lines.push(`Main problem: ${c.summary.mainProblem}`);
+    lines.push(`How long: ${c.summary.howLong}`);
+    const list = (title: string, items?: string[]) => {
+      if (items?.length) lines.push(`${title}: ${items.join("; ")}`);
+    };
+    list("What I feel", c.summary.symptoms);
+    list("Helps or makes it worse", c.summary.thingsThatHelpOrMakeItWorse);
+    list("Medicines", c.summary.medicinesMentioned);
+    list("Questions for the doctor", c.summary.questionsForTheDoctor);
+    if (c.summary.urgentWarning) lines.push(`Warning: ${c.summary.urgentWarning}`);
+    lines.push(`My own words: ${c.original}`);
+    lines.push("");
+  }
+  return lines.join("\n");
+}
+
+function EmailExport() {
+  const { value: details } = useMyDetails();
+  const { value: concerns } = useConcerns();
+  const [to, setTo] = useState("");
+  const href = `mailto:${encodeURIComponent(to.trim())}?subject=${encodeURIComponent(
+    `My health notes${details.fullName ? ` — ${details.fullName}` : ""}`,
+  )}&body=${encodeURIComponent(buildEmailBody(details, concerns))}`;
+  return (
+    <section
+      aria-labelledby="email-export"
+      className="mt-8 space-y-4 rounded-2xl border border-border/60 surface p-4 sm:p-5"
+    >
+      <h2 id="email-export" className="font-display text-2xl font-bold">
+        Email my notes
+      </h2>
+      <p className="text-base text-muted-foreground">
+        Send your details and health history to a doctor or carer in one email. Type their email
+        address, then tap the button — your email app opens with everything written for you.
+      </p>
+      <div className="space-y-2">
+        <Label htmlFor="export-to" className="text-base">
+          Their email address
+        </Label>
+        <Input
+          id="export-to"
+          type="email"
+          inputMode="email"
+          maxLength={120}
+          placeholder="doctor@example.com"
+          className="h-14 text-base"
+          value={to}
+          onChange={(e) => setTo(e.target.value)}
+        />
+      </div>
+      <Button asChild className="h-16 w-full text-lg" disabled={!to.trim()}>
+        <a href={to.trim() ? href : undefined} aria-disabled={!to.trim()}>
+          <Mail className="size-5" aria-hidden="true" /> Open email with my notes
+        </a>
+      </Button>
+      {concerns.length === 0 ? (
+        <p className="text-base text-muted-foreground">
+          You have no saved notes yet, so the email will only have your name and contact details.
+        </p>
+      ) : null}
+    </section>
   );
 }
 
