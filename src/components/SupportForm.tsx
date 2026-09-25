@@ -55,9 +55,9 @@ export function SupportForm() {
     try {
       let screenshotPath: string | null = null;
 
-      if (file) {
+      if (file && user) {
         const safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, "-").slice(-60);
-        const path = `${crypto.randomUUID()}-${safeName}`;
+        const path = `${user.id}/${crypto.randomUUID()}-${safeName}`;
         const upload = await supabase.storage.from("support-screenshots").upload(path, file);
         if (upload.error) throw upload.error;
         screenshotPath = upload.data.path;
@@ -160,6 +160,7 @@ export function SupportForm() {
         </div>
       </div>
 
+      {user ? (
       <div>
         <Label htmlFor="support-file" className="text-lg font-semibold">
           Add a picture of the screen (optional)
@@ -190,6 +191,11 @@ export function SupportForm() {
           </span>
         </div>
       </div>
+      ) : (
+        <p className="text-base text-muted-foreground">
+          Sign in to add a picture of the screen.
+        </p>
+      )}
 
       {error ? (
         <p role="alert" className="rounded-xl border border-destructive p-3 text-lg font-semibold">

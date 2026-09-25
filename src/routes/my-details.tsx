@@ -198,14 +198,24 @@ function MyDetailsPage() {
 
 function SavedConcerns() {
   const { value: concerns, save } = useConcerns();
+  const [newestFirst, setNewestFirst] = useState(true);
+  const sorted = [...concerns].sort((a, b) =>
+    newestFirst
+      ? b.createdAt.localeCompare(a.createdAt)
+      : a.createdAt.localeCompare(b.createdAt),
+  );
+  let lastMonth = "";
   return (
     <section
       aria-labelledby="concerns-title"
-      className="space-y-4 rounded-2xl border border-border/60 surface p-4 sm:p-5"
+      className="mt-8 space-y-4 rounded-2xl border border-border/60 surface p-4 sm:p-5"
     >
       <h2 id="concerns-title" className="font-display text-2xl font-bold">
-        My health notes
+        My health history
       </h2>
+      <p className="text-base text-muted-foreground">
+        Your saved notes in date order. Tap a note to read it.
+      </p>
       {concerns.length === 0 ? (
         <p className="text-base">
           No notes yet.{" "}
@@ -215,9 +225,32 @@ function SavedConcerns() {
         </p>
       ) : (
         <>
-          <ul className="space-y-3">
-            {concerns.map((c) => (
-              <li key={c.id} className="rounded-xl border border-border/50 bg-secondary/60 p-4">
+          {concerns.length > 1 ? (
+            <Button
+              type="button"
+              variant="secondary"
+              className="h-12 w-full text-base"
+              onClick={() => setNewestFirst((v) => !v)}
+            >
+              {newestFirst ? "Show oldest first" : "Show newest first"}
+            </Button>
+          ) : null}
+          <ol className="relative space-y-3 border-l-2 border-primary/60 pl-5">
+            {sorted.map((c) => {
+              const d = new Date(c.createdAt);
+              const month = d.toLocaleDateString("en-GB", { month: "long", year: "numeric" });
+              const showMonth = month !== lastMonth;
+              lastMonth = month;
+              return (
+              <li key={c.id} className="relative">
+                {showMonth ? (
+                  <h3 className="mb-2 text-lg font-bold text-primary">{month}</h3>
+                ) : null}
+                <span
+                  aria-hidden="true"
+                  className="absolute -left-[1.72rem] top-5 size-3 rounded-full bg-primary"
+                />
+                <div className="rounded-xl border border-border/50 bg-secondary/60 p-4">
                 <details>
                   <summary className="cursor-pointer text-lg font-bold">
                     {c.summary.mainProblem}
@@ -252,9 +285,11 @@ function SavedConcerns() {
                     </Button>
                   </div>
                 </details>
+                </div>
               </li>
-            ))}
-          </ul>
+              );
+            })}
+          </ol>
           <Link to="/appointment" className="inline-block text-lg font-bold underline">
             Add a new note
           </Link>
