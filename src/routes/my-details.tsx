@@ -285,9 +285,11 @@ function SavedConcerns() {
                     </Button>
                   </div>
                 </details>
+                </div>
               </li>
-            ))}
-          </ul>
+              );
+            })}
+          </ol>
           <Link to="/appointment" className="inline-block text-lg font-bold underline">
             Add a new note
           </Link>
