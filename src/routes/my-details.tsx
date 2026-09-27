@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { GoalTracker } from "@/components/GoalTracker";
+import { MyMessages } from "@/components/MyMessages";
 import { newId, usePeople, useMyDetails, useConcerns, type MyDetails } from "@/lib/local-store";
 
 export const Route = createFileRoute("/my-details")({
@@ -191,8 +193,10 @@ function MyDetailsPage() {
         </form>
       </section>
 
+      <GoalTracker />
       <SavedConcerns />
       <EmailExport />
+      <MyMessages />
     </PageShell>
   );
 }

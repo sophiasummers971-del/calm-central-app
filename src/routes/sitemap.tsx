@@ -13,6 +13,7 @@ import {
   Leaf,
   Stethoscope,
   ChevronRight,
+  Mail,
 } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 
@@ -38,6 +39,7 @@ export const Route = createFileRoute("/sitemap")({
 });
 
 const pages = [
+  { to: "/support" as const, label: "Send us a message", icon: Mail, help: "Write to us with a picture of the screen. We answer by email." },
   { to: "/" as const, label: "Home", icon: Home, help: "Your big buttons and quick phone numbers." },
   {
     to: "/accounts" as const,
