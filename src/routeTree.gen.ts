@@ -20,6 +20,7 @@ import { Route as HealthTipsRouteImport } from './routes/health-tips'
 import { Route as MyDetailsRouteImport } from './routes/my-details'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SitemapRouteImport } from './routes/sitemap'
+import { Route as SupportRouteImport } from './routes/support'
 import { Route as SymptomCheckerRouteImport } from './routes/symptom-checker'
 import { Route as WellnessGuidesRouteImport } from './routes/wellness-guides'
 
@@ -78,6 +79,11 @@ const SitemapRoute = SitemapRouteImport.update({
   path: '/sitemap',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SymptomCheckerRoute = SymptomCheckerRouteImport.update({
   id: '/symptom-checker',
   path: '/symptom-checker',
@@ -101,6 +107,7 @@ export interface FileRoutesByFullPath {
   '/my-details': typeof MyDetailsRoute
   '/settings': typeof SettingsRoute
   '/sitemap': typeof SitemapRoute
+  '/support': typeof SupportRoute
   '/symptom-checker': typeof SymptomCheckerRoute
   '/wellness-guides': typeof WellnessGuidesRoute
 }
@@ -116,6 +123,7 @@ export interface FileRoutesByTo {
   '/my-details': typeof MyDetailsRoute
   '/settings': typeof SettingsRoute
   '/sitemap': typeof SitemapRoute
+  '/support': typeof SupportRoute
   '/symptom-checker': typeof SymptomCheckerRoute
   '/wellness-guides': typeof WellnessGuidesRoute
 }
@@ -132,6 +140,7 @@ export interface FileRoutesById {
   '/my-details': typeof MyDetailsRoute
   '/settings': typeof SettingsRoute
   '/sitemap': typeof SitemapRoute
+  '/support': typeof SupportRoute
   '/symptom-checker': typeof SymptomCheckerRoute
   '/wellness-guides': typeof WellnessGuidesRoute
 }
@@ -149,6 +158,7 @@ export interface FileRouteTypes {
     | '/my-details'
     | '/settings'
     | '/sitemap'
+    | '/support'
     | '/symptom-checker'
     | '/wellness-guides'
   fileRoutesByTo: FileRoutesByTo
@@ -164,6 +174,7 @@ export interface FileRouteTypes {
     | '/my-details'
     | '/settings'
     | '/sitemap'
+    | '/support'
     | '/symptom-checker'
     | '/wellness-guides'
   id:
@@ -179,6 +190,7 @@ export interface FileRouteTypes {
     | '/my-details'
     | '/settings'
     | '/sitemap'
+    | '/support'
     | '/symptom-checker'
     | '/wellness-guides'
   fileRoutesById: FileRoutesById
@@ -195,6 +207,7 @@ export interface RootRouteChildren {
   MyDetailsRoute: typeof MyDetailsRoute
   SettingsRoute: typeof SettingsRoute
   SitemapRoute: typeof SitemapRoute
+  SupportRoute: typeof SupportRoute
   SymptomCheckerRoute: typeof SymptomCheckerRoute
   WellnessGuidesRoute: typeof WellnessGuidesRoute
 }
@@ -278,6 +291,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/symptom-checker': {
       id: '/symptom-checker'
       path: '/symptom-checker'
@@ -307,6 +327,7 @@ const rootRouteChildren: RootRouteChildren = {
   MyDetailsRoute: MyDetailsRoute,
   SettingsRoute: SettingsRoute,
   SitemapRoute: SitemapRoute,
+  SupportRoute: SupportRoute,
   SymptomCheckerRoute: SymptomCheckerRoute,
   WellnessGuidesRoute: WellnessGuidesRoute,
 }
