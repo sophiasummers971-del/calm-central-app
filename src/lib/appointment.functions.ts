@@ -3,6 +3,7 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { streamText, Output, NoObjectGeneratedError } from "ai";
 import { z } from "zod";
 import { createLovableAiGatewayRunIdFetch } from "./ai-gateway.server";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 const SummaryInput = z.object({
   concern: z.string().min(1),
@@ -32,6 +33,7 @@ const SYSTEM = [
 ].join(" ");
 
 export const summarizeConcern = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => SummaryInput.parse(input))
   .handler(async ({ data }): Promise<AppointmentSummary> => {
     const key = process.env["LOVABLE_API_KEY"];
