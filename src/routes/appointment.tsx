@@ -37,6 +37,7 @@ function AppointmentPage() {
   const [summary, setSummary] = useState<AppointmentSummary | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [needsSignIn, setNeedsSignIn] = useState(false);
   const [copied, setCopied] = useState(false);
   const [savedId, setSavedId] = useState<string | null>(null);
   const { value: concerns, save: saveConcerns } = useConcerns();
@@ -46,6 +47,7 @@ function AppointmentPage() {
     if (!text.trim() || busy) return;
     setBusy(true);
     setError(null);
+    setNeedsSignIn(false);
     setSummary(null);
     setCopied(false);
     setSavedId(null);
@@ -53,11 +55,12 @@ function AppointmentPage() {
       const result = await run({ data: { concern: text.trim() } });
       setSummary(result);
     } catch (err) {
-      setError(
-        err instanceof Error && err.message
-          ? err.message
-          : "Sorry, that did not work. Please try again.",
-      );
+      const message = err instanceof Error && err.message ? err.message : "";
+      if (message.toLowerCase().includes("unauthorized")) {
+        setNeedsSignIn(true);
+      } else {
+        setError(message || "Sorry, that did not work. Please try again.");
+      }
     } finally {
       setBusy(false);
     }
@@ -102,6 +105,15 @@ function AppointmentPage() {
           )}
         </Button>
 
+        {needsSignIn ? (
+          <p role="alert" className="text-center text-lg font-semibold">
+            Please{" "}
+            <Link to="/auth" className="underline underline-offset-4">
+              sign in
+            </Link>{" "}
+            first, then make your summary.
+          </p>
+        ) : null}
         {error ? (
           <p role="alert" className="text-center text-lg font-semibold text-destructive">
             {error}
