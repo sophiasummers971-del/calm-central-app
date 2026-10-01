@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useHealthInfo, usePeople, type HealthInfo } from "@/lib/local-store";
 
 export const Route = createFileRoute("/emergency")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Emergency page — doctor, allergies and medicine" },

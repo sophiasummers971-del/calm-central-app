@@ -12,6 +12,7 @@ import { PageShell } from "@/components/PageShell";
 import { useAccounts, useHealthInfo, useMyDetails, usePeople } from "@/lib/local-store";
 
 export const Route = createFileRoute("/")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "My Life Folder — one clear place for your accounts" },

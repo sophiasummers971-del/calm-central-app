@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { summarizeConcern, type AppointmentSummary } from "@/lib/appointment.functions";
 
 export const Route = createFileRoute("/appointment")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Appointment notes — turn your words into a clear summary" },

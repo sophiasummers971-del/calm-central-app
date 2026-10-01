@@ -104,6 +104,7 @@ function StatusCard({
 }
 
 export const Route = createFileRoute("/admin")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Support inbox — admin view" },

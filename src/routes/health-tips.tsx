@@ -3,6 +3,7 @@ import { PageShell } from "@/components/PageShell";
 import { InfoCards, NotMedicalAdvice } from "@/components/InfoCards";
 
 export const Route = createFileRoute("/health-tips")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Health tips — small easy steps for every day" },

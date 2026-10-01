@@ -3,6 +3,7 @@ import { PageShell } from "@/components/PageShell";
 import { SupportForm } from "@/components/SupportForm";
 
 export const Route = createFileRoute("/support")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Send us a message — get help by email" },
