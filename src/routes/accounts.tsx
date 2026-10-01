@@ -16,6 +16,7 @@ import {
 import { accountKinds, newId, useAccounts, type Account } from "@/lib/local-store";
 
 export const Route = createFileRoute("/accounts")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "My accounts — My Life Folder" },

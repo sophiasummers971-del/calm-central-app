@@ -12,6 +12,7 @@ import { MyMessages } from "@/components/MyMessages";
 import { newId, usePeople, useMyDetails, useConcerns, type MyDetails } from "@/lib/local-store";
 
 export const Route = createFileRoute("/my-details")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "My details — name, home address and phone" },

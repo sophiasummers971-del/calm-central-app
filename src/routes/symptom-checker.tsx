@@ -6,6 +6,7 @@ import { NotMedicalAdvice } from "@/components/InfoCards";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/symptom-checker")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Symptom checker — who should I call?" },

@@ -29,6 +29,7 @@ import {
 } from "@/lib/local-store";
 
 export const Route = createFileRoute("/settings")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Settings — see, back up or clear your information" },

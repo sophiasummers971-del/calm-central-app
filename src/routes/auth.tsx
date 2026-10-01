@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useSessionUser } from "@/lib/auth";
 
 export const Route = createFileRoute("/auth")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Sign in with your email — My Life Folder" },

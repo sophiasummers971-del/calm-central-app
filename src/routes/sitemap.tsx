@@ -18,6 +18,7 @@ import {
 import { PageShell } from "@/components/PageShell";
 
 export const Route = createFileRoute("/sitemap")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Map of pages — find every page in My Life Folder" },

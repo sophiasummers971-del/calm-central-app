@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/accordion";
 
 export const Route = createFileRoute("/faq")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Help and questions — My Life Folder" },
