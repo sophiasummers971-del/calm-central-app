@@ -79,14 +79,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "My Life Folder — your health, in one place" },
+      {
+        name: "description",
+        content:
+          "Keep your personal details, emergency and medical information, health notes and daily goals together in one simple, easy-to-read place.",
+      },
+      { property: "og:title", content: "My Life Folder — your health, in one place" },
+      {
+        property: "og:description",
+        content:
+          "Keep your personal details, emergency and medical information, health notes and daily goals together in one simple, easy-to-read place.",
+      },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
+      { property: "og:site_name", content: "My Life Folder" },
+      { name: "twitter:card", content: "summary" },
     ],
     links: [
       {
