@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Plus, Trash2, Phone, Mail } from "lucide-react";
+import { Plus, Trash2, Phone, Mail, TrendingUp } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { MicButton } from "@/components/MicButton";
 import { Button } from "@/components/ui/button";
@@ -195,6 +195,11 @@ function MyDetailsPage() {
       </section>
 
       <GoalTracker />
+      <Button asChild variant="secondary" className="mt-4 h-14 w-full text-base">
+        <Link to="/goal-progress">
+          <TrendingUp className="size-5" aria-hidden="true" /> See my goal progress and week summary
+        </Link>
+      </Button>
       <SavedConcerns />
       <EmailExport />
       <MyMessages />

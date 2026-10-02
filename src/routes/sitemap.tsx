@@ -14,6 +14,7 @@ import {
   Stethoscope,
   ChevronRight,
   Mail,
+  TrendingUp,
 } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 
@@ -65,6 +66,12 @@ const pages = [
     label: "Appointment notes",
     icon: Sparkles,
     help: "Say how you feel and get a clear list for the doctor.",
+  },
+  {
+    to: "/goal-progress" as const,
+    label: "My goal progress",
+    icon: TrendingUp,
+    help: "Charts of your goals, day by day, and a summary of your week.",
   },
   { to: "/health-tips" as const, label: "Health tips", icon: Lightbulb, help: "Small, easy steps for water, food, sleep and medicine." },
   { to: "/wellness-guides" as const, label: "Wellness guides", icon: Leaf, help: "Calm step-by-step guides for breathing, stress and sleep." },

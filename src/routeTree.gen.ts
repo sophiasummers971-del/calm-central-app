@@ -16,6 +16,7 @@ import { Route as AppointmentRouteImport } from './routes/appointment'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as EmergencyRouteImport } from './routes/emergency'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as GoalProgressRouteImport } from './routes/goal-progress'
 import { Route as HealthTipsRouteImport } from './routes/health-tips'
 import { Route as MyDetailsRouteImport } from './routes/my-details'
 import { Route as SettingsRouteImport } from './routes/settings'
@@ -58,6 +59,11 @@ const EmergencyRoute = EmergencyRouteImport.update({
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GoalProgressRoute = GoalProgressRouteImport.update({
+  id: '/goal-progress',
+  path: '/goal-progress',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HealthTipsRoute = HealthTipsRouteImport.update({
@@ -109,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/emergency': typeof EmergencyRoute
   '/faq': typeof FaqRoute
+  '/goal-progress': typeof GoalProgressRoute
   '/health-tips': typeof HealthTipsRoute
   '/my-details': typeof MyDetailsRoute
   '/settings': typeof SettingsRoute
@@ -126,6 +133,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/emergency': typeof EmergencyRoute
   '/faq': typeof FaqRoute
+  '/goal-progress': typeof GoalProgressRoute
   '/health-tips': typeof HealthTipsRoute
   '/my-details': typeof MyDetailsRoute
   '/settings': typeof SettingsRoute
@@ -144,6 +152,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/emergency': typeof EmergencyRoute
   '/faq': typeof FaqRoute
+  '/goal-progress': typeof GoalProgressRoute
   '/health-tips': typeof HealthTipsRoute
   '/my-details': typeof MyDetailsRoute
   '/settings': typeof SettingsRoute
@@ -163,6 +172,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/emergency'
     | '/faq'
+    | '/goal-progress'
     | '/health-tips'
     | '/my-details'
     | '/settings'
@@ -180,6 +190,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/emergency'
     | '/faq'
+    | '/goal-progress'
     | '/health-tips'
     | '/my-details'
     | '/settings'
@@ -197,6 +208,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/emergency'
     | '/faq'
+    | '/goal-progress'
     | '/health-tips'
     | '/my-details'
     | '/settings'
@@ -215,6 +227,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   EmergencyRoute: typeof EmergencyRoute
   FaqRoute: typeof FaqRoute
+  GoalProgressRoute: typeof GoalProgressRoute
   HealthTipsRoute: typeof HealthTipsRoute
   MyDetailsRoute: typeof MyDetailsRoute
   SettingsRoute: typeof SettingsRoute
@@ -274,6 +287,13 @@ declare module '@tanstack/react-router' {
       path: '/faq'
       fullPath: '/faq'
       preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/goal-progress': {
+      id: '/goal-progress'
+      path: '/goal-progress'
+      fullPath: '/goal-progress'
+      preLoaderRoute: typeof GoalProgressRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/health-tips': {
@@ -343,6 +363,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   EmergencyRoute: EmergencyRoute,
   FaqRoute: FaqRoute,
+  GoalProgressRoute: GoalProgressRoute,
   HealthTipsRoute: HealthTipsRoute,
   MyDetailsRoute: MyDetailsRoute,
   SettingsRoute: SettingsRoute,
