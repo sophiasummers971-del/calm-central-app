@@ -14,6 +14,7 @@ import {
   Stethoscope,
   ChevronRight,
   Mail,
+  TrendingUp,
 } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 
