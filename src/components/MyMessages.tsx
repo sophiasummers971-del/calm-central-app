@@ -29,7 +29,19 @@ export function MyMessages() {
       .select("id, created_at, topic, message, status, screenshot_path")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false })
-      .then(({ data }) => setItems((data as Msg[]) ?? []));
+      .then(async ({ data }) => {
+        const rows = (data as Msg[]) ?? [];
+        const withUrls = await Promise.all(
+          rows.map(async (m) => {
+            if (!m.screenshot_path) return m;
+            const { data: signed } = await supabase.storage
+              .from("support-screenshots")
+              .createSignedUrl(m.screenshot_path, 3600);
+            return { ...m, screenshot_url: signed?.signedUrl ?? null };
+          }),
+        );
+        setItems(withUrls);
+      });
   }, [user]);
 
   return (
