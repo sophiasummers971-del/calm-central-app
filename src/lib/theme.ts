@@ -15,6 +15,20 @@ function apply(choice: ThemeChoice) {
   document.documentElement.classList.toggle("dark", dark);
 }
 
+export function storedTheme(): ThemeChoice {
+  try {
+    const raw = window.localStorage.getItem(KEY);
+    if (raw === "light" || raw === "dark" || raw === "system") return raw;
+  } catch {
+    /* storage blocked */
+  }
+  return "system";
+}
+
+export function applyStoredTheme() {
+  apply(storedTheme());
+}
+
 export function useTheme() {
   const [choice, setChoice] = useState<ThemeChoice>("system");
   const [ready, setReady] = useState(false);
