@@ -10,6 +10,7 @@ type Msg = {
   message: string;
   status: string;
   screenshot_path: string | null;
+  screenshot_url?: string | null;
 };
 
 const statusText: Record<string, string> = {
@@ -75,6 +76,15 @@ export function MyMessages() {
                 {m.screenshot_path ? " · picture added" : ""}
               </p>
               <p className="mt-2 whitespace-pre-wrap break-words text-base">{m.message}</p>
+              {m.screenshot_url ? (
+                <a href={m.screenshot_url} target="_blank" rel="noreferrer" className="mt-3 block">
+                  <img
+                    src={m.screenshot_url}
+                    alt="Picture you added to this message"
+                    className="max-h-48 rounded-xl border border-border/50"
+                  />
+                </a>
+              ) : null}
             </li>
           ))}
         </ul>
