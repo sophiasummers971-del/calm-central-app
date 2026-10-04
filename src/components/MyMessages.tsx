@@ -10,6 +10,7 @@ type Msg = {
   message: string;
   status: string;
   screenshot_path: string | null;
+  screenshot_url?: string | null;
 };
 
 const statusText: Record<string, string> = {
@@ -29,7 +30,19 @@ export function MyMessages() {
       .select("id, created_at, topic, message, status, screenshot_path")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false })
-      .then(({ data }) => setItems((data as Msg[]) ?? []));
+      .then(async ({ data }) => {
+        const rows = (data as Msg[]) ?? [];
+        const withUrls = await Promise.all(
+          rows.map(async (m) => {
+            if (!m.screenshot_path) return m;
+            const { data: signed } = await supabase.storage
+              .from("support-screenshots")
+              .createSignedUrl(m.screenshot_path, 3600);
+            return { ...m, screenshot_url: signed?.signedUrl ?? null };
+          }),
+        );
+        setItems(withUrls);
+      });
   }, [user]);
 
   return (
@@ -63,6 +76,15 @@ export function MyMessages() {
                 {m.screenshot_path ? " · picture added" : ""}
               </p>
               <p className="mt-2 whitespace-pre-wrap break-words text-base">{m.message}</p>
+              {m.screenshot_url ? (
+                <a href={m.screenshot_url} target="_blank" rel="noreferrer" className="mt-3 block">
+                  <img
+                    src={m.screenshot_url}
+                    alt="Picture you added to this message"
+                    className="max-h-48 rounded-xl border border-border/50"
+                  />
+                </a>
+              ) : null}
             </li>
           ))}
         </ul>
