@@ -24,8 +24,14 @@ export function GoalTracker() {
     save([...goals, { ...g, id: newId(), progress: {} }]);
 
   const change = (g: HealthGoal, delta: number) => {
-    const now = Math.max(0, (g.progress[today] ?? 0) + delta);
+    const before = g.progress[today] ?? 0;
+    const now = Math.max(0, before + delta);
     save(goals.map((x) => (x.id === g.id ? { ...x, progress: { ...x.progress, [today]: now } } : x)));
+    // Alert once when crossing 80% of today's target (not when already reached)
+    const near = g.target * 0.8;
+    if (before < near && now >= near && now < g.target) {
+      alert({ data: { label: g.label, done: now, target: g.target, unit: g.unit } }).catch(() => undefined);
+    }
   };
 
   return (
