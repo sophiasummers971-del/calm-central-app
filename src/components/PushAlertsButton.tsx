@@ -24,7 +24,7 @@ export function PushAlertsButton() {
     try {
       const r = await enablePush();
       if (r.status === "registered") await save({ data: { token: r.token } });
-      setNote(messages[r.status]);
+      setNote(messages[r.status] ?? "");
     } catch (e) {
       const msg = e instanceof Error ? e.message : "";
       setNote(
