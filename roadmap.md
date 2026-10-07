@@ -9,3 +9,8 @@
 - [x] Support messages page: send message with screenshot, show user's messages in My details
 - [x] Walk health note flow end to end: write, save, verify timeline date order in My details
 - [x] Health goal tracker in My details (steps, water, sleep)
+- [ ] Finish per-user Gmail, Drive and Calendar connections; resolve Google Contacts availability.
+- [ ] Choose and implement welcoming light/dark page designs, profile avatar and account settings.
+- [ ] Move read-aloud and bigger-text controls into Settings.
+- [ ] Replace bottom-only navigation with grouped top/side navigation and animated subfolders.
+- [ ] Verify connected-account flows and refreshed pages.
