@@ -15,6 +15,13 @@
       "when": 1791171649028,
       "tag": "0001_push_tokens",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791340859244,
+      "tag": "0002_create_app_user_connections",
+      "breakpoints": true
     }
   ]
 }
