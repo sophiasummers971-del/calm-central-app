@@ -7,9 +7,9 @@ import { googleProducts, type GoogleConnectorId, type GoogleItem, type GoogleSta
 
 const GATEWAY = "https://connector-gateway.lovable.dev";
 const BASE_SCOPES = ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"];
-const scopesFor = (id: GoogleConnectorId) => [...BASE_SCOPES, ...(googleProducts.find((p) => p.id === id)?.scopes ?? [])];
+const scopesFor = (id: GoogleConnectorId) => [...BASE_SCOPES, ...(googleProducts.find((p) => p["id"] === id)?.scopes ?? [])];
 const validateId = (input: { connectorId: string }) => {
-  if (!googleProducts.some((p) => p.id === input.connectorId)) throw new Error("Unknown Google service.");
+  if (!googleProducts.some((p) => p["id"] === input.connectorId)) throw new Error("Unknown Google service.");
   return { connectorId: input.connectorId as GoogleConnectorId };
 };
 const fmtDate = (value?: string) => (value ? new Date(value).toLocaleDateString("en-GB") : "");
@@ -31,7 +31,7 @@ export const startGoogleConnect = createServerFn({ method: "POST" })
     const sandboxHost = url.hostname === "localhost" ? request.headers.get("x-forwarded-host") : null;
     const returnUrl = new URL("/api/oauth/google/return", sandboxHost ? `https://${sandboxHost}` : url.origin).toString();
     const existing = await getConnectionKeyForUser(context.userId, data.connectorId);
-    return authorizeAppUserOAuth({ gatewayBaseUrl: GATEWAY, connectorId: data.connectorId, appUserId: context.userId, clientAPIKey: clientKey, returnUrl, connectionAPIKey: existing ?? undefined, credentialsConfiguration: { scopes: scopesFor(data.connectorId) } });
+    return authorizeAppUserOAuth({ gatewayBaseUrl: GATEWAY, connectorId: data.connectorId, appUserId: context.userId, clientAPIKey: clientKey, returnUrl, ...(existing ? { connectionAPIKey: existing } : {}), credentialsConfiguration: { scopes: scopesFor(data.connectorId) } });
   });
 
 export const completeGoogleConnect = createServerFn({ method: "POST" })
@@ -72,29 +72,29 @@ export const getGoogleStatus = createServerFn({ method: "POST" })
     let items: GoogleItem[] = [];
     let account = "";
     if (connectorId === "google_mail") {
-      const ids = arr(body.messages).map((m) => str(obj(m).id)).filter(Boolean).slice(0, 10);
+      const ids = arr(body["messages"]).map((m) => str(obj(m)["id"])).filter(Boolean).slice(0, 10);
       const details = await Promise.all(ids.map(async (id) => {
         const r = await call(`/gmail/v1/users/me/messages/${id}?format=metadata&metadataHeaders=From&metadataHeaders=Subject&metadataHeaders=Date`);
         if (!r.ok) return null;
         const m = obj(await r.json());
-        const headers = arr(obj(m.payload).headers).map(obj);
-        const h = (n: string) => str(headers.find((x) => str(x.name).toLowerCase() === n)?.value);
+        const headers = arr(obj(m["payload"])["headers"]).map(obj);
+        const h = (n: string) => str(headers.find((x) => str(x["name"]).toLowerCase() === n)?.value);
         return { id, title: h("subject") || "(No subject)", detail: `${h("from")} · ${fmtDate(h("date"))}`, url: `https://mail.google.com/mail/u/0/#inbox/${id}` };
       }));
-      items = details.filter((d): d is GoogleItem => d !== null);
+      items = details.flatMap((d) => (d ? [d] : []));
       const p = await call("/gmail/v1/users/me/profile");
-      if (p.ok) account = str(obj(await p.json()).emailAddress);
+      if (p.ok) account = str(obj(await p.json())["emailAddress"]);
     } else if (connectorId === "google_drive") {
-      items = arr(body.files).map(obj).map((f) => ({ id: str(f.id), title: str(f.name), detail: `Changed ${fmtDate(str(f.modifiedTime))}`, url: str(f.webViewLink) || undefined }));
+      items = arr(body["files"]).map(obj).map((f) => ({ id: str(f["id"]), title: str(f["name"]), detail: `Changed ${fmtDate(str(f["modifiedTime"]))}`, url: str(f["webViewLink"]) || undefined }));
       const a = await call("/drive/v3/about?fields=user(emailAddress)");
-      if (a.ok) account = str(obj(obj(await a.json()).user).emailAddress);
+      if (a.ok) account = str(obj(obj(await a.json())["user"])["emailAddress"]);
     } else {
-      items = arr(body.items).map(obj).map((e) => {
-        const s = obj(e.start);
-        const when = str(s.dateTime) ? fmtDateTime(str(s.dateTime)) : `${fmtDate(str(s.date))} (all day)`;
-        return { id: str(e.id), title: str(e.summary) || "(No title)", detail: when, url: str(e.htmlLink) || undefined };
+      items = arr(body["items"]).map(obj).map((e) => {
+        const s = obj(e["start"]);
+        const when = str(s["dateTime"]) ? fmtDateTime(str(s["dateTime"])) : `${fmtDate(str(s["date"]))} (all day)`;
+        return { id: str(e["id"]), title: str(e["summary"]) || "(No title)", detail: when, url: str(e["htmlLink"]) || undefined };
       });
-      account = str(obj(body).summary);
+      account = str(obj(body)["summary"]);
     }
     return { ...base, connected: true, account, items };
   });
