@@ -92,7 +92,7 @@ export function PageShell({ title, intro, children }: { title: string; intro?: s
           <div className="mx-auto flex max-w-4xl items-center gap-3 px-3 py-3 sm:px-5">
             <button type="button" aria-label="Open menu" onClick={() => setMenuOpen(true)} className="rounded-md border border-border/60 p-2 lg:hidden"><Menu className="size-6" /></button>
             <p className="min-w-0 flex-1 truncate text-base text-muted-foreground">{greeting}</p>
-            <Link to={ready && user ? "/settings" : "/auth"} className="inline-flex min-h-11 items-center gap-2 rounded-md border border-border/70 bg-card px-3 text-sm font-semibold hover:bg-secondary">
+            <Link to="/auth" className="inline-flex min-h-11 items-center gap-2 rounded-md border border-border/70 bg-card px-3 text-sm font-semibold hover:bg-secondary">
               <AccountAvatar user={user} className="size-8" />
               {ready && user ? "My account" : "Sign in"}
             </Link>
