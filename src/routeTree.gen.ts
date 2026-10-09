@@ -14,10 +14,13 @@ import { Route as AccountsRouteImport } from './routes/accounts'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AppointmentRouteImport } from './routes/appointment'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as EmergencyRouteImport } from './routes/emergency'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as FilesRouteImport } from './routes/files'
 import { Route as GoalProgressRouteImport } from './routes/goal-progress'
 import { Route as HealthTipsRouteImport } from './routes/health-tips'
+import { Route as InboxRouteImport } from './routes/inbox'
 import { Route as MyDetailsRouteImport } from './routes/my-details'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SitemapRouteImport } from './routes/sitemap'
@@ -25,6 +28,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as SymptomCheckerRouteImport } from './routes/symptom-checker'
 import { Route as WellnessGuidesRouteImport } from './routes/wellness-guides'
+import { Route as ApiOauthGoogleReturnRouteImport } from './routes/api/oauth/google/return'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -51,6 +55,11 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CalendarRoute = CalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EmergencyRoute = EmergencyRouteImport.update({
   id: '/emergency',
   path: '/emergency',
@@ -61,6 +70,11 @@ const FaqRoute = FaqRouteImport.update({
   path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FilesRoute = FilesRouteImport.update({
+  id: '/files',
+  path: '/files',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GoalProgressRoute = GoalProgressRouteImport.update({
   id: '/goal-progress',
   path: '/goal-progress',
@@ -69,6 +83,11 @@ const GoalProgressRoute = GoalProgressRouteImport.update({
 const HealthTipsRoute = HealthTipsRouteImport.update({
   id: '/health-tips',
   path: '/health-tips',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InboxRoute = InboxRouteImport.update({
+  id: '/inbox',
+  path: '/inbox',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MyDetailsRoute = MyDetailsRouteImport.update({
@@ -106,6 +125,11 @@ const WellnessGuidesRoute = WellnessGuidesRouteImport.update({
   path: '/wellness-guides',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiOauthGoogleReturnRoute = ApiOauthGoogleReturnRouteImport.update({
+  id: '/api/oauth/google/return',
+  path: '/api/oauth/google/return',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -113,10 +137,13 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/appointment': typeof AppointmentRoute
   '/auth': typeof AuthRoute
+  '/calendar': typeof CalendarRoute
   '/emergency': typeof EmergencyRoute
   '/faq': typeof FaqRoute
+  '/files': typeof FilesRoute
   '/goal-progress': typeof GoalProgressRoute
   '/health-tips': typeof HealthTipsRoute
+  '/inbox': typeof InboxRoute
   '/my-details': typeof MyDetailsRoute
   '/settings': typeof SettingsRoute
   '/sitemap': typeof SitemapRoute
@@ -124,6 +151,7 @@ export interface FileRoutesByFullPath {
   '/support': typeof SupportRoute
   '/symptom-checker': typeof SymptomCheckerRoute
   '/wellness-guides': typeof WellnessGuidesRoute
+  '/api/oauth/google/return': typeof ApiOauthGoogleReturnRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -131,10 +159,13 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/appointment': typeof AppointmentRoute
   '/auth': typeof AuthRoute
+  '/calendar': typeof CalendarRoute
   '/emergency': typeof EmergencyRoute
   '/faq': typeof FaqRoute
+  '/files': typeof FilesRoute
   '/goal-progress': typeof GoalProgressRoute
   '/health-tips': typeof HealthTipsRoute
+  '/inbox': typeof InboxRoute
   '/my-details': typeof MyDetailsRoute
   '/settings': typeof SettingsRoute
   '/sitemap': typeof SitemapRoute
@@ -142,6 +173,7 @@ export interface FileRoutesByTo {
   '/support': typeof SupportRoute
   '/symptom-checker': typeof SymptomCheckerRoute
   '/wellness-guides': typeof WellnessGuidesRoute
+  '/api/oauth/google/return': typeof ApiOauthGoogleReturnRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -150,10 +182,13 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/appointment': typeof AppointmentRoute
   '/auth': typeof AuthRoute
+  '/calendar': typeof CalendarRoute
   '/emergency': typeof EmergencyRoute
   '/faq': typeof FaqRoute
+  '/files': typeof FilesRoute
   '/goal-progress': typeof GoalProgressRoute
   '/health-tips': typeof HealthTipsRoute
+  '/inbox': typeof InboxRoute
   '/my-details': typeof MyDetailsRoute
   '/settings': typeof SettingsRoute
   '/sitemap': typeof SitemapRoute
@@ -161,6 +196,7 @@ export interface FileRoutesById {
   '/support': typeof SupportRoute
   '/symptom-checker': typeof SymptomCheckerRoute
   '/wellness-guides': typeof WellnessGuidesRoute
+  '/api/oauth/google/return': typeof ApiOauthGoogleReturnRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -170,10 +206,13 @@ export interface FileRouteTypes {
     | '/admin'
     | '/appointment'
     | '/auth'
+    | '/calendar'
     | '/emergency'
     | '/faq'
+    | '/files'
     | '/goal-progress'
     | '/health-tips'
+    | '/inbox'
     | '/my-details'
     | '/settings'
     | '/sitemap'
@@ -181,6 +220,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/symptom-checker'
     | '/wellness-guides'
+    | '/api/oauth/google/return'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -188,10 +228,13 @@ export interface FileRouteTypes {
     | '/admin'
     | '/appointment'
     | '/auth'
+    | '/calendar'
     | '/emergency'
     | '/faq'
+    | '/files'
     | '/goal-progress'
     | '/health-tips'
+    | '/inbox'
     | '/my-details'
     | '/settings'
     | '/sitemap'
@@ -199,6 +242,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/symptom-checker'
     | '/wellness-guides'
+    | '/api/oauth/google/return'
   id:
     | '__root__'
     | '/'
@@ -206,10 +250,13 @@ export interface FileRouteTypes {
     | '/admin'
     | '/appointment'
     | '/auth'
+    | '/calendar'
     | '/emergency'
     | '/faq'
+    | '/files'
     | '/goal-progress'
     | '/health-tips'
+    | '/inbox'
     | '/my-details'
     | '/settings'
     | '/sitemap'
@@ -217,6 +264,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/symptom-checker'
     | '/wellness-guides'
+    | '/api/oauth/google/return'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -225,10 +273,13 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   AppointmentRoute: typeof AppointmentRoute
   AuthRoute: typeof AuthRoute
+  CalendarRoute: typeof CalendarRoute
   EmergencyRoute: typeof EmergencyRoute
   FaqRoute: typeof FaqRoute
+  FilesRoute: typeof FilesRoute
   GoalProgressRoute: typeof GoalProgressRoute
   HealthTipsRoute: typeof HealthTipsRoute
+  InboxRoute: typeof InboxRoute
   MyDetailsRoute: typeof MyDetailsRoute
   SettingsRoute: typeof SettingsRoute
   SitemapRoute: typeof SitemapRoute
@@ -236,6 +287,7 @@ export interface RootRouteChildren {
   SupportRoute: typeof SupportRoute
   SymptomCheckerRoute: typeof SymptomCheckerRoute
   WellnessGuidesRoute: typeof WellnessGuidesRoute
+  ApiOauthGoogleReturnRoute: typeof ApiOauthGoogleReturnRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -275,6 +327,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/calendar': {
+      id: '/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/emergency': {
       id: '/emergency'
       path: '/emergency'
@@ -289,6 +348,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/files': {
+      id: '/files'
+      path: '/files'
+      fullPath: '/files'
+      preLoaderRoute: typeof FilesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/goal-progress': {
       id: '/goal-progress'
       path: '/goal-progress'
@@ -301,6 +367,13 @@ declare module '@tanstack/react-router' {
       path: '/health-tips'
       fullPath: '/health-tips'
       preLoaderRoute: typeof HealthTipsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inbox': {
+      id: '/inbox'
+      path: '/inbox'
+      fullPath: '/inbox'
+      preLoaderRoute: typeof InboxRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/my-details': {
@@ -352,6 +425,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WellnessGuidesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/oauth/google/return': {
+      id: '/api/oauth/google/return'
+      path: '/api/oauth/google/return'
+      fullPath: '/api/oauth/google/return'
+      preLoaderRoute: typeof ApiOauthGoogleReturnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -361,10 +441,13 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   AppointmentRoute: AppointmentRoute,
   AuthRoute: AuthRoute,
+  CalendarRoute: CalendarRoute,
   EmergencyRoute: EmergencyRoute,
   FaqRoute: FaqRoute,
+  FilesRoute: FilesRoute,
   GoalProgressRoute: GoalProgressRoute,
   HealthTipsRoute: HealthTipsRoute,
+  InboxRoute: InboxRoute,
   MyDetailsRoute: MyDetailsRoute,
   SettingsRoute: SettingsRoute,
   SitemapRoute: SitemapRoute,
@@ -372,6 +455,7 @@ const rootRouteChildren: RootRouteChildren = {
   SupportRoute: SupportRoute,
   SymptomCheckerRoute: SymptomCheckerRoute,
   WellnessGuidesRoute: WellnessGuidesRoute,
+  ApiOauthGoogleReturnRoute: ApiOauthGoogleReturnRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
