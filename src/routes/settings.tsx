@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { Download, Upload, Trash2 } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { BigTextButton } from "@/components/BigTextButton";
+import { ReadAloudButton } from "@/components/ReadAloudButton";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
@@ -153,6 +154,8 @@ function SettingsPage() {
           Turn on bigger text with stronger colours. It stays on until you turn it off.
         </p>
         <BigTextButton className="h-16 w-full text-lg" />
+        <p className="text-base text-muted-foreground">Have this page read out loud to you.</p>
+        <ReadAloudButton targetId="page-content" />
       </section>
 
       <section className="mt-6 space-y-3 rounded-2xl border border-border/60 surface p-4 sm:p-5" aria-labelledby="backup">
