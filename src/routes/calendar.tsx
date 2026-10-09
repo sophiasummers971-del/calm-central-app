@@ -3,6 +3,7 @@ import { PageShell } from "@/components/PageShell";
 import { GooglePanel } from "@/components/google-panel";
 
 export const Route = createFileRoute("/calendar")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Calendar — My Life Folder" },

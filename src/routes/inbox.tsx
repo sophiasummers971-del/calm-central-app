@@ -3,6 +3,7 @@ import { PageShell } from "@/components/PageShell";
 import { GooglePanel } from "@/components/google-panel";
 
 export const Route = createFileRoute("/inbox")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Inbox — My Life Folder" },

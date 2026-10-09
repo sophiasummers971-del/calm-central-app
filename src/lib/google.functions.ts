@@ -78,7 +78,7 @@ export const getGoogleStatus = createServerFn({ method: "POST" })
         if (!r.ok) return null;
         const m = obj(await r.json());
         const headers = arr(obj(m["payload"])["headers"]).map(obj);
-        const h = (n: string) => str(headers.find((x) => str(x["name"]).toLowerCase() === n)?.value);
+        const h = (n: string) => str(headers.find((x) => str(x["name"]).toLowerCase() === n)?.["value"]);
         return { id, title: h("subject") || "(No subject)", detail: `${h("from")} · ${fmtDate(h("date"))}`, url: `https://mail.google.com/mail/u/0/#inbox/${id}` };
       }));
       items = details.flatMap((d) => (d ? [d] : []));
