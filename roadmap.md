@@ -1,5 +1,8 @@
 # Roadmap
 
+- [ ] Add automatically refreshed, paginated Gmail, Drive and Calendar lists.
+- [ ] Connect and verify the user's real Google data on all three pages (requires Google consent).
+
 - [x] Audit and fix contrast on my-details, emergency, settings, FAQ, and admin in light, dark, and big-text modes.
 - [x] Improve those pages for mobile and tablet, including cards, data layouts, controls, and navigation.
 - [x] Verify the five pages across themes and responsive viewports.
