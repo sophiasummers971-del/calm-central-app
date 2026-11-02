@@ -30,21 +30,26 @@ export type GmailBatchPart = { id: string; status: number; body: unknown };
 export function parseGmailBatch(contentType: string, text: string): GmailBatchPart[] {
   const boundary = /boundary=(?:"([^"]+)"|([^;\s]+))/i.exec(contentType);
   const value = boundary?.[1] ?? boundary?.[2];
-  if (!/^multipart\/mixed\b/i.test(contentType) || !value) throw new Error("Gmail returned an invalid batch response.");
-  return text.split(`--${value}`).slice(1).filter((part) => part.trim() && !part.trim().startsWith("--")).map((part) => {
-    const normalized = part.replace(/\r\n/g, "\n").trim();
-    const mimeEnd = normalized.indexOf("\n\n");
-    if (mimeEnd < 0) throw new Error("Gmail returned an incomplete batch part.");
-    const mimeHeaders = normalized.slice(0, mimeEnd);
-    const http = normalized.slice(mimeEnd + 2);
-    const status = /^HTTP\/\d(?:\.\d)?\s+(\d{3})/.exec(http)?.[1];
-    const bodyStart = http.indexOf("\n\n");
-    const id = /Content-ID:\s*<?(?:response-)?([^>\n]+)>?/i.exec(mimeHeaders)?.[1]?.trim();
-    if (!status || bodyStart < 0 || !id) throw new Error("Gmail returned an invalid batch part.");
-    const raw = http.slice(bodyStart + 2).trim();
-    const body: unknown = raw ? JSON.parse(raw) : null;
-    return { id, status: Number(status), body };
-  });
+  if (!/^multipart\/mixed\b/i.test(contentType) || !value)
+    throw new Error("Gmail returned an invalid batch response.");
+  return text
+    .split(`--${value}`)
+    .slice(1)
+    .filter((part) => part.trim() && !part.trim().startsWith("--"))
+    .map((part) => {
+      const normalized = part.replace(/\r\n/g, "\n").trim();
+      const mimeEnd = normalized.indexOf("\n\n");
+      if (mimeEnd < 0) throw new Error("Gmail returned an incomplete batch part.");
+      const mimeHeaders = normalized.slice(0, mimeEnd);
+      const http = normalized.slice(mimeEnd + 2);
+      const status = /^HTTP\/\d(?:\.\d)?\s+(\d{3})/.exec(http)?.[1];
+      const bodyStart = http.indexOf("\n\n");
+      const id = /Content-ID:\s*<?(?:response-)?([^>\n]+)>?/i.exec(mimeHeaders)?.[1]?.trim();
+      if (!status || bodyStart < 0 || !id) throw new Error("Gmail returned an invalid batch part.");
+      const raw = http.slice(bodyStart + 2).trim();
+      const body: unknown = raw ? JSON.parse(raw) : null;
+      return { id, status: Number(status), body };
+    });
 }
 
 export function formatGoogleCalendarDate(value: string) {
