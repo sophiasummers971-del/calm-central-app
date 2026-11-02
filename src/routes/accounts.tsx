@@ -30,6 +30,8 @@ export const Route = createFileRoute("/accounts")({
         property: "og:description",
         content: "All your accounts in one simple list. Tap one to see the details.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: AccountsPage,

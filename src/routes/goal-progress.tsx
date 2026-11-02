@@ -31,6 +31,8 @@ export const Route = createFileRoute("/goal-progress")({
         content: "See your health goals, your progress over the last two weeks, and a summary of your week.",
       },
       { name: "robots", content: "noindex" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: GoalProgressPage,

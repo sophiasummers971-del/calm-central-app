@@ -26,6 +26,8 @@ export const Route = createFileRoute("/my-details")({
         property: "og:description",
         content: "Your name, home address, phone number and the people you call.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: MyDetailsPage,
