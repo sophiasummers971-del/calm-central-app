@@ -5,4 +5,4 @@ export const googleProducts = [
 ] as const;
 export type GoogleConnectorId = typeof googleProducts[number]["id"];
 export type GoogleItem = { id: string; title: string; detail: string; url?: string | undefined };
-export type GoogleStatus = { connectorId: GoogleConnectorId; connected: boolean; reconnectRequired: boolean; account: string; items: GoogleItem[]; error?: string };
+export type GoogleStatus = { connectorId: GoogleConnectorId; connected: boolean; reconnectRequired: boolean; account: string; items: GoogleItem[]; nextPageToken?: string; error?: string };
