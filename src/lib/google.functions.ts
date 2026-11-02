@@ -4,6 +4,8 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { appUserReconnectRequired, authorizeAppUserOAuth, callAsAppUser, disconnectAppUser, exchangeAppUserOAuthCode } from "@/integrations/lovable/appUserConnector";
 import { deleteConnectionKeyForUser, getConnectionKeyForUser, saveConnectionKeyForUser } from "@/server/app-user-connections.server";
 import { googleProducts, type GoogleConnectorId, type GoogleItem, type GoogleStatus } from "@/lib/google-config";
+import { formatGoogleCalendarDate, googleListPath, parseGmailBatch } from "@/lib/google-data";
+import { z } from "zod";
 
 const GATEWAY = "https://connector-gateway.lovable.dev";
 const BASE_SCOPES = ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"];
@@ -56,32 +58,47 @@ export const disconnectGoogle = createServerFn({ method: "POST" })
 
 export const getGoogleStatus = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator(validateId)
+  .inputValidator((input: unknown) => z.object({ connectorId: z.enum(["google_mail", "google_drive", "google_calendar"]), pageToken: z.string().max(4096).optional() }).parse(input))
   .handler(async ({ data, context }): Promise<GoogleStatus> => {
     const connectorId = data.connectorId;
     const base: GoogleStatus = { connectorId, connected: false, reconnectRequired: false, account: "", items: [] };
     const key = await getConnectionKeyForUser(context.userId, connectorId);
     if (!key) return base;
     const call = (path: string) => callAsAppUser({ gatewayBaseUrl: GATEWAY, connectionAPIKey: key, connectorId, path, requiredScopes: scopesFor(connectorId) });
-    const first = connectorId === "google_mail" ? await call("/gmail/v1/users/me/messages?maxResults=10&labelIds=INBOX")
-      : connectorId === "google_drive" ? await call(`/drive/v3/files?pageSize=12&orderBy=modifiedTime%20desc&fields=files(id,name,modifiedTime,webViewLink,mimeType)`)
-      : await call(`/calendar/v3/calendars/primary/events?maxResults=12&singleEvents=true&orderBy=startTime&timeMin=${encodeURIComponent(new Date().toISOString())}`);
+    const first = await call(googleListPath(connectorId, data.pageToken));
     if (await appUserReconnectRequired(first)) return { ...base, reconnectRequired: true };
-    if (!first.ok) return { ...base, connected: true, error: `Google could not load your data right now (${first.status}).` };
+    if (!first.ok) {
+      const errorBody = await first.text();
+      console.error(`Google read failed [${first.status}]: ${errorBody}`);
+      return { ...base, connected: true, error: `Google could not load your data (${first.status}): ${errorBody}` };
+    }
     const body = obj(await first.json());
     let items: GoogleItem[] = [];
     let account = "";
     if (connectorId === "google_mail") {
-      const ids = arr(body["messages"]).map((m) => str(obj(m)["id"])).filter(Boolean).slice(0, 10);
-      const details = await Promise.all(ids.map(async (id) => {
-        const r = await call(`/gmail/v1/users/me/messages/${id}?format=metadata&metadataHeaders=From&metadataHeaders=Subject&metadataHeaders=Date`);
-        if (!r.ok) return null;
-        const m = obj(await r.json());
+      const ids = arr(body["messages"]).map((m) => str(obj(m)["id"])).filter(Boolean);
+      const boundary = `gmail_${crypto.randomUUID()}`;
+      const requestBody = ids.map((id) => `--${boundary}\r\nContent-Type: application/http\r\nContent-ID: <${id}>\r\n\r\nGET /gmail/v1/users/me/messages/${encodeURIComponent(id)}?format=metadata&metadataHeaders=From&metadataHeaders=Subject&metadataHeaders=Date HTTP/1.1\r\n\r\n`).join("") + `--${boundary}--\r\n`;
+      const parts = ids.length ? await (async () => {
+        const response = await callAsAppUser({ gatewayBaseUrl: GATEWAY, connectionAPIKey: key, connectorId, path: "/batch/gmail/v1", requiredScopes: scopesFor(connectorId), init: { method: "POST", headers: { "Content-Type": `multipart/mixed; boundary=${boundary}` }, body: requestBody } });
+        if (await appUserReconnectRequired(response)) return null;
+        const text = await response.text();
+        if (!response.ok) { console.error(`Gmail batch failed [${response.status}]: ${text}`); throw new Error(`Gmail could not load messages (${response.status}): ${text}`); }
+        return parseGmailBatch(response.headers.get("Content-Type") ?? "", text);
+      })() : [];
+      if (!parts) return { ...base, reconnectRequired: true };
+      const failed = parts.filter((part) => part.status < 200 || part.status >= 300);
+      if (failed.length) {
+        console.error("Gmail batch parts failed", failed);
+        throw new Error(`Gmail could not load ${failed.length} messages (${failed[0]?.status}): ${JSON.stringify(failed[0]?.body)}`);
+      }
+      if (parts.length !== ids.length || ids.some((id) => !parts.some((part) => part.id === id))) throw new Error("Gmail did not return every requested message. Please refresh.");
+      items = ids.map((id) => {
+        const m = obj(parts.find((part) => part.id === id)?.body);
         const headers = arr(obj(m["payload"])["headers"]).map(obj);
         const h = (n: string) => str(headers.find((x) => str(x["name"]).toLowerCase() === n)?.["value"]);
         return { id, title: h("subject") || "(No subject)", detail: `${h("from")} · ${fmtDate(h("date"))}`, url: `https://mail.google.com/mail/u/0/#inbox/${id}` };
-      }));
-      items = details.flatMap((d) => (d ? [d] : []));
+      });
       const p = await call("/gmail/v1/users/me/profile");
       if (p.ok) account = str(obj(await p.json())["emailAddress"]);
     } else if (connectorId === "google_drive") {
@@ -91,10 +108,11 @@ export const getGoogleStatus = createServerFn({ method: "POST" })
     } else {
       items = arr(body["items"]).map(obj).map((e) => {
         const s = obj(e["start"]);
-        const when = str(s["dateTime"]) ? fmtDateTime(str(s["dateTime"])) : `${fmtDate(str(s["date"]))} (all day)`;
+        const when = str(s["dateTime"]) ? fmtDateTime(str(s["dateTime"])) : `${formatGoogleCalendarDate(str(s["date"]))} (all day)`;
         return { id: str(e["id"]), title: str(e["summary"]) || "(No title)", detail: when, url: str(e["htmlLink"]) || undefined };
       });
       account = str(obj(body)["summary"]);
     }
-    return { ...base, connected: true, account, items };
+    const nextPageToken = str(body["nextPageToken"]);
+    return { ...base, connected: true, account, items, ...(nextPageToken ? { nextPageToken } : {}) };
   });

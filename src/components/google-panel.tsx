@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { ExternalLink, Link2, Unlink } from "lucide-react";
+import { ExternalLink, Link2, Unlink, RefreshCw, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSessionUser } from "@/lib/auth";
 import { completeGoogleConnect, disconnectGoogle, getGoogleStatus, startGoogleConnect } from "@/lib/google.functions";
 import { googleProducts, type GoogleConnectorId } from "@/lib/google-config";
+import { googleRefreshInterval } from "@/lib/google-data";
 
 function waitForPopup(popup: Window, connectorId: string) {
   return new Promise<string | null>((resolve, reject) => {
@@ -35,7 +36,18 @@ export function GooglePanel({ connectorId, emptyText }: { connectorId: GoogleCon
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
   const queryKey = ["google", connectorId, user?.id];
-  const status = useQuery({ queryKey, queryFn: () => statusFn({ data: { connectorId } }), enabled: !!user });
+  const status = useInfiniteQuery({
+    queryKey,
+    initialPageParam: "",
+    queryFn: ({ pageParam }) => statusFn({ data: { connectorId, ...(pageParam ? { pageToken: pageParam } : {}) } }),
+    getNextPageParam: (last) => last.error || last.reconnectRequired ? undefined : last.nextPageToken,
+    enabled: !!user,
+    refetchInterval: (query) => query.state.data?.pages[0]?.connected && !query.state.data.pages[0].reconnectRequired && !query.state.data.pages[0].error ? googleRefreshInterval : false,
+    refetchIntervalInBackground: false,
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
+    retry: false,
+  });
 
   if (!ready) return <p className="text-base text-muted-foreground">Loading…</p>;
   if (!user) return (
@@ -55,9 +67,10 @@ export function GooglePanel({ connectorId, emptyText }: { connectorId: GoogleCon
       const done = waitForPopup(popup, connectorId);
       popup.location.href = authorizationUrl;
       const code = await done;
-      if (code) await completeFn({ data: { code, connectorId } });
-      await qc.invalidateQueries({ queryKey });
-      setNotice(`Connected to ${label}.`);
+      if (!code) { setNotice("Google consent finished, but offline access must be enabled before your data can load."); return; }
+      await completeFn({ data: { code, connectorId } });
+      await qc.resetQueries({ queryKey });
+      setNotice(`Google access saved for ${label}. Checking your data…`);
     } catch (e) {
       popup.close();
       setNotice(e instanceof Error ? e.message : "Something went wrong.");
@@ -65,12 +78,15 @@ export function GooglePanel({ connectorId, emptyText }: { connectorId: GoogleCon
   };
   const disconnect = async () => {
     setBusy(true);
-    try { await disconnectFn({ data: { connectorId } }); await qc.invalidateQueries({ queryKey }); setNotice(`${label} disconnected.`); }
+    try { await disconnectFn({ data: { connectorId } }); await qc.resetQueries({ queryKey }); setNotice(`${label} disconnected.`); }
     catch (e) { setNotice(e instanceof Error ? e.message : "Something went wrong."); }
     finally { setBusy(false); }
   };
 
-  const s = status.data;
+  const pages = status.data?.pages ?? [];
+  const s = pages.find((page) => page.reconnectRequired) ?? pages[0];
+  const items = s?.reconnectRequired ? [] : [...new Map(pages.flatMap((page) => page.items).map((item) => [item.id, item])).values()];
+  const pageError = pages.find((page) => page.error)?.error;
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border/60 surface p-4">
@@ -85,13 +101,17 @@ export function GooglePanel({ connectorId, emptyText }: { connectorId: GoogleCon
         )}
       </div>
       {notice ? <p role="status" className="text-base font-semibold">{notice}</p> : null}
+      {s?.connected && !s.reconnectRequired ? <div className="flex flex-wrap items-center justify-between gap-3">
+        <p className="text-sm text-muted-foreground">{items.length} results · Updated {new Date(status.dataUpdatedAt).toLocaleString("en-GB")}</p>
+        <Button variant="outline" size="icon" aria-label={`Refresh ${label}`} title={`Refresh ${label}`} disabled={status.isFetching} onClick={() => void status.refetch()}><RefreshCw className={status.isFetching ? "size-4 animate-spin motion-reduce:animate-none" : "size-4"} /></Button>
+      </div> : null}
       {status.isLoading ? <p className="text-base text-muted-foreground">Loading your {label}…</p> : null}
-      {status.error ? <p className="text-base text-destructive">Could not check your {label}. Please try again.</p> : null}
-      {s?.error ? <p className="text-base text-destructive">{s.error}</p> : null}
-      {s?.connected && !s.error && s.items.length === 0 ? <p className="text-base text-muted-foreground">{emptyText}</p> : null}
-      {s?.items.length ? (
+      {status.error ? <div role="alert"><p className="text-base text-destructive">{status.error.message}</p><Button variant="outline" onClick={() => void status.refetch()} disabled={status.isFetching}>Try again</Button></div> : null}
+      {pageError ? <p role="alert" className="text-base text-destructive">{pageError}</p> : null}
+      {s?.connected && !pageError && !status.error && items.length === 0 ? <p className="text-base text-muted-foreground">{emptyText}</p> : null}
+      {items.length ? (
         <ul className="divide-y divide-border/60 rounded-lg border border-border/60 surface">
-          {s.items.map((item) => (
+          {items.map((item) => (
             <li key={item.id} className="flex items-center gap-3 p-4">
               <div className="min-w-0 flex-1">
                 <p className="break-words text-base font-semibold">{item.title}</p>
@@ -102,6 +122,7 @@ export function GooglePanel({ connectorId, emptyText }: { connectorId: GoogleCon
           ))}
         </ul>
       ) : null}
+      {status.hasNextPage && !s?.reconnectRequired ? <Button variant="outline" onClick={() => void status.fetchNextPage()} disabled={status.isFetching}><ChevronDown className="size-4" />{status.isFetchingNextPage ? "Loading…" : "Load more"}</Button> : null}
     </div>
   );
 }
