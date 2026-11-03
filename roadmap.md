@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Fix homepage search and social titles and expand health tips and wellness guides with sourced guidance and relevant next steps.
+
 - [x] Add automatically refreshed, paginated Gmail, Drive and Calendar lists.
 - [ ] Connect and verify the user's real Google data on all three pages (blocked: Google approval was declined and no requesting-user app session is available; sign in in the preview and complete each service's consent).
 

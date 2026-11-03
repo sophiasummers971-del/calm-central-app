@@ -15,13 +15,13 @@ export const Route = createFileRoute("/")({
   staticData: { sitemap: true },
   head: () => ({
     meta: [
-      { title: "My Life Folder — one clear place for your accounts" },
+      { title: "My Life Folder — personal, health and emergency details" },
       {
         name: "description",
         content:
           "A calm, easy dashboard to keep your accounts, home address, phone contacts and emergency details in one clear view.",
       },
-      { property: "og:title", content: "My Life Folder — one clear place for your accounts" },
+      { property: "og:title", content: "My Life Folder — personal, health and emergency details" },
       {
         property: "og:description",
         content: "Keep your accounts, contacts and emergency details in one easy view.",
