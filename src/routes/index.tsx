@@ -92,7 +92,9 @@ function Index() {
                 <Icon className="size-7" aria-hidden="true" />
               </span>
               <span className="min-w-0 flex-1">
-                <span className="block break-words font-display text-2xl font-bold tracking-wide">{label}</span>
+                <span className="block break-words font-display text-2xl font-bold tracking-wide">
+                  {label}
+                </span>
                 <span className="block text-base text-foreground/90">{help}</span>
                 <span className="mt-1 block truncate text-base font-semibold">{line}</span>
               </span>
@@ -102,13 +104,14 @@ function Index() {
         ))}
       </ul>
 
-      <section className="mt-8 rounded-2xl border border-border/60 surface p-5" aria-labelledby="help-now">
+      <section
+        className="mt-8 rounded-2xl border border-border/60 surface p-5"
+        aria-labelledby="help-now"
+      >
         <h2 id="help-now" className="font-display text-2xl font-bold tracking-wide">
           Need help now?
         </h2>
-        <p className="mt-1 text-base text-muted-foreground">
-          These are your quick phone numbers.
-        </p>
+        <p className="mt-1 text-base text-muted-foreground">These are your quick phone numbers.</p>
         <div className="mt-4 space-y-3">
           {firstHelper?.phone ? (
             <CallButton name={firstHelper.name} phone={firstHelper.phone} />
