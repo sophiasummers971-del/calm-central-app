@@ -4,7 +4,7 @@ import {
   googleListPath,
   googleRefreshInterval,
   parseGmailBatch,
-} from "./google-data";
+} from "../src/lib/google-data";
 
 describe("Google updates", () => {
   it("allows browsing beyond the latest 10 Gmail messages", () => {
