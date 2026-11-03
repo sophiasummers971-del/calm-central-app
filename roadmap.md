@@ -1,5 +1,7 @@
 # Roadmap
 
+- [ ] Add dated mood, food and symptom journal entries and a Health sidebar link; verify saving, editing and deletion.
+
 - [x] Fix homepage search and social titles and expand health tips and wellness guides with sourced guidance and relevant next steps.
 
 - [x] Add automatically refreshed, paginated Gmail, Drive and Calendar lists.

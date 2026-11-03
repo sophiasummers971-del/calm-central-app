@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import type { JournalEntry } from "@/lib/health-journal";
 
 export type Account = {
   id: string;
@@ -126,6 +127,7 @@ export const usePeople = () => useStored<Person[]>(KEYS.people, []);
 export const useMyDetails = () => useStored<MyDetails>(KEYS.details, emptyDetails);
 export const useHealthInfo = () => useStored<HealthInfo>(KEYS.health, emptyHealth);
 export const useConcerns = () => useStored<SavedConcern[]>("mycare.concerns", []);
+export const useJournal = () => useStored<JournalEntry[]>("mycare.journal", []);
 
 export type HealthGoal = {
   id: string;

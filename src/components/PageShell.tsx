@@ -13,6 +13,7 @@ const groups = [
     { to: "/calendar", label: "Calendar", icon: CalendarDays },
   ] },
   { label: "Health", items: [
+    { to: "/health-journal", label: "Health journal", icon: BookOpen },
     { to: "/emergency", label: "Emergency", icon: HeartPulse },
     { to: "/appointment", label: "Appointment notes", icon: Sparkles },
     { to: "/goal-progress", label: "Goal progress", icon: Target },

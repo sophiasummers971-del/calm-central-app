@@ -19,6 +19,7 @@ import { Route as EmergencyRouteImport } from './routes/emergency'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as FilesRouteImport } from './routes/files'
 import { Route as GoalProgressRouteImport } from './routes/goal-progress'
+import { Route as HealthJournalRouteImport } from './routes/health-journal'
 import { Route as HealthTipsRouteImport } from './routes/health-tips'
 import { Route as InboxRouteImport } from './routes/inbox'
 import { Route as MyDetailsRouteImport } from './routes/my-details'
@@ -78,6 +79,11 @@ const FilesRoute = FilesRouteImport.update({
 const GoalProgressRoute = GoalProgressRouteImport.update({
   id: '/goal-progress',
   path: '/goal-progress',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HealthJournalRoute = HealthJournalRouteImport.update({
+  id: '/health-journal',
+  path: '/health-journal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HealthTipsRoute = HealthTipsRouteImport.update({
@@ -142,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/files': typeof FilesRoute
   '/goal-progress': typeof GoalProgressRoute
+  '/health-journal': typeof HealthJournalRoute
   '/health-tips': typeof HealthTipsRoute
   '/inbox': typeof InboxRoute
   '/my-details': typeof MyDetailsRoute
@@ -164,6 +171,7 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/files': typeof FilesRoute
   '/goal-progress': typeof GoalProgressRoute
+  '/health-journal': typeof HealthJournalRoute
   '/health-tips': typeof HealthTipsRoute
   '/inbox': typeof InboxRoute
   '/my-details': typeof MyDetailsRoute
@@ -187,6 +195,7 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/files': typeof FilesRoute
   '/goal-progress': typeof GoalProgressRoute
+  '/health-journal': typeof HealthJournalRoute
   '/health-tips': typeof HealthTipsRoute
   '/inbox': typeof InboxRoute
   '/my-details': typeof MyDetailsRoute
@@ -211,6 +220,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/files'
     | '/goal-progress'
+    | '/health-journal'
     | '/health-tips'
     | '/inbox'
     | '/my-details'
@@ -233,6 +243,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/files'
     | '/goal-progress'
+    | '/health-journal'
     | '/health-tips'
     | '/inbox'
     | '/my-details'
@@ -255,6 +266,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/files'
     | '/goal-progress'
+    | '/health-journal'
     | '/health-tips'
     | '/inbox'
     | '/my-details'
@@ -278,6 +290,7 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   FilesRoute: typeof FilesRoute
   GoalProgressRoute: typeof GoalProgressRoute
+  HealthJournalRoute: typeof HealthJournalRoute
   HealthTipsRoute: typeof HealthTipsRoute
   InboxRoute: typeof InboxRoute
   MyDetailsRoute: typeof MyDetailsRoute
@@ -360,6 +373,13 @@ declare module '@tanstack/react-router' {
       path: '/goal-progress'
       fullPath: '/goal-progress'
       preLoaderRoute: typeof GoalProgressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/health-journal': {
+      id: '/health-journal'
+      path: '/health-journal'
+      fullPath: '/health-journal'
+      preLoaderRoute: typeof HealthJournalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/health-tips': {
@@ -446,6 +466,7 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   FilesRoute: FilesRoute,
   GoalProgressRoute: GoalProgressRoute,
+  HealthJournalRoute: HealthJournalRoute,
   HealthTipsRoute: HealthTipsRoute,
   InboxRoute: InboxRoute,
   MyDetailsRoute: MyDetailsRoute,
