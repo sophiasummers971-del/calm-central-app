@@ -1,6 +1,17 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { LogIn, UserPlus, LogOut } from "lucide-react";
+import {
+  ArrowUpRight,
+  CalendarDays,
+  FolderOpen,
+  LogIn,
+  UserPlus,
+  LogOut,
+  Mail,
+  Settings,
+  UserRound,
+} from "lucide-react";
+import { AccountAvatar } from "@/components/account-avatar";
 import { PageShell } from "@/components/PageShell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,16 +23,16 @@ export const Route = createFileRoute("/auth")({
   staticData: { sitemap: false },
   head: () => ({
     meta: [
-      { title: "Sign in with your email — My Life Folder" },
+      { title: "My account and identity — My Life Folder" },
       {
         name: "description",
         content:
-          "Sign in with your email address so your folder belongs to your own account on any device.",
+          "View your account identity, sign-in details, personal settings and connected service pages.",
       },
-      { property: "og:title", content: "Sign in with your email — My Life Folder" },
+      { property: "og:title", content: "My account and identity — My Life Folder" },
       {
         property: "og:description",
-        content: "Use your email address to sign in to your own private folder.",
+        content: "Your account identity, personal settings and Google service pages in one place.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -37,6 +48,9 @@ function AuthPage() {
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
+  const fullName: unknown = user?.user_metadata["full_name"];
+  const displayName =
+    typeof fullName === "string" && fullName.trim() ? fullName : "Your personal account";
 
   useEffect(() => {
     setMessage("");
@@ -79,20 +93,87 @@ function AuthPage() {
   };
 
   return (
-    <PageShell
-      title="My account"
-      intro="Sign in with your email address. Then your folder is yours on any device."
-    >
+    <PageShell title="My account" intro="Your identity, your preferences, your space.">
       {ready && user ? (
-        <section className="rounded-2xl border border-border/60 surface p-5">
-          <h2 className="text-2xl font-bold">You are signed in</h2>
-          <p className="mt-2 break-words text-lg">{user.email}</p>
-          <Button variant="secondary" className="mt-4 h-16 w-full text-lg" onClick={signOut}>
-            <LogOut className="size-6" aria-hidden="true" /> Sign out
-          </Button>
-        </section>
+        <div className="space-y-7">
+          <section className="flex flex-wrap items-center gap-5 border-b border-border pb-6">
+            <AccountAvatar user={user} className="size-20" />
+            <div className="min-w-0 flex-1">
+              <p className="mb-1 text-xs font-semibold text-primary">Signed in</p>
+              <h2 className="break-words font-display text-xl font-bold">{displayName}</h2>
+              <p className="mt-2 break-words text-sm text-muted-foreground">{user.email}</p>
+            </div>
+            <Button variant="outline" asChild>
+              <Link to="/settings">
+                <Settings />
+                Account settings
+              </Link>
+            </Button>
+          </section>
+          <section>
+            <h2 className="mb-4 font-display text-lg font-bold">Account details</h2>
+            <dl className="grid gap-5 sm:grid-cols-3">
+              <div>
+                <dt className="text-xs text-muted-foreground">Email address</dt>
+                <dd className="mt-1 break-words text-sm">{user.email || "Not provided"}</dd>
+              </div>
+              <div>
+                <dt className="text-xs text-muted-foreground">Member since</dt>
+                <dd className="mt-1 text-sm">
+                  {new Date(user.created_at).toLocaleDateString("en-GB")}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs text-muted-foreground">Email confirmation</dt>
+                <dd className="mt-1 text-sm">
+                  {user.email_confirmed_at ? "Confirmed" : "Awaiting confirmation"}
+                </dd>
+              </div>
+            </dl>
+          </section>
+          <div className="flex flex-wrap gap-3">
+            <Button variant="secondary" asChild>
+              <Link to="/my-details">
+                <UserRound />
+                My personal details
+                <ArrowUpRight />
+              </Link>
+            </Button>
+            <Button variant="outline" onClick={signOut}>
+              <LogOut />
+              Sign out
+            </Button>
+          </div>
+          <section className="border-t border-border pt-6">
+            <h2 className="mb-4 font-display text-lg font-bold">Your Google services</h2>
+            <ul className="grid gap-3 sm:grid-cols-3">
+              {(
+                [
+                  { to: "/inbox", label: "Gmail", icon: Mail },
+                  { to: "/files", label: "Google Drive", icon: FolderOpen },
+                  { to: "/calendar", label: "Google Calendar", icon: CalendarDays },
+                ] as const
+              ).map(({ to, label, icon: Icon }) => (
+                <li key={to}>
+                  <Link
+                    to={to}
+                    className="explore-tile flex items-center gap-3 rounded-lg border border-border bg-card p-4"
+                  >
+                    <Icon className="size-5 text-primary" />
+                    <span className="flex-1 text-sm font-semibold">{label}</span>
+                    <ArrowUpRight className="size-4" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+          <p className="border-t border-border pt-4 text-xs text-muted-foreground">
+            Health notes and saved details remain on this device. Google services require separate
+            consent.
+          </p>
+        </div>
       ) : (
-        <section className="space-y-4 rounded-2xl border border-border/60 surface p-5">
+        <section className="max-w-lg space-y-4 border-t border-border py-6">
           <div className="space-y-2">
             <Label htmlFor="email" className="text-lg">
               Your email address
@@ -119,7 +200,7 @@ function AuthPage() {
               onChange={(event) => setPassword(event.target.value)}
             />
             <p className="text-base text-muted-foreground">
-              Use at least 6 letters or numbers. Write it somewhere safe.
+              Use at least 6 characters. Never share your password.
             </p>
           </div>
 
@@ -138,7 +219,10 @@ function AuthPage() {
       )}
 
       {message ? (
-        <p role="status" className="mt-6 rounded-xl bg-secondary p-4 text-center text-lg font-semibold">
+        <p
+          role="status"
+          className="mt-6 rounded-xl bg-secondary p-4 text-center text-lg font-semibold"
+        >
           {message}
         </p>
       ) : null}

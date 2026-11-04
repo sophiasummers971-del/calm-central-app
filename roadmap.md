@@ -1,5 +1,7 @@
 # Roadmap
 
+- [ ] Rebuild overview, grouped navigation and account identity into a clear, polished structure; verify desktop, mobile and both themes.
+
 - [ ] Add dated mood, food and symptom journal entries and a Health sidebar link; verify saving, editing and deletion.
 
 - [x] Fix homepage search and social titles and expand health tips and wellness guides with sourced guidance and relevant next steps.
