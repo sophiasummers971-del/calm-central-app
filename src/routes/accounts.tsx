@@ -55,7 +55,9 @@ function AccountsPage() {
 
   const store = (account: Account) => {
     const exists = accounts.some((a) => a.id === account.id);
-    save(exists ? accounts.map((a) => (a.id === account.id ? account : a)) : [...accounts, account]);
+    save(
+      exists ? accounts.map((a) => (a.id === account.id ? account : a)) : [...accounts, account],
+    );
     setEditing(null);
   };
 
@@ -65,18 +67,16 @@ function AccountsPage() {
   };
 
   return (
-    <PageShell
-      title="Saved accounts"
-      intro="Your bank, bills and everyday account records."
-    >
+    <PageShell title="Saved accounts" intro="Your bank, bills and everyday account records.">
       <AccountSummary />
-      <div className="my-6 flex flex-wrap items-center justify-between gap-3"><h2 className="font-display text-lg font-bold">Account records <span className="text-sm text-muted-foreground">({accounts.length})</span></h2><Button
-        size="lg"
-        className="h-11"
-        onClick={() => setEditing({ ...empty, id: newId() })}
-      >
-        <Plus className="size-6" aria-hidden="true" /> Add an account
-      </Button></div>
+      <div className="my-6 flex flex-wrap items-center justify-between gap-3">
+        <h2 className="font-display text-lg font-bold">
+          Account records <span className="text-sm text-muted-foreground">({accounts.length})</span>
+        </h2>
+        <Button size="lg" className="h-11" onClick={() => setEditing({ ...empty, id: newId() })}>
+          <Plus className="size-6" aria-hidden="true" /> Add an account
+        </Button>
+      </div>
 
       {accounts.length === 0 ? (
         <p className="border-y border-dashed py-8 text-center text-base text-muted-foreground">
@@ -86,7 +86,8 @@ function AccountsPage() {
         <ul className="mt-6 space-y-3">
           {accounts.map((account) => (
             <li key={account.id}>
-              <Button variant="ghost"
+              <Button
+                variant="ghost"
                 type="button"
                 onClick={() => setViewing(account)}
                 className="explore-tile flex h-auto w-full items-center gap-4 whitespace-normal rounded-lg border border-border/60 bg-card p-4 text-left hover:bg-secondary hover:text-foreground"
