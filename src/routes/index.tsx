@@ -1,156 +1,52 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  Wallet,
-  User,
-  HeartPulse,
-  Phone,
-  ChevronRight,
-  Sparkles,
-  Map as MapIcon,
-} from "lucide-react";
+import { ArrowUpRight, HeartPulse, Phone, Sparkles } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
-import { useAccounts, useHealthInfo, useMyDetails, usePeople } from "@/lib/local-store";
+import { AccountSummary } from "@/components/account-summary";
+import { Button } from "@/components/ui/button";
+import { useAccounts, useHealthInfo, useJournal, usePeople } from "@/lib/local-store";
+import { navigationGroups } from "@/lib/navigation";
+import folderSculpture from "@/assets/folder-sculpture.jpg";
 
 export const Route = createFileRoute("/")({
   staticData: { sitemap: true },
-  head: () => ({
-    meta: [
-      { title: "My Life Folder — personal, health and emergency details" },
-      {
-        name: "description",
-        content:
-          "A calm, easy dashboard to keep your accounts, home address, phone contacts and emergency details in one clear view.",
-      },
-      { property: "og:title", content: "My Life Folder — personal, health and emergency details" },
-      {
-        property: "og:description",
-        content: "Keep your accounts, contacts and emergency details in one easy view.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
-  component: Index,
+  head: () => ({ meta: [
+    { title: "My Life Folder — your personal overview" },
+    { name: "description", content: "Your personal details, connected Google services, health journal, goals and emergency information in one organised folder." },
+    { property: "og:title", content: "My Life Folder — your personal overview" },
+    { property: "og:description", content: "Explore your accounts, daily health, appointments and personal settings in one clear overview." },
+    { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
+  ] }), component: Index,
 });
 
 function Index() {
   const { value: accounts, ready } = useAccounts();
-  const { value: details } = useMyDetails();
+  const { value: journal } = useJournal();
   const { value: health } = useHealthInfo();
   const { value: people } = usePeople();
-
-  const tiles = [
-    {
-      to: "/accounts" as const,
-      label: "My accounts",
-      icon: Wallet,
-      tile: "bg-tile-accounts",
-      line: ready ? `${accounts.length} saved` : "Loading…",
-      help: "Bank, phone, electricity and more.",
-    },
-    {
-      to: "/my-details" as const,
-      label: "My details",
-      icon: User,
-      tile: "bg-tile-details",
-      line: details.fullName ? details.fullName : "Not filled in yet",
-      help: "Your name, home address and phone.",
-    },
-    {
-      to: "/emergency" as const,
-      label: "Emergency",
-      icon: HeartPulse,
-      tile: "bg-tile-emergency",
-      line: health.gpName ? `Doctor: ${health.gpName}` : "Not filled in yet",
-      help: "Doctor, allergies, medicine, helpers.",
-    },
-    {
-      to: "/appointment" as const,
-      label: "Appointment notes",
-      icon: Sparkles,
-      tile: "bg-tile-details",
-      line: "Say how you feel",
-      help: "Turn your words into a clear list for the doctor.",
-    },
-  ];
-
-  const firstHelper = people[0];
-
-  return (
-    <PageShell
-      title="My Life Folder"
-      intro="Everything about you, in one calm place. Tap a big button below."
-    >
-      <ul className="space-y-4">
-        {tiles.map(({ to, label, icon: Icon, tile, line, help }) => (
-          <li key={to}>
-            <Link
-              to={to}
-              className={`grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-2xl border border-border/60 p-4 sm:gap-4 sm:p-5 ${tile} shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-0.5 hover:glow-edge`}
-            >
-              <span className="flex size-14 shrink-0 items-center justify-center rounded-xl bg-card/80 ring-1 ring-border/60">
-                <Icon className="size-7" aria-hidden="true" />
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="block break-words font-display text-2xl font-bold tracking-wide">
-                  {label}
-                </span>
-                <span className="block text-base text-foreground/90">{help}</span>
-                <span className="mt-1 block truncate text-base font-semibold">{line}</span>
-              </span>
-              <ChevronRight className="size-7 shrink-0" aria-hidden="true" />
-            </Link>
-          </li>
-        ))}
-      </ul>
-
-      <section
-        className="mt-8 rounded-2xl border border-border/60 surface p-5"
-        aria-labelledby="help-now"
-      >
-        <h2 id="help-now" className="font-display text-2xl font-bold tracking-wide">
-          Need help now?
-        </h2>
-        <p className="mt-1 text-base text-muted-foreground">These are your quick phone numbers.</p>
-        <div className="mt-4 space-y-3">
-          {firstHelper?.phone ? (
-            <CallButton name={firstHelper.name} phone={firstHelper.phone} />
-          ) : null}
-          {health.gpPhone ? (
-            <CallButton name={health.gpName || "My doctor"} phone={health.gpPhone} />
-          ) : null}
-          {!firstHelper?.phone && !health.gpPhone ? (
-            <p className="text-base">
-              No numbers yet. Add them on the{" "}
-              <Link to="/emergency" className="font-bold underline">
-                Emergency page
-              </Link>
-              .
-            </p>
-          ) : null}
-        </div>
-      </section>
-
-      <Link
-        to="/sitemap"
-        className="mt-6 flex min-h-14 items-center justify-center gap-3 rounded-xl border border-border/60 bg-secondary px-4 py-3 text-base font-bold text-secondary-foreground sm:text-lg"
-      >
-        <MapIcon className="size-6" aria-hidden="true" /> Map of all pages
-      </Link>
-    </PageShell>
-  );
+  const firstHelper = people.find((person) => person.phone);
+  return <PageShell title="My Life Folder" intro="Your life, thoughtfully organised.">
+    <section className="folder-cover relative mb-6 overflow-hidden" aria-label="Your folder">
+      <img src={folderSculpture} alt="Sculptural glass folders with cyan edges and a pink tab" width={1536} height={768} className="absolute inset-0 h-full w-full object-cover object-right" />
+      <div className="relative z-10 max-w-[60%] px-5 py-8 sm:px-8 sm:py-10">
+        <p className="mb-3 flex items-center gap-2 text-xs font-semibold text-cover-muted"><span className="h-px w-6 bg-primary" />A space of your own</p>
+        <h2 className="font-display text-xl font-bold text-cover-foreground sm:text-2xl">Less scattered.<br />More you.</h2>
+        <Button asChild className="mt-5 h-auto whitespace-normal px-3 py-2 text-xs sm:text-sm"><Link to="/health-journal"><Sparkles />Open your journal<ArrowUpRight /></Link></Button>
+      </div>
+    </section>
+    <AccountSummary />
+    <div className="my-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground"><span><strong className="text-foreground">{ready ? accounts.length : "—"}</strong> saved accounts</span><span><strong className="text-foreground">{journal.length}</strong> journal entries</span><Link to="/emergency" className="inline-flex items-center gap-2 text-accent hover:underline"><HeartPulse className="size-4" />Emergency details<ArrowUpRight className="size-3" /></Link></div>
+    <div className="space-y-8">
+      {navigationGroups.map((group, index) => <section key={group.label} aria-labelledby={`section-${index}`}>
+        <div className="mb-3 flex flex-wrap items-baseline justify-between gap-1"><h2 id={`section-${index}`} className="flex items-center gap-3 font-display text-lg font-bold"><span className="text-xs text-primary">0{index + 1}</span>{group.label}</h2><p className="text-xs text-muted-foreground">{group.description}</p></div>
+        <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+          {group.items.map(({ to, label, detail, icon: Icon }) => <li key={to}><Link to={to} className={`explore-tile group flex h-full min-h-24 items-center gap-3 rounded-lg border border-border/70 bg-card p-4 ${to === "/emergency" ? "explore-tile-accent" : ""}`}><span className={`flex size-10 shrink-0 items-center justify-center rounded-md ${index === 1 ? "bg-accent/10 text-accent" : "bg-primary/10 text-primary"}`}><Icon className="size-5" /></span><span className="min-w-0 flex-1"><span className="block text-sm font-semibold">{label}</span><span className="mt-1 block text-xs leading-relaxed text-muted-foreground">{detail}</span></span><ArrowUpRight className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-reduce:transform-none" /></Link></li>)}
+        </ul>
+      </section>)}
+    </div>
+    {(firstHelper || health.gpPhone) && <section className="mt-8 border-t border-border py-5" aria-label="Quick contacts"><h2 className="mb-3 font-display text-lg font-bold">Your quick contacts</h2><div className="flex flex-wrap gap-3">{firstHelper && <CallButton name={firstHelper.name} phone={firstHelper.phone} />}{health.gpPhone && <CallButton name={health.gpName || "My doctor"} phone={health.gpPhone} />}</div></section>}
+  </PageShell>;
 }
 
 function CallButton({ name, phone }: { name: string; phone: string }) {
-  return (
-    <a
-      href={`tel:${phone.replace(/[^+\d]/g, "")}`}
-      className="flex items-center gap-3 rounded-xl bg-primary px-5 py-4 text-lg font-bold text-primary-foreground"
-    >
-      <Phone className="size-6" aria-hidden="true" />
-      <span className="min-w-0 flex-1 truncate">
-        Call {name} — {phone}
-      </span>
-    </a>
-  );
+  return <Button asChild variant="secondary" className="h-auto max-w-full whitespace-normal py-3"><a href={`tel:${phone.replace(/[^+\d]/g, "")}`}><Phone /><span className="break-words">{name} · {phone}</span></a></Button>;
 }

@@ -12,3 +12,4 @@
 - Google lists use authenticated server functions, provider cursor pagination and foreground React Query polling; Gmail metadata uses MIME batches to avoid per-message gateway calls.
 - Keep Bun test globals outside the application TypeScript configuration so browser fetch types remain compatible with the edge runtime.
 - Health journal entries follow the existing device-local health storage model, with schema validation and date-ordering helpers separated from the page for testing.
+- Keep the overview, navigation and page search driven by one shared navigation catalogue so every destination remains discoverable; separate account identity from saved account records and Google service consent.
