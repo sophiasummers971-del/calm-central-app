@@ -116,7 +116,9 @@ export const navigationGroups = [
   },
 ] as const;
 
+type NavigationItem = (typeof navigationGroups)[number]["items"][number];
+
 export const navigationItems = [
   { to: "/", label: "Overview", detail: "Your whole folder", icon: Home },
-  ...navigationGroups.flatMap((group) => group.items),
+  ...navigationGroups.flatMap<NavigationItem>((group) => [...group.items]),
 ] as const;
