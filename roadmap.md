@@ -1,5 +1,7 @@
 # Roadmap
 
+- [ ] Add OAuth-protected MCP and browser page discovery tools; extract manifest and verify consent errors and login return handling. Full consent approval requires a signed-in user.
+
 - [x] Publish restructured pages and verify the published pages in a real browser; current build is clean and eight primary pages return 200 without browser exceptions.
 
 - [ ] Rebuild overview, grouped navigation and account identity into a clear, polished structure; desktop, mobile navigation and both themes verified; signed-in identity checks blocked until the requesting user signs in.

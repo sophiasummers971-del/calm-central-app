@@ -18,8 +18,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { useSessionUser } from "@/lib/auth";
+import { oauthReturnPath } from "@/lib/oauth-return-path";
 
 export const Route = createFileRoute("/auth")({
+  validateSearch: (search: Record<string, unknown>) => ({ next: oauthReturnPath(search["next"]) }),
   staticData: { sitemap: false },
   head: () => ({
     meta: [
@@ -44,6 +46,7 @@ export const Route = createFileRoute("/auth")({
 function AuthPage() {
   const { user, ready } = useSessionUser();
   const navigate = useNavigate();
+  const { next } = Route.useSearch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
@@ -65,7 +68,7 @@ function AuthPage() {
       return;
     }
     setPassword("");
-    void navigate({ to: "/" });
+    void navigate({ href: next });
   };
 
   const signUp = async () => {
@@ -73,7 +76,7 @@ function AuthPage() {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: { emailRedirectTo: window.location.origin },
+      options: { emailRedirectTo: new URL(next, window.location.origin).href },
     });
     setBusy(false);
     if (error) {
@@ -85,6 +88,7 @@ function AuthPage() {
         ? "Your account is ready."
         : "Almost done. Please open the email we sent you and click the link.",
     );
+    if (data.session) void navigate({ href: next });
   };
 
   const signOut = async () => {
