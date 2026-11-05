@@ -1,8 +1,8 @@
 # Roadmap
 
-- [ ] Publish restructured pages and verify the published pages in a real browser; fix any remaining build errors.
+- [x] Publish restructured pages and verify the published pages in a real browser; current build is clean and eight primary pages return 200 without browser exceptions.
 
-- [ ] Rebuild overview, grouped navigation and account identity into a clear, polished structure; verify desktop, mobile and both themes.
+- [ ] Rebuild overview, grouped navigation and account identity into a clear, polished structure; desktop, mobile navigation and both themes verified; signed-in identity checks blocked until the requesting user signs in.
 
 - [ ] Add dated mood, food and symptom journal entries and a Health sidebar link; verify saving, editing and deletion.
 
