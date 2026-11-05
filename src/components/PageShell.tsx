@@ -18,6 +18,8 @@ import { navigationGroups, navigationItems } from "@/lib/navigation";
 import { AccountAvatar } from "@/components/account-avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useWebMCP } from "use-webmcp-tool";
+import { runWebMCPTool } from "@/lib/webmcp-telemetry";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 function NavGroups({ compact, onNavigate }: { compact: boolean; onNavigate?: () => void }) {
@@ -103,6 +105,23 @@ export function PageShell({
   const results = navigationItems.filter((item) =>
     `${item.label} ${item.detail}`.toLowerCase().includes(search.toLowerCase()),
   );
+  useWebMCP({
+    name: "list_folder_pages",
+    description: "List the pages available in your folder navigation.",
+    annotations: { readOnlyHint: true },
+    execute: () => runWebMCPTool("list_folder_pages", () => navigationItems.map((item) => `${item.label}: ${item.to}`).join("\n")),
+  });
+  useWebMCP({
+    name: "search_folder_pages",
+    description: "Open the page search and filter its destinations by a search phrase.",
+    inputSchema: { type: "object", properties: { query: { type: "string", description: "Phrase to find in page names or descriptions." } }, required: ["query"] },
+    execute: ({ query }: { query: string }) => runWebMCPTool("search_folder_pages", () => {
+      if (typeof query !== "string") throw new Error("Search phrase must be text.");
+      setSearch(query);
+      setSearchOpen(true);
+      return "Page search opened.";
+    }),
+  });
   useEffect(() => {
     setCompact(localStorage.getItem("mycare.compact-nav") === "true");
   }, []);

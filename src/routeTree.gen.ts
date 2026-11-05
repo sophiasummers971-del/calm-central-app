@@ -22,6 +22,7 @@ import { Route as GoalProgressRouteImport } from './routes/goal-progress'
 import { Route as HealthJournalRouteImport } from './routes/health-journal'
 import { Route as HealthTipsRouteImport } from './routes/health-tips'
 import { Route as InboxRouteImport } from './routes/inbox'
+import { Route as McpRouteImport } from './routes/mcp'
 import { Route as MyDetailsRouteImport } from './routes/my-details'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SitemapRouteImport } from './routes/sitemap'
@@ -29,6 +30,8 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as SymptomCheckerRouteImport } from './routes/symptom-checker'
 import { Route as WellnessGuidesRouteImport } from './routes/wellness-guides'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as ApiOauthGoogleReturnRouteImport } from './routes/api/oauth/google/return'
 
 const IndexRoute = IndexRouteImport.update({
@@ -96,6 +99,11 @@ const InboxRoute = InboxRouteImport.update({
   path: '/inbox',
   getParentRoute: () => rootRouteImport,
 } as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MyDetailsRoute = MyDetailsRouteImport.update({
   id: '/my-details',
   path: '/my-details',
@@ -131,6 +139,17 @@ const WellnessGuidesRoute = WellnessGuidesRouteImport.update({
   path: '/wellness-guides',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
+  id: '/.lovable/oauth/consent',
+  path: '/.lovable/oauth/consent',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiOauthGoogleReturnRoute = ApiOauthGoogleReturnRouteImport.update({
   id: '/api/oauth/google/return',
   path: '/api/oauth/google/return',
@@ -151,6 +170,7 @@ export interface FileRoutesByFullPath {
   '/health-journal': typeof HealthJournalRoute
   '/health-tips': typeof HealthTipsRoute
   '/inbox': typeof InboxRoute
+  '/mcp': typeof McpRoute
   '/my-details': typeof MyDetailsRoute
   '/settings': typeof SettingsRoute
   '/sitemap': typeof SitemapRoute
@@ -158,6 +178,8 @@ export interface FileRoutesByFullPath {
   '/support': typeof SupportRoute
   '/symptom-checker': typeof SymptomCheckerRoute
   '/wellness-guides': typeof WellnessGuidesRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/api/oauth/google/return': typeof ApiOauthGoogleReturnRoute
 }
 export interface FileRoutesByTo {
@@ -174,6 +196,7 @@ export interface FileRoutesByTo {
   '/health-journal': typeof HealthJournalRoute
   '/health-tips': typeof HealthTipsRoute
   '/inbox': typeof InboxRoute
+  '/mcp': typeof McpRoute
   '/my-details': typeof MyDetailsRoute
   '/settings': typeof SettingsRoute
   '/sitemap': typeof SitemapRoute
@@ -181,6 +204,8 @@ export interface FileRoutesByTo {
   '/support': typeof SupportRoute
   '/symptom-checker': typeof SymptomCheckerRoute
   '/wellness-guides': typeof WellnessGuidesRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/api/oauth/google/return': typeof ApiOauthGoogleReturnRoute
 }
 export interface FileRoutesById {
@@ -198,6 +223,7 @@ export interface FileRoutesById {
   '/health-journal': typeof HealthJournalRoute
   '/health-tips': typeof HealthTipsRoute
   '/inbox': typeof InboxRoute
+  '/mcp': typeof McpRoute
   '/my-details': typeof MyDetailsRoute
   '/settings': typeof SettingsRoute
   '/sitemap': typeof SitemapRoute
@@ -205,6 +231,8 @@ export interface FileRoutesById {
   '/support': typeof SupportRoute
   '/symptom-checker': typeof SymptomCheckerRoute
   '/wellness-guides': typeof WellnessGuidesRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/api/oauth/google/return': typeof ApiOauthGoogleReturnRoute
 }
 export interface FileRouteTypes {
@@ -223,6 +251,7 @@ export interface FileRouteTypes {
     | '/health-journal'
     | '/health-tips'
     | '/inbox'
+    | '/mcp'
     | '/my-details'
     | '/settings'
     | '/sitemap'
@@ -230,6 +259,8 @@ export interface FileRouteTypes {
     | '/support'
     | '/symptom-checker'
     | '/wellness-guides'
+    | '/.well-known/oauth-protected-resource'
+    | '/.lovable/oauth/consent'
     | '/api/oauth/google/return'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -246,6 +277,7 @@ export interface FileRouteTypes {
     | '/health-journal'
     | '/health-tips'
     | '/inbox'
+    | '/mcp'
     | '/my-details'
     | '/settings'
     | '/sitemap'
@@ -253,6 +285,8 @@ export interface FileRouteTypes {
     | '/support'
     | '/symptom-checker'
     | '/wellness-guides'
+    | '/.well-known/oauth-protected-resource'
+    | '/.lovable/oauth/consent'
     | '/api/oauth/google/return'
   id:
     | '__root__'
@@ -269,6 +303,7 @@ export interface FileRouteTypes {
     | '/health-journal'
     | '/health-tips'
     | '/inbox'
+    | '/mcp'
     | '/my-details'
     | '/settings'
     | '/sitemap'
@@ -276,6 +311,8 @@ export interface FileRouteTypes {
     | '/support'
     | '/symptom-checker'
     | '/wellness-guides'
+    | '/.well-known/oauth-protected-resource'
+    | '/.lovable/oauth/consent'
     | '/api/oauth/google/return'
   fileRoutesById: FileRoutesById
 }
@@ -293,6 +330,7 @@ export interface RootRouteChildren {
   HealthJournalRoute: typeof HealthJournalRoute
   HealthTipsRoute: typeof HealthTipsRoute
   InboxRoute: typeof InboxRoute
+  McpRoute: typeof McpRoute
   MyDetailsRoute: typeof MyDetailsRoute
   SettingsRoute: typeof SettingsRoute
   SitemapRoute: typeof SitemapRoute
@@ -300,6 +338,8 @@ export interface RootRouteChildren {
   SupportRoute: typeof SupportRoute
   SymptomCheckerRoute: typeof SymptomCheckerRoute
   WellnessGuidesRoute: typeof WellnessGuidesRoute
+  Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   ApiOauthGoogleReturnRoute: typeof ApiOauthGoogleReturnRoute
 }
 
@@ -396,6 +436,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InboxRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/my-details': {
       id: '/my-details'
       path: '/my-details'
@@ -445,6 +492,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WellnessGuidesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.lovable/oauth/consent': {
+      id: '/.lovable/oauth/consent'
+      path: '/.lovable/oauth/consent'
+      fullPath: '/.lovable/oauth/consent'
+      preLoaderRoute: typeof DotlovableOauthConsentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/oauth/google/return': {
       id: '/api/oauth/google/return'
       path: '/api/oauth/google/return'
@@ -469,6 +530,7 @@ const rootRouteChildren: RootRouteChildren = {
   HealthJournalRoute: HealthJournalRoute,
   HealthTipsRoute: HealthTipsRoute,
   InboxRoute: InboxRoute,
+  McpRoute: McpRoute,
   MyDetailsRoute: MyDetailsRoute,
   SettingsRoute: SettingsRoute,
   SitemapRoute: SitemapRoute,
@@ -476,6 +538,9 @@ const rootRouteChildren: RootRouteChildren = {
   SupportRoute: SupportRoute,
   SymptomCheckerRoute: SymptomCheckerRoute,
   WellnessGuidesRoute: WellnessGuidesRoute,
+  Char91DotwellKnownChar93OauthProtectedResourceRoute:
+    Char91DotwellKnownChar93OauthProtectedResourceRoute,
+  DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   ApiOauthGoogleReturnRoute: ApiOauthGoogleReturnRoute,
 }
 export const routeTree = rootRouteImport
