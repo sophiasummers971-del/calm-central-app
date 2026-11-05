@@ -1,5 +1,7 @@
 # Roadmap
 
+- [ ] Publish restructured pages and verify the published pages in a real browser; fix any remaining build errors.
+
 - [ ] Rebuild overview, grouped navigation and account identity into a clear, polished structure; verify desktop, mobile and both themes.
 
 - [ ] Add dated mood, food and symptom journal entries and a Health sidebar link; verify saving, editing and deletion.
