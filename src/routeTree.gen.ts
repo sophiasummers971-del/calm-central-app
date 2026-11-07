@@ -18,17 +18,21 @@ import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as EmergencyRouteImport } from './routes/emergency'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as FilesRouteImport } from './routes/files'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as GoalProgressRouteImport } from './routes/goal-progress'
 import { Route as HealthJournalRouteImport } from './routes/health-journal'
 import { Route as HealthTipsRouteImport } from './routes/health-tips'
 import { Route as InboxRouteImport } from './routes/inbox'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as MyDetailsRouteImport } from './routes/my-details'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SitemapRouteImport } from './routes/sitemap'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as SymptomCheckerRouteImport } from './routes/symptom-checker'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as WellnessGuidesRouteImport } from './routes/wellness-guides'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
@@ -79,6 +83,11 @@ const FilesRoute = FilesRouteImport.update({
   path: '/files',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GoalProgressRoute = GoalProgressRouteImport.update({
   id: '/goal-progress',
   path: '/goal-progress',
@@ -109,6 +118,16 @@ const MyDetailsRoute = MyDetailsRouteImport.update({
   path: '/my-details',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -132,6 +151,11 @@ const SupportRoute = SupportRouteImport.update({
 const SymptomCheckerRoute = SymptomCheckerRouteImport.update({
   id: '/symptom-checker',
   path: '/symptom-checker',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WellnessGuidesRoute = WellnessGuidesRouteImport.update({
@@ -166,17 +190,21 @@ export interface FileRoutesByFullPath {
   '/emergency': typeof EmergencyRoute
   '/faq': typeof FaqRoute
   '/files': typeof FilesRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/goal-progress': typeof GoalProgressRoute
   '/health-journal': typeof HealthJournalRoute
   '/health-tips': typeof HealthTipsRoute
   '/inbox': typeof InboxRoute
   '/mcp': typeof McpRoute
   '/my-details': typeof MyDetailsRoute
+  '/privacy': typeof PrivacyRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
   '/sitemap': typeof SitemapRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/support': typeof SupportRoute
   '/symptom-checker': typeof SymptomCheckerRoute
+  '/terms': typeof TermsRoute
   '/wellness-guides': typeof WellnessGuidesRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -192,17 +220,21 @@ export interface FileRoutesByTo {
   '/emergency': typeof EmergencyRoute
   '/faq': typeof FaqRoute
   '/files': typeof FilesRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/goal-progress': typeof GoalProgressRoute
   '/health-journal': typeof HealthJournalRoute
   '/health-tips': typeof HealthTipsRoute
   '/inbox': typeof InboxRoute
   '/mcp': typeof McpRoute
   '/my-details': typeof MyDetailsRoute
+  '/privacy': typeof PrivacyRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
   '/sitemap': typeof SitemapRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/support': typeof SupportRoute
   '/symptom-checker': typeof SymptomCheckerRoute
+  '/terms': typeof TermsRoute
   '/wellness-guides': typeof WellnessGuidesRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -219,17 +251,21 @@ export interface FileRoutesById {
   '/emergency': typeof EmergencyRoute
   '/faq': typeof FaqRoute
   '/files': typeof FilesRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/goal-progress': typeof GoalProgressRoute
   '/health-journal': typeof HealthJournalRoute
   '/health-tips': typeof HealthTipsRoute
   '/inbox': typeof InboxRoute
   '/mcp': typeof McpRoute
   '/my-details': typeof MyDetailsRoute
+  '/privacy': typeof PrivacyRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
   '/sitemap': typeof SitemapRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/support': typeof SupportRoute
   '/symptom-checker': typeof SymptomCheckerRoute
+  '/terms': typeof TermsRoute
   '/wellness-guides': typeof WellnessGuidesRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
@@ -247,17 +283,21 @@ export interface FileRouteTypes {
     | '/emergency'
     | '/faq'
     | '/files'
+    | '/forgot-password'
     | '/goal-progress'
     | '/health-journal'
     | '/health-tips'
     | '/inbox'
     | '/mcp'
     | '/my-details'
+    | '/privacy'
+    | '/reset-password'
     | '/settings'
     | '/sitemap'
     | '/sitemap.xml'
     | '/support'
     | '/symptom-checker'
+    | '/terms'
     | '/wellness-guides'
     | '/.well-known/oauth-protected-resource'
     | '/.lovable/oauth/consent'
@@ -273,17 +313,21 @@ export interface FileRouteTypes {
     | '/emergency'
     | '/faq'
     | '/files'
+    | '/forgot-password'
     | '/goal-progress'
     | '/health-journal'
     | '/health-tips'
     | '/inbox'
     | '/mcp'
     | '/my-details'
+    | '/privacy'
+    | '/reset-password'
     | '/settings'
     | '/sitemap'
     | '/sitemap.xml'
     | '/support'
     | '/symptom-checker'
+    | '/terms'
     | '/wellness-guides'
     | '/.well-known/oauth-protected-resource'
     | '/.lovable/oauth/consent'
@@ -299,17 +343,21 @@ export interface FileRouteTypes {
     | '/emergency'
     | '/faq'
     | '/files'
+    | '/forgot-password'
     | '/goal-progress'
     | '/health-journal'
     | '/health-tips'
     | '/inbox'
     | '/mcp'
     | '/my-details'
+    | '/privacy'
+    | '/reset-password'
     | '/settings'
     | '/sitemap'
     | '/sitemap.xml'
     | '/support'
     | '/symptom-checker'
+    | '/terms'
     | '/wellness-guides'
     | '/.well-known/oauth-protected-resource'
     | '/.lovable/oauth/consent'
@@ -326,17 +374,21 @@ export interface RootRouteChildren {
   EmergencyRoute: typeof EmergencyRoute
   FaqRoute: typeof FaqRoute
   FilesRoute: typeof FilesRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   GoalProgressRoute: typeof GoalProgressRoute
   HealthJournalRoute: typeof HealthJournalRoute
   HealthTipsRoute: typeof HealthTipsRoute
   InboxRoute: typeof InboxRoute
   McpRoute: typeof McpRoute
   MyDetailsRoute: typeof MyDetailsRoute
+  PrivacyRoute: typeof PrivacyRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SettingsRoute: typeof SettingsRoute
   SitemapRoute: typeof SitemapRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SupportRoute: typeof SupportRoute
   SymptomCheckerRoute: typeof SymptomCheckerRoute
+  TermsRoute: typeof TermsRoute
   WellnessGuidesRoute: typeof WellnessGuidesRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
@@ -408,6 +460,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FilesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/goal-progress': {
       id: '/goal-progress'
       path: '/goal-progress'
@@ -450,6 +509,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MyDetailsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/settings': {
       id: '/settings'
       path: '/settings'
@@ -483,6 +556,13 @@ declare module '@tanstack/react-router' {
       path: '/symptom-checker'
       fullPath: '/symptom-checker'
       preLoaderRoute: typeof SymptomCheckerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/wellness-guides': {
@@ -526,17 +606,21 @@ const rootRouteChildren: RootRouteChildren = {
   EmergencyRoute: EmergencyRoute,
   FaqRoute: FaqRoute,
   FilesRoute: FilesRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   GoalProgressRoute: GoalProgressRoute,
   HealthJournalRoute: HealthJournalRoute,
   HealthTipsRoute: HealthTipsRoute,
   InboxRoute: InboxRoute,
   McpRoute: McpRoute,
   MyDetailsRoute: MyDetailsRoute,
+  PrivacyRoute: PrivacyRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SettingsRoute: SettingsRoute,
   SitemapRoute: SitemapRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SupportRoute: SupportRoute,
   SymptomCheckerRoute: SymptomCheckerRoute,
+  TermsRoute: TermsRoute,
   WellnessGuidesRoute: WellnessGuidesRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
