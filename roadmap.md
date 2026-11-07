@@ -1,5 +1,7 @@
 # Roadmap
 
+- [ ] Add password recovery, privacy and terms pages; verify browser flows and request publication. Legal operator details and real recovery email delivery require owner confirmation.
+
 - [ ] Add OAuth-protected MCP and browser page discovery tools; extract manifest and verify consent errors and login return handling. Full consent approval requires a signed-in user.
 
 - [x] Publish restructured pages and verify the published pages in a real browser; current build is clean and eight primary pages return 200 without browser exceptions.
