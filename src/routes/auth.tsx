@@ -19,9 +19,10 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { useSessionUser } from "@/lib/auth";
 import { oauthReturnPath } from "@/lib/oauth-return-path";
+import type { SearchSchemaInput } from "@tanstack/router-core";
 
 export const Route = createFileRoute("/auth")({
-  validateSearch: (search: Record<string, unknown>) => ({ next: oauthReturnPath(search["next"]) }),
+  validateSearch: (search: { next?: unknown } & SearchSchemaInput) => ({ next: oauthReturnPath(search.next) }),
   staticData: { sitemap: false },
   head: () => ({
     meta: [

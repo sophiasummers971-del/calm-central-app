@@ -32,7 +32,7 @@ export const Route = createFileRoute("/.lovable/oauth/consent")({
     return data;
   },
   pendingComponent: () => <PageShell title="Connect an assistant"><p role="status">Checking your connection request…</p></PageShell>,
-  errorComponent: ({ error }) => <PageShell title="Connection unavailable"><p role="alert">{error.message}</p><Button asChild variant="outline" className="mt-4"><Link to="/auth" search={{ next: "/" }}>My account</Link></Button></PageShell>,
+  errorComponent: ({ error }) => <PageShell title="Connection unavailable"><p role="alert">{error instanceof Error ? error.message : "This connection request could not be loaded."}</p><Button asChild variant="outline" className="mt-4"><Link to="/auth" search={{ next: "/" }}>My account</Link></Button></PageShell>,
   component: ConsentPage,
 });
 

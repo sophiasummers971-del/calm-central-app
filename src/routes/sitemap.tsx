@@ -15,6 +15,9 @@ import {
   ChevronRight,
   Mail,
   TrendingUp,
+  ShieldCheck,
+  FileText,
+  KeyRound,
 } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 
@@ -41,6 +44,9 @@ export const Route = createFileRoute("/sitemap")({
 });
 
 const pages = [
+  { to: "/forgot-password" as const, label: "Reset password", icon: KeyRound, help: "Request an email link to recover your account." },
+  { to: "/privacy" as const, label: "Privacy notice", icon: ShieldCheck, help: "Information handling and your privacy choices." },
+  { to: "/terms" as const, label: "Terms of use", icon: FileText, help: "Responsible use and important health limitations." },
   { to: "/support" as const, label: "Send us a message", icon: Mail, help: "Write to us with a picture of the screen. We answer by email." },
   { to: "/" as const, label: "Home", icon: Home, help: "Your big buttons and quick phone numbers." },
   {
