@@ -44,11 +44,36 @@ export const Route = createFileRoute("/sitemap")({
 });
 
 const pages = [
-  { to: "/forgot-password" as const, label: "Reset password", icon: KeyRound, help: "Request an email link to recover your account." },
-  { to: "/privacy" as const, label: "Privacy notice", icon: ShieldCheck, help: "Information handling and your privacy choices." },
-  { to: "/terms" as const, label: "Terms of use", icon: FileText, help: "Responsible use and important health limitations." },
-  { to: "/support" as const, label: "Send us a message", icon: Mail, help: "Write to us with a picture of the screen. We answer by email." },
-  { to: "/" as const, label: "Home", icon: Home, help: "Your big buttons and quick phone numbers." },
+  {
+    to: "/forgot-password" as const,
+    label: "Reset password",
+    icon: KeyRound,
+    help: "Request an email link to recover your account.",
+  },
+  {
+    to: "/privacy" as const,
+    label: "Privacy notice",
+    icon: ShieldCheck,
+    help: "Information handling and your privacy choices.",
+  },
+  {
+    to: "/terms" as const,
+    label: "Terms of use",
+    icon: FileText,
+    help: "Responsible use and important health limitations.",
+  },
+  {
+    to: "/support" as const,
+    label: "Send us a message",
+    icon: Mail,
+    help: "Write to us with a picture of the screen. We answer by email.",
+  },
+  {
+    to: "/" as const,
+    label: "Home",
+    icon: Home,
+    help: "Your big buttons and quick phone numbers.",
+  },
   {
     to: "/accounts" as const,
     label: "My accounts",
@@ -79,9 +104,24 @@ const pages = [
     icon: TrendingUp,
     help: "Charts of your goals, day by day, and a summary of your week.",
   },
-  { to: "/health-tips" as const, label: "Health tips", icon: Lightbulb, help: "Small, easy steps for water, food, sleep and medicine." },
-  { to: "/wellness-guides" as const, label: "Wellness guides", icon: Leaf, help: "Calm step-by-step guides for breathing, stress and sleep." },
-  { to: "/symptom-checker" as const, label: "Symptom checker", icon: Stethoscope, help: "Yes or no questions to help you choose who to call." },
+  {
+    to: "/health-tips" as const,
+    label: "Health tips",
+    icon: Lightbulb,
+    help: "Small, easy steps for water, food, sleep and medicine.",
+  },
+  {
+    to: "/wellness-guides" as const,
+    label: "Wellness guides",
+    icon: Leaf,
+    help: "Calm step-by-step guides for breathing, stress and sleep.",
+  },
+  {
+    to: "/symptom-checker" as const,
+    label: "Symptom checker",
+    icon: Stethoscope,
+    help: "Yes or no questions to help you choose who to call.",
+  },
   {
     to: "/settings" as const,
     label: "Settings",
@@ -110,7 +150,10 @@ const pages = [
 
 function SitemapPage() {
   return (
-    <PageShell title="Map of pages" intro="Every page in this app, with a short line about each one.">
+    <PageShell
+      title="Map of pages"
+      intro="Every page in this app, with a short line about each one."
+    >
       <ul className="space-y-3">
         {pages.map(({ to, label, icon: Icon, help }) => (
           <li key={to}>

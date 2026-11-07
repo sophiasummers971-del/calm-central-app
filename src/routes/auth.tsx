@@ -22,7 +22,9 @@ import { oauthReturnPath } from "@/lib/oauth-return-path";
 import type { SearchSchemaInput } from "@tanstack/router-core";
 
 export const Route = createFileRoute("/auth")({
-  validateSearch: (search: { next?: unknown } & SearchSchemaInput) => ({ next: oauthReturnPath(search.next) }),
+  validateSearch: (search: { next?: unknown } & SearchSchemaInput) => ({
+    next: oauthReturnPath(search.next),
+  }),
   staticData: { sitemap: false },
   head: () => ({
     meta: [
