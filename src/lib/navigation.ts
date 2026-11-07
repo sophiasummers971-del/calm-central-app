@@ -114,8 +114,18 @@ export const navigationGroups = [
         icon: MessageSquare,
       },
       { to: "/sitemap", label: "All pages", detail: "The complete folder", icon: Map },
-      { to: "/privacy", label: "Privacy notice", detail: "Your information and choices", icon: ShieldCheck },
-      { to: "/terms", label: "Terms of use", detail: "Responsible use and health limitations", icon: FileText },
+      {
+        to: "/privacy",
+        label: "Privacy notice",
+        detail: "Your information and choices",
+        icon: ShieldCheck,
+      },
+      {
+        to: "/terms",
+        label: "Terms of use",
+        detail: "Responsible use and health limitations",
+        icon: FileText,
+      },
     ],
   },
 ] as const;

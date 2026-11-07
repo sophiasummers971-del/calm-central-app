@@ -234,8 +234,12 @@ function AuthPage() {
         </p>
       ) : null}
       <div className="mt-8 flex flex-wrap gap-3 border-t border-border pt-4">
-        <Button variant="link" asChild><Link to="/privacy">Privacy notice</Link></Button>
-        <Button variant="link" asChild><Link to="/terms">Terms of use</Link></Button>
+        <Button variant="link" asChild>
+          <Link to="/privacy">Privacy notice</Link>
+        </Button>
+        <Button variant="link" asChild>
+          <Link to="/terms">Terms of use</Link>
+        </Button>
       </div>
     </PageShell>
   );
