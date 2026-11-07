@@ -211,6 +211,9 @@ function AuthPage() {
           <Button className="h-16 w-full text-lg" disabled={busy} onClick={() => void signIn()}>
             <LogIn className="size-6" aria-hidden="true" /> Sign in
           </Button>
+          <Button variant="link" asChild>
+            <Link to="/forgot-password">Forgot your password?</Link>
+          </Button>
           <Button
             variant="secondary"
             className="h-16 w-full text-lg"
@@ -230,6 +233,10 @@ function AuthPage() {
           {message}
         </p>
       ) : null}
+      <div className="mt-8 flex flex-wrap gap-3 border-t border-border pt-4">
+        <Button variant="link" asChild><Link to="/privacy">Privacy notice</Link></Button>
+        <Button variant="link" asChild><Link to="/terms">Terms of use</Link></Button>
+      </div>
     </PageShell>
   );
 }
