@@ -34,9 +34,8 @@ function TermsPage() {
         <section className="space-y-3">
           <h2 className="font-display text-xl font-bold">Service operator</h2>
           <p>
-            My Life Folder is operated by Sophia Jade Summers under the name Sj-insides,
-            based in Essex, United Kingdom. Questions about these terms can be sent through
-            Messages to help.
+            My Life Folder is operated by Sophia Jade Summers under the name Sj-insides, based in
+            Essex, United Kingdom. Questions about these terms can be sent through Messages to help.
           </p>
         </section>
         <section className="space-y-3">
@@ -94,8 +93,8 @@ function TermsPage() {
           <p>
             A public contact address and approved terms, including any governing-law provisions,
             still need confirmation. The operator’s location does not by itself establish those
-            provisions. These terms remain an operational draft, not confirmation of complete
-            legal launch readiness.
+            provisions. These terms remain an operational draft, not confirmation of complete legal
+            launch readiness.
           </p>
           <div className="flex flex-wrap gap-3">
             <Button variant="outline" asChild>

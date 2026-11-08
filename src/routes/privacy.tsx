@@ -33,9 +33,9 @@ function PrivacyPage() {
         <section className="space-y-3">
           <h2 className="font-display text-xl font-bold">Who operates My Life Folder</h2>
           <p>
-            My Life Folder is operated by Sophia Jade Summers under the name Sj-insides,
-            based in Essex, United Kingdom. For privacy questions or requests, contact the
-            operator through Messages to help.
+            My Life Folder is operated by Sophia Jade Summers under the name Sj-insides, based in
+            Essex, United Kingdom. For privacy questions or requests, contact the operator through
+            Messages to help.
           </p>
         </section>
         <section className="space-y-3">
@@ -109,8 +109,8 @@ function PrivacyPage() {
           <p>
             A public contact address and privacy email, applicable processing bases, specific
             retention periods and international-transfer safeguards still need to be supplied and
-            verified. This notice describes current app behaviour and remains incomplete until
-            those details and the legal wording are confirmed.
+            verified. This notice describes current app behaviour and remains incomplete until those
+            details and the legal wording are confirmed.
           </p>
           <div className="flex flex-wrap gap-3">
             <Button variant="outline" asChild>
