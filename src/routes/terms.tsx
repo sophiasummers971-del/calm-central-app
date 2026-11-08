@@ -30,7 +30,15 @@ function TermsPage() {
   return (
     <PageShell title="Terms of use" intro="A clear understanding of your personal folder.">
       <article className="max-w-3xl space-y-8 leading-relaxed">
-        <p className="text-sm text-muted-foreground">Last updated: 07/11/2026</p>
+        <p className="text-sm text-muted-foreground">Last updated: 08/11/2026</p>
+        <section className="space-y-3">
+          <h2 className="font-display text-xl font-bold">Service operator</h2>
+          <p>
+            My Life Folder is operated by Sophia Jade Summers under the name Sj-insides,
+            based in Essex, United Kingdom. Questions about these terms can be sent through
+            Messages to help.
+          </p>
+        </section>
         <section className="space-y-3">
           <h2 className="font-display text-xl font-bold">Purpose of the service</h2>
           <p>
@@ -84,8 +92,10 @@ function TermsPage() {
             that cannot lawfully be excluded.
           </p>
           <p>
-            The operator’s legal identity and applicable jurisdiction still need confirmation. These
-            terms are an operational draft, not confirmation of complete legal launch readiness.
+            A public contact address and approved terms, including any governing-law provisions,
+            still need confirmation. The operator’s location does not by itself establish those
+            provisions. These terms remain an operational draft, not confirmation of complete
+            legal launch readiness.
           </p>
           <div className="flex flex-wrap gap-3">
             <Button variant="outline" asChild>

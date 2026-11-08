@@ -1,7 +1,9 @@
 # Roadmap
 
 - [x] Add password recovery, privacy and terms pages; public browser flows verified on phone and desktop, 17 tests pass and build is clean.
-- [ ] Confirm legal operator identity, processing bases, retention and jurisdiction; verify an actual recovery email and password change (requires owner details and an emailed recovery link).
+- [x] Add confirmed operator details to privacy and terms: Sj-insides, Sophia Jade Summers, Essex, UK.
+- [ ] Complete legal notices with public contact details, processing bases, exact retention periods, transfer safeguards and approved terms (not supplied); verify an actual recovery email and password change (requires emailed recovery link).
+- [ ] Review deep security scan results before claiming launch readiness (scan requested 08/11/2026; awaiting completion).
 
 - [ ] Add OAuth-protected MCP and browser page discovery tools; extract manifest and verify consent errors and login return handling. Full consent approval requires a signed-in user.
 
