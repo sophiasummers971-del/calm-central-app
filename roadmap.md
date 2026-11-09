@@ -32,3 +32,4 @@
 - [x] Move read-aloud and bigger-text controls into Settings.
 - [x] Replace bottom-only navigation with grouped top/side navigation and animated subfolders.
 - [x] Verify connected-account flows and refreshed pages.
+- [ ] Add public contact details + retention periods to privacy/terms, then publish (needs details from user)
