@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useSessionUser } from "@/lib/auth";
 import {
   getIsAdmin,
+  getSupportScreenshot,
   listSupportRequests,
   updateSupportRequest,
   type SupportRequestRow,
@@ -100,6 +101,38 @@ function StatusCard({
         ) : null}
       </div>
     </div>
+  );
+}
+
+function ScreenshotPreview({ id, topic }: { id: string; topic: string | null }) {
+  const fetchFn = useServerFn(getSupportScreenshot);
+  const [show, setShow] = useState(false);
+  const query = useQuery({
+    queryKey: ["support-screenshot", id],
+    queryFn: () => fetchFn({ data: { id } }),
+    enabled: show,
+    staleTime: 0,
+    gcTime: 0,
+  });
+
+  if (!show) {
+    return (
+      <Button type="button" variant="outline" className="mt-4 h-12 text-base" onClick={() => setShow(true)}>
+        <ImageIcon className="mr-2 size-5" aria-hidden="true" />
+        Show screenshot
+      </Button>
+    );
+  }
+  if (query.isPending) return <p className="mt-4 text-base">Loading screenshot…</p>;
+  if (query.isError || !query.data?.dataUrl) {
+    return <p className="mt-4 text-base text-destructive">Sorry, this screenshot could not be opened.</p>;
+  }
+  return (
+    <img
+      src={query.data.dataUrl}
+      alt={`Screenshot sent with the message about ${topic || "a problem"}`}
+      className="mt-4 max-h-96 max-w-full rounded-xl border object-contain"
+    />
   );
 }
 
@@ -307,20 +340,8 @@ function AdminPage() {
                         : ""}
                     </p>
                     <p className="mt-3 whitespace-pre-wrap text-lg">{r.message}</p>
-                    {r.screenshot_url ? (
-                      <a
-                        href={r.screenshot_url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="mt-4 inline-block"
-                      >
-                        <img
-                          src={r.screenshot_url}
-                          alt={`Screenshot sent with the message about ${r.topic || "a problem"}`}
-                          className="max-h-64 max-w-full rounded-xl border object-contain"
-                          loading="lazy"
-                        />
-                      </a>
+                    {r.screenshot_path ? (
+                      <ScreenshotPreview id={r.id} topic={r.topic} />
                     ) : null}
                     <StatusCard
                       key={`${r.id}-${r.status}`}

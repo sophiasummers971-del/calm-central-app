@@ -41,25 +41,46 @@ export const listSupportRequests = createServerFn({ method: "GET" })
       .limit(500);
     if (error) throw error;
 
-    const rows = data ?? [];
-    const paths = rows
-      .map((r) => r.screenshot_path)
-      .filter((p): p is string => Boolean(p));
+    return (data ?? []).map((r) => ({ ...r, screenshot_url: null }));
+  });
 
-    const urls = new Map<string, string>();
-    if (paths.length > 0) {
-      const signed = await context.supabase.storage
-        .from("support-screenshots")
-        .createSignedUrls(paths, 60 * 60);
-      for (const item of signed.data ?? []) {
-        if (item.path && item.signedUrl) urls.set(item.path, item.signedUrl);
-      }
+// Screenshots are streamed on demand after a live admin check, so no reusable
+// link exists that would outlive a revoked admin role.
+export const getSupportScreenshot = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: { id: string }) => {
+    if (!input?.id || typeof input.id !== "string") throw new Error("Missing id");
+    return { id: input.id };
+  })
+  .handler(async ({ data, context }): Promise<{ dataUrl: string | null }> => {
+    const { data: isAdmin, error: roleError } = await context.supabase.rpc("has_role", {
+      _user_id: context.userId,
+      _role: "admin",
+    });
+    if (roleError) throw roleError;
+    if (!isAdmin) throw new Error("Not allowed");
+
+    const { data: row, error } = await context.supabase
+      .from("support_requests")
+      .select("screenshot_path")
+      .eq("id", data.id)
+      .maybeSingle();
+    if (error) throw error;
+    if (!row?.screenshot_path) return { dataUrl: null };
+
+    const file = await context.supabase.storage
+      .from("support-screenshots")
+      .download(row.screenshot_path);
+    if (file.error || !file.data) return { dataUrl: null };
+
+    const bytes = new Uint8Array(await file.data.arrayBuffer());
+    let binary = "";
+    const chunk = 0x8000;
+    for (let i = 0; i < bytes.length; i += chunk) {
+      binary += String.fromCharCode(...bytes.subarray(i, i + chunk));
     }
-
-    return rows.map((r) => ({
-      ...r,
-      screenshot_url: r.screenshot_path ? (urls.get(r.screenshot_path) ?? null) : null,
-    }));
+    const type = file.data.type || "image/png";
+    return { dataUrl: `data:${type};base64,${btoa(binary)}` };
   });
 
 export const updateSupportRequest = createServerFn({ method: "POST" })
